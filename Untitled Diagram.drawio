@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-02-26T20:17:26.680Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="yB3IgYec0BI4giz6z4bs" version="16.6.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-02-26T20:18:09.914Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="UBB_qAdi97of2xFAbQf3" version="16.6.4" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
     <mxGraphModel dx="1673" dy="925" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
@@ -60,7 +60,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="g0dB4fThE9D3y6vZpoi5-15" value="quiz_variant" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;" vertex="1" parent="1">
-          <mxGeometry x="760" y="160" width="180" height="140" as="geometry" />
+          <mxGeometry x="770" y="160" width="180" height="140" as="geometry" />
         </mxCell>
         <mxCell id="g0dB4fThE9D3y6vZpoi5-16" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" vertex="1" parent="g0dB4fThE9D3y6vZpoi5-15">
           <mxGeometry y="30" width="180" height="30" as="geometry" />
@@ -309,7 +309,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="g0dB4fThE9D3y6vZpoi5-67" value="event_priority" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;" vertex="1" parent="1">
-          <mxGeometry x="1480" y="430" width="180" height="150" as="geometry" />
+          <mxGeometry x="1500" y="430" width="180" height="150" as="geometry" />
         </mxCell>
         <mxCell id="g0dB4fThE9D3y6vZpoi5-68" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" vertex="1" parent="g0dB4fThE9D3y6vZpoi5-67">
           <mxGeometry y="30" width="180" height="30" as="geometry" />
@@ -1199,6 +1199,12 @@
           <mxGeometry width="100" height="100" relative="1" as="geometry">
             <mxPoint x="400" y="300" as="sourcePoint" />
             <mxPoint x="500" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g0dB4fThE9D3y6vZpoi5-167" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERmandOne;startArrow=ERmandOne;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="g0dB4fThE9D3y6vZpoi5-61" target="g0dB4fThE9D3y6vZpoi5-68">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="1410" y="550" as="sourcePoint" />
+            <mxPoint x="1510" y="450" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
