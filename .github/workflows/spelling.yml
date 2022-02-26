@@ -2,7 +2,7 @@ name: Spell checking
 on:
   pull_request:
     types: [opened, reopened]
-    paths: [*.md, *.markdown, *.txt]
+    paths: ["*.md", "*.markdown", "*.txt"]
 
 jobs:
   spelling:
