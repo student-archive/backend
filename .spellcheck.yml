@@ -2,6 +2,8 @@ matrix:
   - name: Text
     sources:
       - '**/*.md'
+      - '**/*.markdown'
+      - '**/*.txt'
     default_encoding: utf-8
     aspell:
       lang: [en, ru]
