@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-02-27T00:26:23.189Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="LjXG9Bb5QwkXSQqC3Y7I" version="16.6.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-02-27T00:36:05.305Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="sbj4t4b7rQFVr5LGqX9L" version="16.6.4" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="177" dy="98" grid="1" gridSize="5" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="1038" dy="575" grid="1" gridSize="5" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -765,7 +765,7 @@
           <mxGeometry x="189.99644067796612" y="176.8778707224335" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="g0dB4fThE9D3y6vZpoi5-160" value="" style="group" parent="1" vertex="1" connectable="0">
-          <mxGeometry x="2097.5423728813557" y="1535.4372623574145" width="270.34" height="523.8027376425855" as="geometry" />
+          <mxGeometry x="2097.5423728813557" y="1535.4372623574145" width="270.34" height="554.5627376425855" as="geometry" />
         </mxCell>
         <mxCell id="g0dB4fThE9D3y6vZpoi5-122" value="email" style="shape=partialRectangle;fillColor=none;align=left;verticalAlign=middle;strokeColor=none;spacingLeft=34;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dropTarget=0;" parent="g0dB4fThE9D3y6vZpoi5-160" vertex="1">
           <mxGeometry y="144.56" width="90" height="43.19" as="geometry" />
@@ -864,7 +864,7 @@
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="2jKcjm-qkLe9Er315lRe-191" value="role" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="2jKcjm-qkLe9Er315lRe-189" vertex="1">
+        <mxCell id="2jKcjm-qkLe9Er315lRe-191" value="role_name" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="2jKcjm-qkLe9Er315lRe-189" vertex="1">
           <mxGeometry x="30" width="213.31" height="30" as="geometry">
             <mxRectangle width="213.31" height="30" as="alternateBounds" />
           </mxGeometry>
@@ -881,6 +881,18 @@
           <mxGeometry x="30" width="213.31" height="30" as="geometry">
             <mxRectangle width="213.31" height="30" as="alternateBounds" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="lhJJ4rwmt8Zln155oaHr-87" value="" style="line;strokeWidth=2;direction=south;html=1;fontSize=12;" vertex="1" parent="g0dB4fThE9D3y6vZpoi5-160">
+          <mxGeometry x="197.46" y="424.56" width="10" height="100.44" as="geometry" />
+        </mxCell>
+        <mxCell id="lhJJ4rwmt8Zln155oaHr-88" value="UUID" style="text;strokeColor=none;fillColor=none;html=1;fontSize=12;fontStyle=0;verticalAlign=middle;align=center;" vertex="1" parent="g0dB4fThE9D3y6vZpoi5-160">
+          <mxGeometry x="197.45762711864427" y="424.5627376425855" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lhJJ4rwmt8Zln155oaHr-89" value="Text" style="text;strokeColor=none;fillColor=none;html=1;fontSize=12;fontStyle=0;verticalAlign=middle;align=center;" vertex="1" parent="g0dB4fThE9D3y6vZpoi5-160">
+          <mxGeometry x="197.45762711864427" y="454.5627376425855" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lhJJ4rwmt8Zln155oaHr-90" value="Text" style="text;strokeColor=none;fillColor=none;html=1;fontSize=12;fontStyle=0;verticalAlign=middle;align=center;" vertex="1" parent="g0dB4fThE9D3y6vZpoi5-160">
+          <mxGeometry x="197.45762711864427" y="484.5627376425855" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="g0dB4fThE9D3y6vZpoi5-164" value="" style="group" parent="1" vertex="1" connectable="0">
           <mxGeometry x="1529.8305084745762" y="1468.0608365019011" width="250.16949152542384" height="370.5703422053232" as="geometry" />
@@ -1439,6 +1451,18 @@
         </mxCell>
         <mxCell id="lhJJ4rwmt8Zln155oaHr-75" value="datetime" style="text;strokeColor=none;fillColor=none;html=1;fontSize=12;fontStyle=0;verticalAlign=middle;align=center;" vertex="1" parent="1">
           <mxGeometry x="1250" y="1760" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lhJJ4rwmt8Zln155oaHr-83" value="" style="line;strokeWidth=2;direction=south;html=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1715" y="1995" width="10" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="lhJJ4rwmt8Zln155oaHr-84" value="UUID" style="text;strokeColor=none;fillColor=none;html=1;fontSize=12;fontStyle=0;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1715" y="2000" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lhJJ4rwmt8Zln155oaHr-85" value="UUID" style="text;strokeColor=none;fillColor=none;html=1;fontSize=12;fontStyle=0;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1715" y="2030" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lhJJ4rwmt8Zln155oaHr-86" value="Text" style="text;strokeColor=none;fillColor=none;html=1;fontSize=12;fontStyle=0;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1715" y="2055" width="50" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
