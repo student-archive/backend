@@ -1,25 +1,33 @@
 package ru.giv.star.api.models;
 
+import ru.giv.star.api.requestBodies.PostInviteCodeBody;
+import ru.giv.star.api.utils.Utils;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
 public class InviteCode {
-  private @Id @GeneratedValue UUID id;
+  private @Id UUID id;
   private String inviteCode;
   private Boolean isValid;
   private Instant activatedDate;
 
-  public InviteCode() {}
-
-  InviteCode(String inviteCode, Boolean isValid, Instant activatedDate) {
-    this.inviteCode = inviteCode;
-    this.isValid = isValid;
-    this.activatedDate = activatedDate;
+  /**
+   * Creates new InviteCode entity
+   *
+   * @param body information about group and role to generate a code
+   */
+  public InviteCode(PostInviteCodeBody body) {
+    this.id = UUID.randomUUID();
+    this.inviteCode = Utils.generateInviteCode(body.getGroupName(), body.getRole().getRoleName());
+    this.isValid = true;
+    this.activatedDate = Instant.now();
   }
+
+  public InviteCode() {}
 
   public UUID getId() {
     return this.id;
