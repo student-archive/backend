@@ -1,12 +1,11 @@
 package ru.giv.star.api.models;
 
-import ru.giv.star.api.requestBodies.PostInviteCodeBody;
-import ru.giv.star.api.utils.Utils;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.time.Instant;
 import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import ru.giv.star.api.requestBodies.PostInviteCodeBody;
+import ru.giv.star.api.utils.Utils;
 
 @Entity
 public class InviteCode {
