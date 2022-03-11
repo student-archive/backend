@@ -3,8 +3,7 @@ package ru.giv.star.api.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -12,11 +11,11 @@ class InviteCode {
   private @Id @GeneratedValue UUID id;
   private String inviteCode;
   private Boolean isValid;
-  private Timestamp activatedDate;
+  private Instant activatedDate;
 
   public InviteCode() {}
 
-  InviteCode(String inviteCode, Boolean isValid, Timestamp activatedDate) {
+  InviteCode(String inviteCode, Boolean isValid, Instant activatedDate) {
     this.inviteCode = inviteCode;
     this.isValid = isValid;
     this.activatedDate = activatedDate;
@@ -34,7 +33,7 @@ class InviteCode {
     return isValid;
   }
 
-  public Timestamp getActivatedDate() {
+  public Instant getActivatedDate() {
     return activatedDate;
   }
 }
