@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-class InviteCode {
+public class InviteCode {
   private @Id @GeneratedValue UUID id;
   private String inviteCode;
   private Boolean isValid;
