@@ -1778,7 +1778,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ''
+                $ref: '#/components/schemas/Error'
       operationId: get-whoami
       description: |-
         Gets username of current user
