@@ -1,0 +1,17 @@
+{
+    "groupId": "ru.giv.star",
+    "basePackage": "ru.giv.star.backend",
+    "invokerPackage": "ru.giv.star.backend",
+    "apiPackage": "ru.giv.star.backend.api",
+    "modelPackage": "ru.giv.star.backend.models",
+    "configPackage": "ru.giv.star.backend.configuration",
+    "snapshotVersion": "false",
+    "useTags": "true",
+    "title": "Star API",
+    "useOptional": "true",
+    "artifactId": "star-backend",
+    "artifactUrl": "https://github.com/student-archive/backend",
+    "developerEmail": "dadyarri@gmail.com",
+    "developerOrganization": "Gentlemen in velvet",
+    "developerOrganizationUrl": "https://github.com/student-archive"
+}
