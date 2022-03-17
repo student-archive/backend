@@ -1,14 +1,10 @@
 package ru.giv.star.backend.models;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import ru.giv.star.backend.models.AnyOfPageAttachmentQuizSoftwareQuestionQuizVariant;
-import org.openapitools.jackson.nullable.JsonNullable;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import java.util.Objects;
 
 /** InlineResponse200 */
 @javax.annotation.Generated(
@@ -19,7 +15,7 @@ public class InlineResponse200 {
   private String id;
 
   @JsonProperty("deletedContent")
-  private AnyOfPageAttachmentQuizSoftwareQuestionQuizVariant deletedContent = null;
+  private Object deletedContent = null;
 
   public InlineResponse200 id(String id) {
     this.id = id;

@@ -1,16 +1,15 @@
 package ru.giv.star.backend.models;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
-import ru.giv.star.backend.models.QuizVariant;
-import org.openapitools.jackson.nullable.JsonNullable;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import java.util.Objects;
 
 /**
  * The component of the test
@@ -43,7 +42,7 @@ public class Question   {
   @ApiModelProperty(example = "a8f63983-99a9-4c2d-a5fd-3fd7d4839ba9", required = true, value = "")
   @NotNull
 
-@Pattern(regexp="^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$") 
+@Pattern(regexp="^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$")
   public String getId() {
     return id;
   }
@@ -145,7 +144,7 @@ public class Question   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Question {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    questionText: ").append(toIndentedString(questionText)).append("\n");
     sb.append("    questionDescription: ").append(toIndentedString(questionDescription)).append("\n");
