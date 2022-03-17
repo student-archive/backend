@@ -633,6 +633,50 @@ components:
                 type: string
               link:
                 type: string
+    LinkBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              link:
+                type: string
+  responses:
+    DeletedContent200Response:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              deletedContent:
+                anyOf:
+                  - $ref: '#/components/schemas/Page'
+                  - $ref: '#/components/schemas/Attachment'
+                  - $ref: '#/components/schemas/Quiz'
+                  - $ref: '#/components/schemas/Software'
+                  - $ref: '#/components/schemas/Question'
+                  - $ref: '#/components/schemas/QuizVariant'
+    Login201Response:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              jwt:
+                type: string
+    Whoami200Response:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
 tags:
   - name: content
     description: 'Methodical materials, links, etc'
@@ -839,7 +883,7 @@ paths:
         description: ID of subject
   /eventPriorities:
     get:
-      summary: get list of priorities
+      summary: Get list of priorities
       tags:
         - events
       description: |-
@@ -1102,15 +1146,7 @@ paths:
         - Authorization: []
       parameters: []
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                link:
-                  type: string
-              required:
-                - link
+        $ref: '#/components/requestBodies/LinkBody'
     parameters:
       - schema:
           type: string
@@ -1635,22 +1671,7 @@ paths:
         - content
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  deletedContent:
-                    anyOf:
-                      - $ref: '#/components/schemas/Attachment'
-                      - $ref: '#/components/schemas/Page'
-                      - $ref: '#/components/schemas/Software'
-                      - $ref: '#/components/schemas/Quiz'
-                      - $ref: '#/components/schemas/Question'
-                      - $ref: '#/components/schemas/QuizVariant'
+          $ref: '#/components/responses/DeletedContent200Response'
         '401':
           description: Unauthorized
           content:
@@ -1751,14 +1772,7 @@ paths:
         - persons
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  username:
-                    type: string
+          $ref: '#/components/responses/Whoami200Response'
         '401':
           description: Unauthorized
           content:
@@ -2758,14 +2772,7 @@ paths:
         - persons
       responses:
         '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  jwt:
-                    type: string
+          $ref: '#/components/responses/Login201Response'
         '400':
           description: Bad Request
           content:
