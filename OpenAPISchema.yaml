@@ -1,0 +1,2789 @@
+openapi: 3.0.3
+info:
+  title: Star API
+  description: API Reference for student's knowledge base
+  license:
+    name: MIT
+    url: 'https://mit-license.org/'
+  contact:
+    name: Daniil
+    url: 'https://t.me/dadyarri'
+  version: '1.0'
+servers:
+  - url: 'http://localhost'
+    description: Localhost
+  - url: 'https://api.star.dev'
+    description: Production
+components:
+  schemas:
+    Account:
+      title: Account
+      type: object
+      description: Authentication information about users
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: 99167df3-123e-4d1b-9542-3950c7eeef28
+        username:
+          type: string
+          pattern: '^[a-z0-9_-]{3,15}$'
+          example: ejik
+        passwordHash:
+          type: string
+        lastLoginDate:
+          type: integer
+          example: 1647159287
+      required:
+        - id
+        - username
+        - passwordHash
+    Attachment:
+      title: Attachment
+      type: object
+      description: Attachments - file management system
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: 2ceacea5-6831-48f0-856a-3551d375fd89
+        type:
+          $ref: '#/components/schemas/AttachmentType'
+        link:
+          type: string
+          pattern: '^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)$'
+      required:
+        - id
+        - type
+        - link
+    AttachmentType:
+      title: AttachmentType
+      type: object
+      description: 'Type of attachment (example, solution, etc)'
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: 383a40fd-9fdb-467b-a1bb-1b1432fa73e0
+        typeName:
+          type: string
+      required:
+        - id
+        - typeName
+    Employee:
+      title: Employee
+      type: object
+      description: List of useful contacts
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: 9a611d64-37b7-40ff-a25d-5f310d4759cc
+        specialities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Speciality'
+        firstName:
+          type: string
+        lastName:
+          type: string
+        patronym:
+          type: string
+        position:
+          type: string
+        email:
+          type: string
+          pattern: '^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$'
+        phone:
+          type: string
+          pattern: '^\+[1-9]\d{1,14}$'
+        link:
+          type: string
+          pattern: '^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)$'
+      required:
+        - id
+        - specialities
+        - firstName
+        - lastName
+        - position
+    Error:
+      title: Error
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+      required:
+        - errorCode
+        - errorDescription
+      description: Internal model to describe errors in the system
+    Event:
+      title: Event
+      type: object
+      description: System notification
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: 5cbf66de-9a4e-4380-beac-2421f9a26cf4
+        eventPriority:
+          $ref: '#/components/schemas/EventPriority'
+        group:
+          $ref: '#/components/schemas/Group'
+        eventText:
+          type: string
+        eventDescription:
+          type: string
+        eventDate:
+          type: integer
+          example: 1647159287
+      required:
+        - id
+        - eventPriority
+        - eventText
+        - eventDate
+    EventPriority:
+      title: EventPriority
+      type: object
+      description: The level of access (system-wide and local per group) and the importance of the event
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: aa85581d-ef4e-416c-a730-8a3f55ee6396
+        priorityName:
+          type: string
+        priorityDescription:
+          type: string
+      required:
+        - id
+        - priorityName
+    Group:
+      title: Group
+      type: object
+      description: A collection of students
+      properties:
+        id:
+          type: string
+          example: b3120bb1-02f4-4260-b93f-ceca1fdd286d
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        speciality:
+          $ref: '#/components/schemas/Speciality'
+        groupNumber:
+          type: string
+        students:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+      required:
+        - id
+        - speciality
+        - groupNumber
+    InviteCode:
+      title: InviteCode
+      type: object
+      description: Unique one-time code to add new users
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: c02221c7-f761-4680-a414-8eb49984e138
+        account:
+          $ref: '#/components/schemas/Account'
+        inviteCode:
+          type: string
+        isValid:
+          type: boolean
+          default: true
+        activatedDate:
+          type: integer
+          example: 1647159287
+      required:
+        - id
+        - inviteCode
+        - isValid
+    Page:
+      title: Page
+      type: object
+      description: A page is a place where information is stored
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: b242e845-d182-4e85-b03c-b3e97000b483
+        link:
+          type: string
+          pattern: '^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)$'
+        subject:
+          $ref: '#/components/schemas/Subject'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+      required:
+        - id
+        - link
+        - subject
+    Question:
+      title: Question
+      type: object
+      description: The component of the test
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: a8f63983-99a9-4c2d-a5fd-3fd7d4839ba9
+        questionText:
+          type: string
+        questionDescription:
+          type: string
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuizVariant'
+      required:
+        - id
+        - questionText
+        - variants
+    Quiz:
+      title: Quiz
+      type: object
+      description: Collection of questions
+      x-internal: false
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: e373ac57-9896-4b61-b768-91c7c17cc6cd
+        subject:
+          $ref: '#/components/schemas/Subject'
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+      required:
+        - id
+        - subject
+    QuizVariant:
+      title: QuizVariant
+      type: object
+      description: Answers of the question
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: e13764a2-938a-4bfe-98e4-d6b0de0006ec
+        quizVariantText:
+          type: string
+        isCorrect:
+          type: boolean
+      required:
+        - id
+        - quizVariantText
+        - isCorrect
+    Role:
+      title: Role
+      type: object
+      description: Role of user
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: edfc5608-30b2-4408-bd87-5d0fa260bc4b
+        roleName:
+          type: string
+        roleDescription:
+          type: string
+      required:
+        - id
+        - roleName
+    Software:
+      title: Software
+      type: object
+      description: Software - programs necessary for education process
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: ac29b22b-4338-4edc-8332-a045bc0fc9ce
+        link:
+          type: string
+          pattern: '^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)$'
+        subject:
+          $ref: '#/components/schemas/Subject'
+      required:
+        - id
+        - link
+        - subject
+    Speciality:
+      title: Speciality
+      type: object
+      description: Education profile
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: f2dd849d-0daa-4a05-89df-078946aaade9
+        specialityName:
+          type: string
+      required:
+        - id
+        - specialityName
+    Subject:
+      title: Subject
+      type: object
+      description: Information about training course
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: 0b5f18cd-3907-4fd1-b64f-bd5d44fc5f66
+        subjectName:
+          type: string
+        semester:
+          type: integer
+          minimum: 1
+          example: 3
+        group:
+          $ref: '#/components/schemas/Group'
+        tutors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tutor'
+      required:
+        - id
+        - subjectName
+        - semester
+        - group
+        - tutors
+    Trash:
+      title: Trash
+      type: object
+      description: Temporary storage of deleted pages
+      properties:
+        id:
+          type: string
+          example: 2a1dbd41-b900-4d0a-9180-5fe58e569dc4
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        deletedId:
+          type: string
+          example: 115e1da5-6dfd-41dc-818f-184c59b4714e
+        deleteDate:
+          type: integer
+          example: 1647159287
+        group:
+          $ref: '#/components/schemas/Group'
+      required:
+        - id
+        - deletedId
+        - deleteDate
+        - group
+    Tutor:
+      title: Tutor
+      type: object
+      description: 'University employee, who teachs students'
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+          example: 8fae1554-9e9c-4ea3-8104-35ad1d97a05c
+        firstName:
+          type: string
+        lastName:
+          type: string
+        patronym:
+          type: string
+        email:
+          type: string
+          pattern: '^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$'
+        phone:
+          type: string
+          pattern: '^\+[1-9]\d{1,14}$'
+        link:
+          type: string
+          pattern: '^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)$'
+        subjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+      required:
+        - id
+        - firstName
+        - lastName
+        - subjects
+    User:
+      title: User
+      type: object
+      description: User of the system
+      properties:
+        id:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
+        firstName:
+          type: string
+        lastName:
+          type: string
+        account:
+          $ref: '#/components/schemas/Account'
+        group:
+          $ref: '#/components/schemas/Group'
+        role:
+          $ref: '#/components/schemas/Role'
+      required:
+        - id
+        - firstName
+        - lastName
+        - account
+        - role
+  securitySchemes:
+    Authorization:
+      name: Authorization
+      type: apiKey
+      in: header
+  requestBodies:
+    CreatePageBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              attachments:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+              link:
+                type: string
+                pattern: '^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)$'
+    EventBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              eventText:
+                type: string
+              eventDescription:
+                type: string
+              eventDate:
+                type: integer
+              eventPriority:
+                $ref: '#/components/schemas/EventPriority'
+            required:
+              - eventText
+              - eventDescription
+              - eventDate
+              - eventPriority
+      description: Body for POST request to create new event
+    QuizBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              quizName:
+                type: string
+              quizDescription:
+                type: string
+              subject:
+                $ref: '#/components/schemas/Subject'
+            required:
+              - quizName
+              - subject
+    CreateAttachmentBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              type:
+                $ref: '#/components/schemas/AttachmentType'
+              link:
+                type: string
+    CreateEmployeeBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              patronym:
+                type: string
+              position:
+                type: string
+              phone:
+                type: string
+              email:
+                type: string
+              link:
+                type: string
+            required:
+              - firstName
+              - lastName
+              - position
+      description: ''
+    QuestionBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              questionText:
+                type: string
+              questionDescription:
+                type: string
+              quiz:
+                $ref: '#/components/schemas/Quiz'
+    DeleteContentBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              deletedId:
+                type: string
+    AccountBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              passwordHash:
+                type: string
+              lastActiveDate:
+                type: integer
+    UserBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              group:
+                $ref: '#/components/schemas/Group'
+              account:
+                $ref: '#/components/schemas/Account'
+              role:
+                $ref: '#/components/schemas/Role'
+    GroupBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              speciality:
+                $ref: '#/components/schemas/Speciality'
+              groupName:
+                type: string
+    LoginBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              passwordHash:
+                type: string
+              scope:
+                type: string
+    SubjectBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              subjectName:
+                type: string
+              semester:
+                type: integer
+              group:
+                $ref: '#/components/schemas/Group'
+    SpecialityBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              specialityName:
+                type: string
+    TutorBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              patronym:
+                type: string
+              email:
+                type: string
+              phone:
+                type: string
+              link:
+                type: string
+tags:
+  - name: content
+    description: 'Methodical materials, links, etc'
+  - name: persons
+    description: 'Authorization information, useful contacts, etc'
+  - name: events
+    description: Notification system
+  - name: tests
+    description: Knowledge checking system
+paths:
+  /inviteCode:
+    post:
+      summary: Generate invite code
+      tags:
+        - persons
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteCode'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-inviteCode
+      description: |-
+        Generates new invite code and returns it
+        Access level: Captains+
+      parameters: []
+  '/events/{group}':
+    get:
+      summary: Get events
+      tags:
+        - events
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-event
+      description: |-
+        Get events of group by its ID
+        Access level: Captains+
+      parameters: []
+    post:
+      summary: Create event
+      tags:
+        - events
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-event
+      description: |-
+        Creates event
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/EventBody'
+    parameters:
+      - schema:
+          type: string
+        name: group
+        in: path
+        required: true
+        description: ID of group
+  '/pages/{subject}':
+    post:
+      summary: Create new page
+      tags:
+        - content
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-pages
+      description: |-
+        Create new pages and return it
+        Access level: Captains+
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/CreatePageBody'
+    get:
+      summary: Get pages by subject
+      tags:
+        - content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Page'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-pages
+      description: |-
+        Get list of pages in subject by its ID
+        Access level: Any user
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: subject
+        in: path
+        required: true
+        description: ID of subject
+  /eventPriorities:
+    get:
+      summary: get list of priorities
+      tags:
+        - events
+      description: |-
+        Gets list of available priorities
+        Access level: Captains+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventPriority'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-eventPriorities
+      parameters: []
+  '/event/{id}':
+    get:
+      summary: Get event by its id
+      description: |-
+        Gets exact event by its id
+        Access level: Captains+
+      tags:
+        - events
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get
+      parameters: []
+    delete:
+      summary: Delete event by its id
+      description: |-
+        Deletes exact event by its id
+        Access level: Captains+
+      tags:
+        - events
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-event
+      parameters: []
+    patch:
+      summary: Update event by its id
+      description: |-
+        Updates exact event by its id
+        Access level: Captains+
+      tags:
+        - events
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: patch-event
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/EventBody'
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: uuid of event
+  '/quizzes/{groupId}':
+    get:
+      summary: Get list of quizzes
+      description: |-
+        Gets list of created quizzes in exact group
+        Access level: Any user
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quiz'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-quizzes
+      parameters: []
+    post:
+      summary: Create new quiz
+      description: |-
+        Creates new quiz for the exact group
+        Access level: Captains+
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-quizzes
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/QuizBody'
+    parameters:
+      - schema:
+          type: string
+        name: groupId
+        in: path
+        required: true
+        description: ID of group
+  '/softwares/{subjectId}':
+    post:
+      summary: Create new software link in a subject by its ID
+      tags:
+        - content
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Software'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-software
+      description: |-
+        Create new software link in a subject by its ID
+        Access level: Captains+
+      security:
+        - Authorization: []
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                link:
+                  type: string
+              required:
+                - link
+    parameters:
+      - schema:
+          type: string
+        name: subjectId
+        in: path
+        required: true
+        description: ID of subject
+    get:
+      summary: Get list of created softwares in the subject
+      operationId: get-softwares
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Software'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: |-
+        Gets list of created softwares in the exact subject by its ID
+        Access level: Any user
+      tags:
+        - content
+  '/attachments/{subjectId}':
+    post:
+      summary: Create new attachment in the subject
+      tags:
+        - content
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-new-attachment
+      parameters: []
+      description: |-
+        Create new attachment in the exact subject by its ID
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/CreateAttachmentBody'
+    parameters:
+      - schema:
+          type: string
+        name: subjectId
+        in: path
+        required: true
+        description: ID of subject
+    get:
+      summary: Get all attachments in subject
+      operationId: get-attachments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: |-
+        Get all attachments in subject by its ID
+        Access level: Any user
+      tags:
+        - content
+  '/employees/{specialtyId}':
+    post:
+      summary: Create new employee
+      tags:
+        - content
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-new-employee
+      description: |-
+        Creates new employee
+        Access level: Captains+
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/CreateEmployeeBody'
+    parameters:
+      - schema:
+          type: string
+        name: specialtyId
+        in: path
+        required: true
+        description: ID of specialty
+    get:
+      summary: Get all employees in a specialty
+      operationId: get-employees
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: |-
+        Get all employees in a specialty
+        Access level: Any user
+      tags:
+        - content
+  '/quiz/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: id of quiz
+    get:
+      summary: Get exact quiz
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-quiz-id
+      description: |-
+        Get exact quiz
+        Access level: Any user
+    delete:
+      summary: Delete quiz
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-quiz-id
+      description: |-
+        Delete quiz
+        Access level: Captains+
+    patch:
+      summary: Update quiz
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: patch-quiz-id
+      description: |-
+        Update quiz
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/QuizBody'
+  '/quiz/{id}/questions':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Quiz ID
+    get:
+      summary: Get a list of questions in the quiz
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-quiz-id-questions
+      description: |-
+        Get a list of questions in the quiz
+        Access level: Editors+
+    post:
+      summary: Create new question
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-quiz-id-questions
+      description: |-
+        Create new question
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/QuestionBody'
+  '/question/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: id of question
+    patch:
+      summary: Change question
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: patch-quiz-quiz_id-question-question_id
+      description: |-
+        Change question
+        Access level: Captains only
+      requestBody:
+        $ref: '#/components/requestBodies/QuestionBody'
+    delete:
+      summary: Delete question
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-quiz-quiz_id-question-question_id
+      description: |-
+        Delete question permanently
+        Access level: Captains+
+    get:
+      summary: Get exact question
+      tags:
+        - tests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-quiz-quiz_id-question-question_id
+      description: |-
+        Get exact question
+        Access level: Any user
+  '/trash/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: id of deleted content
+    get:
+      summary: Get information about deleted content
+      tags:
+        - content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  deletedContent:
+                    anyOf:
+                      - $ref: '#/components/schemas/Attachment'
+                      - $ref: '#/components/schemas/Page'
+                      - $ref: '#/components/schemas/Software'
+                      - $ref: '#/components/schemas/Quiz'
+                      - $ref: '#/components/schemas/Question'
+                      - $ref: '#/components/schemas/QuizVariant'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-trash-id
+      description: |-
+        Get information about deleted content
+        Access level: Editors+
+    delete:
+      summary: Restore content from trash
+      tags:
+        - content
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-trash-id
+      description: |-
+        Restore content from trash
+        Access level: Captains+
+  /trash:
+    post:
+      summary: Delete element to trash
+      tags:
+        - content
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trash'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-trash
+      description: |-
+        Deletes element to trash
+        Access level: Captains only
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteContentBody'
+  /whoami:
+    get:
+      summary: Gets username of current user
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: ''
+      operationId: get-whoami
+      description: |-
+        Gets username of current user
+        Access level: Any user
+  '/inviteCode/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: ID of invite code
+    delete:
+      summary: Invalidate an invite code
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-inviteCode-id
+      description: |-
+        Invalidates invite code by its ID
+        Access level: Any user
+  /accounts:
+    post:
+      summary: Create new account
+      tags:
+        - persons
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-accounts
+      description: |-
+        Creates new account
+        Access level: No auth
+      requestBody:
+        $ref: '#/components/requestBodies/AccountBody'
+      security: []
+  '/account/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get exact account
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-account-id
+      description: |-
+        Gets exact account by its ID
+        Access level: Any user
+    patch:
+      summary: Update account information
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: patch-account-id
+      requestBody:
+        $ref: '#/components/requestBodies/AccountBody'
+      description: |-
+        Updates exact account by its ID
+        Access level: Any user
+    delete:
+      summary: Delete account
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-account-id
+      description: |-
+        Deletes exact account by its ID
+        Access level: Any user
+  /roles:
+    get:
+      summary: Get list of available roles
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-roles
+      description: |-
+        Gets list of available roles
+        Access level: Captains+
+  /users:
+    post:
+      summary: Create new user
+      tags:
+        - persons
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-users
+      description: |-
+        Creates new user
+        Access level: No auth
+      requestBody:
+        $ref: '#/components/requestBodies/UserBody'
+      security: []
+  '/user/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get exact user
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-user-id
+      description: |-
+        Gets user model by its ID
+        Access level: Any user
+    patch:
+      summary: Update user's information
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: patch-user-id
+      requestBody:
+        $ref: '#/components/requestBodies/UserBody'
+      description: |-
+        Updates user information
+        Access level: Any user
+  /groups:
+    get:
+      summary: Get list of groups
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-groups
+      description: |-
+        Gets list of created groups
+        Access level: Moderators only
+    post:
+      summary: Create new group
+      tags:
+        - persons
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-groups
+      description: |-
+        Creates new group
+        Access level: Moderators only
+      requestBody:
+        $ref: '#/components/requestBodies/GroupBody'
+  '/group/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get exact group
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-group-id
+      description: |-
+        Get exact group by its ID
+        Access level: Any user
+    patch:
+      summary: Update group information
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: patch-group-id
+      description: |-
+        Updates group information
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/GroupBody'
+    delete:
+      summary: Delete group
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-group-id
+      description: |-
+        Deletes group by ID
+        Access level: Moderators only
+  '/subjects/{groupId}':
+    parameters:
+      - schema:
+          type: string
+        name: groupId
+        in: path
+        required: true
+    get:
+      summary: Get list of subjects in a group
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subject'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-subjects-groupId
+      description: |-
+        Gets list of subject in a group
+        Access level: Any user
+    post:
+      summary: Create new subject in a group
+      tags:
+        - persons
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-subjects-groupId
+      description: |-
+        Creates new subject for a group
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/SubjectBody'
+  '/subject/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get exact subject
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-subject-id
+      description: |-
+        Gets information about subject
+        Access level: Any user
+    patch:
+      summary: Update exact subject
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: patch-subject-id
+      description: |-
+        Updates information about subject
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/SubjectBody'
+    delete:
+      summary: Delete exact subject
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-subject-id
+      description: |-
+        Deletes subject
+        Access level: Captains+
+  /specialities:
+    get:
+      summary: Get list of specialities
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Speciality'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-specialities
+      description: |-
+        Gets all created specialities
+        Access level: Moderators only
+    post:
+      summary: Create new speciality
+      tags:
+        - persons
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-specialities
+      description: |-
+        Creates new speciality
+        Access level: Moderators only
+      requestBody:
+        $ref: '#/components/requestBodies/SpecialityBody'
+  '/speciality/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get exact speciality
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Speciality'
+      operationId: get-speciality-id
+      description: |-
+        Gets exact speciality by its ID
+        Access level: Moderators only
+    patch:
+      summary: Update speciality
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Speciality'
+      operationId: patch-speciality-id
+      description: |-
+        Updates speciality information
+        Access level: Moderators only
+      requestBody:
+        $ref: '#/components/requestBodies/SpecialityBody'
+    delete:
+      summary: Delete speciality
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-speciality-id
+      description: |-
+        Deletes speciality
+        Access level: Moderators only
+  '/tutors/{subjectId}':
+    parameters:
+      - schema:
+          type: string
+        name: subjectId
+        in: path
+        required: true
+    get:
+      summary: Get list of tutors in subject
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tutor'
+      operationId: get-tutors-subjectId
+      description: |-
+        Gets list of tutors in a subject
+        Access level: Any user
+    post:
+      summary: Create new tutor for subject
+      tags:
+        - persons
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutor'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-tutors-subjectId
+      description: |-
+        Creates new tutor for subject
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/TutorBody'
+  '/tutor/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get exact tutor
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutor'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-tutor-id
+      description: |-
+        Gets exact tutor
+        Access level: Any user
+    patch:
+      summary: Update tutor
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tutor'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: patch-tutor-id
+      description: |-
+        Updates tutor information
+        Access level: Captains+
+      requestBody:
+        $ref: '#/components/requestBodies/TutorBody'
+    delete:
+      summary: Delete tutor
+      tags:
+        - persons
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-tutor-id
+      description: |-
+        Deletes tutor
+        Access level: Captains+
+  /accounts/login:
+    post:
+      summary: Authenticate user
+      tags:
+        - persons
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwt:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-accounts-login
+      description: |-
+        Authenticates user
+        Access level: No auth
+      security: []
+      requestBody:
+        $ref: '#/components/requestBodies/LoginBody'
+security:
+  - Authorization: []
