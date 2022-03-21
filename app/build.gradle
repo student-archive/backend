@@ -28,6 +28,9 @@ dependencies {
 
     // ORM
     implementation 'org.hibernate:hibernate-gradle-plugin:5.6.7.Final'
+
+    // PostgreSQL Driver
+    implementation 'org.postgresql:postgresql:42.3.1'
 }
 
 application {
