@@ -25,6 +25,9 @@ dependencies {
 
     // Web framework
     implementation "com.sparkjava:spark-core:2.9.3"
+
+    // ORM
+    implementation 'org.hibernate:hibernate-gradle-plugin:5.6.7.Final'
 }
 
 application {
