@@ -10,8 +10,7 @@ public class User {
   private String firstName;
   private String lastName;
 
-  @ManyToOne
-  private Role role;
+  @ManyToOne private Role role;
 
   public void setId(UUID id) {
     this.id = id;
