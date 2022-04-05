@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "eventPriority")
+@Table(name = "event_priority")
 public class EventPriority {
 
   private UUID id;

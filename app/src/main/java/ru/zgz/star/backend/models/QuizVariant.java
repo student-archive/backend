@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "quizVariant")
+@Table(name = "quiz_variant")
 public class QuizVariant {
   private UUID id;
   private String quizVariantText;
