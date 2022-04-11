@@ -10,6 +10,7 @@ public class Group {
   private UUID id;
   private String groupName;
 
+  @ManyToOne private University university;
   @ManyToOne private Speciality speciality;
   @OneToMany private Set<User> users;
 
@@ -45,5 +46,13 @@ public class Group {
 
   public void setUsers(Set<User> users) {
     this.users = users;
+  }
+
+  public University getUniversity() {
+    return university;
+  }
+
+  public void setUniversity(University university) {
+    this.university = university;
   }
 }
