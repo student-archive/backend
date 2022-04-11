@@ -14,6 +14,7 @@ public class Employee {
   private String email;
   private String phone;
   private String link;
+  @ManyToMany private Set<Speciality> speciality;
   @ManyToMany private Set<EmployeePosition> position;
 
   @Id
@@ -80,5 +81,13 @@ public class Employee {
 
   public void setPosition(Set<EmployeePosition> position) {
     this.position = position;
+  }
+
+  public Set<Speciality> getSpeciality() {
+    return speciality;
+  }
+
+  public void setSpeciality(Set<Speciality> speciality) {
+    this.speciality = speciality;
   }
 }
