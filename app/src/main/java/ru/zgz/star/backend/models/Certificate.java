@@ -9,8 +9,8 @@ import javax.persistence.Table;
 @Table(name = "certificate")
 public class Certificate {
   private String id;
-  private String name;
-  private String description;
+  private String certificateName;
+  private String certificateDescription;
   private String office;
 
   @Id
@@ -23,20 +23,20 @@ public class Certificate {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getCertificateName() {
+    return certificateName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setCertificateName(String name) {
+    this.certificateName = name;
   }
 
-  public String getDescription() {
-    return description;
+  public String getCertificateDescription() {
+    return certificateDescription;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setCertificateDescription(String description) {
+    this.certificateDescription = description;
   }
 
   public String getOffice() {
