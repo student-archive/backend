@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table (name = "attachment_type")
+@Table(name = "attachment_type")
 public class AttachmentType {
   private UUID id;
   private String typeName;
