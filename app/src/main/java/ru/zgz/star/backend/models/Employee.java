@@ -14,8 +14,9 @@ public class Employee {
   private String email;
   private String phone;
   private String link;
-  @ManyToMany private Set<Speciality> speciality;
-  @ManyToMany private Set<EmployeePosition> position;
+  @ManyToMany private Set<Speciality> specialities;
+  @ManyToMany private Set<EmployeePosition> positions;
+  @ManyToMany private Set<Certificate> certificates;
 
   @Id
   @GeneratedValue
@@ -75,19 +76,27 @@ public class Employee {
     this.link = link;
   }
 
-  public Set<EmployeePosition> getPosition() {
-    return position;
+  public Set<EmployeePosition> getPositions() {
+    return positions;
   }
 
-  public void setPosition(Set<EmployeePosition> position) {
-    this.position = position;
+  public void setPositions(Set<EmployeePosition> positions) {
+    this.positions = positions;
   }
 
-  public Set<Speciality> getSpeciality() {
-    return speciality;
+  public Set<Speciality> getSpecialities() {
+    return specialities;
   }
 
-  public void setSpeciality(Set<Speciality> speciality) {
-    this.speciality = speciality;
+  public void setSpeciality(Set<Speciality> specialities) {
+    this.specialities = specialities;
+  }
+
+  public Set<Certificate> getCertificates() {
+    return certificates;
+  }
+
+  public void setCertificates(Set<Certificate> certificates) {
+    this.certificates = certificates;
   }
 }
