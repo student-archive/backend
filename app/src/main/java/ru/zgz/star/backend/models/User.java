@@ -9,8 +9,12 @@ public class User {
   private UUID id;
   private String firstName;
   private String lastName;
+  private String avatarLink;
 
   @ManyToOne private Role role;
+  @OneToOne private Account account;
+  @ManyToOne private Group group;
+  @ManyToOne private Sex sex;
 
   public void setId(UUID id) {
     this.id = id;
@@ -44,5 +48,37 @@ public class User {
 
   public Role getRole() {
     return role;
+  }
+
+  public String getAvatarLink() {
+    return avatarLink;
+  }
+
+  public void setAvatarLink(String avatarLink) {
+    this.avatarLink = avatarLink;
+  }
+
+  public Account getAccount() {
+    return account;
+  }
+
+  public void setAccount(Account account) {
+    this.account = account;
+  }
+
+  public Group getGroup() {
+    return group;
+  }
+
+  public void setGroup(Group group) {
+    this.group = group;
+  }
+
+  public Sex getSex() {
+    return sex;
+  }
+
+  public void setSex(Sex sex) {
+    this.sex = sex;
   }
 }
