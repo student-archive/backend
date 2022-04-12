@@ -1,5 +1,8 @@
 package ru.zgz.star.backend;
 
+import io.github.cdimascio.dotenv.Dotenv;
+import org.hibernate.cfg.Configuration;
+
 import static spark.Spark.*;
 
 /**
@@ -16,10 +19,13 @@ public class App {
   }
 
   /**
-   * Executable method with definition of endpoints
+   * Executable method with definition of endpoints and connecting to database
    * @param args Command-line arguments
    */
   public static void main(String[] args) {
+    Configuration cfg = new Configuration();
+    Dotenv dotenv = Dotenv.load();
+    cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
     get("/hello", (req, res) -> getGreeting());
   }
 }
