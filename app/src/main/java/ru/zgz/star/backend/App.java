@@ -2,6 +2,7 @@ package ru.zgz.star.backend;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.cfg.Configuration;
+import ru.zgz.star.backend.routes.GetAccountRouter;
 
 import static spark.Spark.*;
 
@@ -26,6 +27,7 @@ public class App {
     Configuration cfg = new Configuration();
     Dotenv dotenv = Dotenv.load();
     cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
-    get("/hello", (req, res) -> getGreeting());
+
+    get(GetAccountRouter.BASE_URL + "/:id", GetAccountRouter::getExactAccount);
   }
 }
