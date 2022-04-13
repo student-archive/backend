@@ -28,8 +28,9 @@ public class Account {
    *
    * @param id New ID of user
    */
-  public void setId(UUID id) {
+  public Account setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   /**
@@ -48,11 +49,13 @@ public class Account {
    *
    * @param username New ID of user
    */
-  public void setUsername(String username) {
+  public Account setUsername(String username) {
     this.username = username;
+    return this;
   }
 
-  /** Returns username
+  /**
+   * Returns username
    *
    * @return username of user
    */
@@ -65,11 +68,13 @@ public class Account {
    *
    * @param passwordHash New hash of password
    */
-  public void setPasswordHash(String passwordHash) {
+  public Account setPasswordHash(String passwordHash) {
     this.passwordHash = passwordHash;
+    return this;
   }
 
-  /** Returns hash of password
+  /**
+   * Returns hash of password
    *
    * @return hash of password of user
    */
@@ -82,11 +87,13 @@ public class Account {
    *
    * @param lastLoginDate New login date
    */
-  public void setLastLoginDate(Instant lastLoginDate) {
+  public Account setLastLoginDate(Instant lastLoginDate) {
     this.lastLoginDate = lastLoginDate;
+    return this;
   }
 
-  /** Returns last login date
+  /**
+   * Returns last login date
    *
    * @return last login date of user
    */
