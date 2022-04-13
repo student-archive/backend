@@ -7,20 +7,32 @@ import java.util.UUID;
 @Entity
 @Table(name = "quiz")
 public class Quiz {
+  @Id
+  @GeneratedValue
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "quiz_name")
   private String quizName;
+
+  @Column(name = "quiz_description")
   private String quizDescription;
+
+  @Column(name = "amount_of_questions")
   private Integer amountOfQuestions;
 
-  @ManyToOne private Subject subject;
+  @Column(name = "subject_id")
+  @ManyToOne
+  private Subject subject;
+
   @OneToMany private Set<Question> questions;
+
+  public Quiz() {}
 
   public void setId(UUID id) {
     this.id = id;
   }
 
-  @Id
-  @GeneratedValue
   public UUID getId() {
     return id;
   }
