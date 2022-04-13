@@ -4,6 +4,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.cfg.Configuration;
 import ru.zgz.star.backend.routes.GetAccountRouter;
 import ru.zgz.star.backend.routes.GetEventPrioritiesRouter;
+import ru.zgz.star.backend.routes.GetSoftwareRouter;
 
 import static spark.Spark.*;
 
@@ -31,5 +32,6 @@ public class App {
 
     get(GetAccountRouter.BASE_URL + "/:id", GetAccountRouter::getExactAccount);
     get(GetEventPrioritiesRouter.BASE_URL, GetEventPrioritiesRouter::getPriorities);
+    get(GetSoftwareRouter.BASE_URL, GetSoftwareRouter::getListSoftware);
   }
 }
