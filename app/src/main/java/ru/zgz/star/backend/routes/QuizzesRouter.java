@@ -15,5 +15,4 @@ public class QuizzesRouter {
     response.type("application/json");
     return new Gson().toJson(IntStream.range(1, 6).boxed().collect(Collectors.toList()));
   }
-
 }

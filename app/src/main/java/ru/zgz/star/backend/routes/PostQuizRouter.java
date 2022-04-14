@@ -15,5 +15,4 @@ public class PostQuizRouter {
     response.type("application/json");
     return new Gson().toJson("OK");
   }
-
 }

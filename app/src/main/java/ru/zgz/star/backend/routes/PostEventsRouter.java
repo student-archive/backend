@@ -9,6 +9,6 @@ public class PostEventsRouter {
 
   public static String postEvents(Request request, Response response) {
     response.type("application/json");
-    return new Gson().toJson("OK" );
+    return new Gson().toJson("OK");
   }
 }

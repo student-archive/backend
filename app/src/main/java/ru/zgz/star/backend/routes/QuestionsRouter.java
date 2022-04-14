@@ -15,9 +15,9 @@ public class QuestionsRouter {
     response.type("application/json");
     return new Gson().toJson(IntStream.range(1, 6).boxed().collect(Collectors.toList()));
   }
+
   public static String postQuestions(Request request, Response response) {
     response.type("application/json");
     return new Gson().toJson("OK");
   }
-
 }

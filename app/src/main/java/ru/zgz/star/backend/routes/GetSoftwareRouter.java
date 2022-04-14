@@ -11,7 +11,7 @@ public class GetSoftwareRouter {
 
   public static String BASE_URL = "/software";
 
-  public static String getListSoftware(Request request, Response response){
+  public static String getListSoftware(Request request, Response response) {
     response.type("application/json");
     return new Gson().toJson(IntStream.range(1, 6).boxed().collect(Collectors.toList()));
   }
