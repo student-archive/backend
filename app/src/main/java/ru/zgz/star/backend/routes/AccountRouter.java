@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 
-public class GetAccountRouter {
+public class AccountRouter {
 
   public static String BASE_URL = "/account";
 

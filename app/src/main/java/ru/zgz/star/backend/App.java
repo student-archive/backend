@@ -2,11 +2,11 @@ package ru.zgz.star.backend;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.cfg.Configuration;
-import ru.zgz.star.backend.routes.GetAccountRouter;
+import ru.zgz.star.backend.routes.AccountRouter;
 import ru.zgz.star.backend.routes.GetEventPrioritiesRouter;
 import ru.zgz.star.backend.routes.GetSoftwareRouter;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
 /** Entry point of the application */
 public class App {
@@ -30,7 +30,7 @@ public class App {
     Dotenv dotenv = Dotenv.load();
     cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
 
-    get(GetAccountRouter.BASE_URL + "/:id", GetAccountRouter::getExactAccount);
+    get(AccountRouter.BASE_URL, AccountRouter::getExactAccount);
     get(GetEventPrioritiesRouter.BASE_URL, GetEventPrioritiesRouter::getPriorities);
     get(GetSoftwareRouter.BASE_URL, GetSoftwareRouter::getListSoftware);
   }
