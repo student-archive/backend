@@ -3,7 +3,7 @@ package ru.zgz.star.backend;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.cfg.Configuration;
 import ru.zgz.star.backend.routes.AccountRouter;
-import ru.zgz.star.backend.routes.GetEventPrioritiesRouter;
+import ru.zgz.star.backend.routes.EventPrioritiesRouter;
 import ru.zgz.star.backend.routes.GetSoftwareRouter;
 
 import static spark.Spark.get;
@@ -31,7 +31,7 @@ public class App {
     cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
 
     get(AccountRouter.BASE_URL, AccountRouter::getExactAccount);
-    get(GetEventPrioritiesRouter.BASE_URL, GetEventPrioritiesRouter::getPriorities);
+    get(EventPrioritiesRouter.BASE_URL, EventPrioritiesRouter::getPriorities);
     get(GetSoftwareRouter.BASE_URL, GetSoftwareRouter::getListSoftware);
   }
 }
