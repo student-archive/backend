@@ -7,7 +7,7 @@ import spark.Response;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class GetEventPrioritiesRouter {
+public class EventPrioritiesRouter {
   public static String BASE_URL = "/eventPriorities";
 
   public static String getPriorities(Request request, Response response) {
