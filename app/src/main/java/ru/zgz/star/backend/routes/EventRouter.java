@@ -6,7 +6,7 @@ import spark.Response;
 
 public class EventRouter {
 
-  public static String BASE_URL = "/event/:id";
+  public static String BASE_URL = "/event/:groupId";
 
   public static String getExactEvent(Request request, Response response) {
     response.type("application/json");
