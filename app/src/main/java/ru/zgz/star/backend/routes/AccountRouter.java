@@ -13,4 +13,14 @@ public class AccountRouter {
     return new Gson().toJson("id:" + request.params(":id"));
   }
 
+  public static String deleteExactAccount(Request request, Response response) {
+    response.type("application/json");
+    return new Gson().toJson("OK");
+  }
+
+  public static String patchExactAccount(Request request, Response response) {
+    response.type("application/json");
+    return new Gson().toJson("OK");
+  }
+
 }
