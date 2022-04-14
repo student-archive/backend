@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class EventsRouter {
   public static String BASE_URL = "/events/:id";
 
-  public static String getEvents(Request request, Response response) {
+  public static String getExactEvents(Request request, Response response) {
     response.type("application/json");
     return new Gson().toJson("id:" + request.params(":id"));
   }
