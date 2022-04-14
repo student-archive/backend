@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 public class QuizzesRouter {
 
-  public static String BASE_URL = "/quizzes/:id";
+  public static String BASE_URL = "/quizzes/:groupId";
 
   public static String getQuizzes(Request request, Response response) {
     response.type("application/json");
