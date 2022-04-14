@@ -6,7 +6,7 @@ import spark.Response;
 
 public class AccountRouter {
 
-  public static String BASE_URL = "/account";
+  public static String BASE_URL = "/account/:id";
 
   public static String getExactAccount(Request request, Response response) {
     response.type("application/json");
