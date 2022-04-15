@@ -1,9 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -16,11 +14,17 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "account")
-public class Account {
+public class Account implements Serializable {
 
+  @Column(name = "id", nullable = false, unique = true)
+  @Id
+  @GeneratedValue
   private UUID id;
+  @Column(name="username", nullable = false, unique = true)
   private String username;
+  @Column(name="passwordHash", nullable = false)
   private String passwordHash;
+  @Column(name="lastLoginDate")
   private Instant lastLoginDate;
 
   /**
@@ -38,8 +42,6 @@ public class Account {
    *
    * @return ID of user
    */
-  @Id
-  @GeneratedValue
   public UUID getId() {
     return id;
   }
