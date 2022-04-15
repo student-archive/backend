@@ -20,12 +20,24 @@ public class Account implements Serializable {
   @Id
   @GeneratedValue
   private UUID id;
-  @Column(name="username", nullable = false, unique = true)
+
+  @Column(name = "username", nullable = false, unique = true)
   private String username;
-  @Column(name="passwordHash", nullable = false)
+
+  @Column(name = "passwordHash", nullable = false)
   private String passwordHash;
-  @Column(name="lastLoginDate")
+
+  @Column(name = "lastLoginDate")
   private Instant lastLoginDate;
+
+  public Account() {}
+
+  public Account(UUID id, String username, String passwordHash, Instant lastLoginDate) {
+    this.id = id;
+    this.username = username;
+    this.passwordHash = passwordHash;
+    this.lastLoginDate = lastLoginDate;
+  }
 
   /**
    * Sets value for ID
