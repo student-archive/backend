@@ -24,7 +24,8 @@ dependencies {
     implementation 'com.google.guava:guava:30.1.1-jre'
 
     // Web framework
-    implementation "com.sparkjava:spark-core:2.9.3"
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.6'
+
 
     // ORM
     implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'
