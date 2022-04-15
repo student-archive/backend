@@ -34,9 +34,6 @@ dependencies {
     // PostgreSQL Driver
     implementation 'org.postgresql:postgresql:42.3.1'
 
-    // Logging
-    implementation 'org.slf4j:slf4j-simple:1.7.36'
-
     // Environment variables
     implementation 'io.github.cdimascio:dotenv-java:2.2.3'
 
