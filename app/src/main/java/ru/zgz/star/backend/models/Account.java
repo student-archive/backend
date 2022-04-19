@@ -1,5 +1,7 @@
 package ru.zgz.star.backend.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -18,7 +20,7 @@ public class Account implements Serializable {
 
   @Column(name = "id", nullable = false, unique = true)
   @Id
-  @GeneratedValue
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
   private UUID id;
 
   @Column(name = "username", nullable = false, unique = true)

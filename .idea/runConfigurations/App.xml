@@ -1,6 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" />
+    <option name="DEBUG_MODE" value="true" />
     <module name="backend.app.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="ru.zgz.star.backend.App" />
     <extension name="net.ashald.envfile">
