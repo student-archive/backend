@@ -24,10 +24,10 @@ public class Account implements Serializable {
   @Column(name = "username", nullable = false, unique = true)
   private String username;
 
-  @Column(name = "passwordHash", nullable = false)
+  @Column(name = "password_hash", nullable = false)
   private String passwordHash;
 
-  @Column(name = "lastLoginDate")
+  @Column(name = "last_login_date")
   private Instant lastLoginDate;
 
   public Account() {}
