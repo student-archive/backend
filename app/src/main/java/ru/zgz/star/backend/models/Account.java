@@ -1,9 +1,8 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -18,10 +17,29 @@ import java.util.UUID;
 @Table(name = "account")
 public class Account {
 
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
-  private String username;
+
+  @Column(name = "email")
+  private String email;
+
+  @Column(name = "password_hash")
   private String passwordHash;
-  private Instant lastLoginDate;
+
+  @Column(name = "last_active_date")
+  private Instant lastActiveDate;
+
+  public Account() {}
+
+  public Account(UUID id, String email, String passwordHash, Instant lastActiveDate) {
+    this.id = id;
+    this.email = email;
+    this.passwordHash = passwordHash;
+    this.lastActiveDate = lastActiveDate;
+  }
 
   /**
    * Sets value for ID
@@ -38,8 +56,6 @@ public class Account {
    *
    * @return ID of user
    */
-  @Id
-  @GeneratedValue
   public UUID getId() {
     return id;
   }
@@ -47,10 +63,10 @@ public class Account {
   /**
    * Sets value for username
    *
-   * @param username New ID of user
+   * @param email New ID of user
    */
-  public Account setUsername(String username) {
-    this.username = username;
+  public Account setEmail(String email) {
+    this.email = email;
     return this;
   }
 
@@ -59,8 +75,8 @@ public class Account {
    *
    * @return username of user
    */
-  public String getUsername() {
-    return username;
+  public String getEmail() {
+    return email;
   }
 
   /**
@@ -85,10 +101,10 @@ public class Account {
   /**
    * Updates last date of login
    *
-   * @param lastLoginDate New login date
+   * @param lastActiveDate New login date
    */
-  public Account setLastLoginDate(Instant lastLoginDate) {
-    this.lastLoginDate = lastLoginDate;
+  public Account setLastActiveDate(Instant lastActiveDate) {
+    this.lastActiveDate = lastActiveDate;
     return this;
   }
 
@@ -97,7 +113,7 @@ public class Account {
    *
    * @return last login date of user
    */
-  public Instant getLastLoginDate() {
-    return lastLoginDate;
+  public Instant getLastActiveDate() {
+    return lastActiveDate;
   }
 }
