@@ -34,8 +34,7 @@ public class Account {
 
   public Account() {}
 
-  public Account(UUID id, String email, String passwordHash, Instant lastActiveDate) {
-    this.id = id;
+  public Account(String email, String passwordHash, Instant lastActiveDate) {
     this.email = email;
     this.passwordHash = passwordHash;
     this.lastActiveDate = lastActiveDate;
