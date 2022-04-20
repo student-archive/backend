@@ -3,14 +3,12 @@ package ru.zgz.star.backend.routes;
 import com.google.gson.Gson;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
-import org.hibernate.PersistentObjectException;
 import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.util.HibernateUtil;
 import spark.Request;
 import spark.Response;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
