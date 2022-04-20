@@ -2,12 +2,15 @@ package ru.zgz.star.backend.routes;
 
 import com.google.gson.Gson;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
+import org.hibernate.PersistentObjectException;
 import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.util.HibernateUtil;
 import spark.Request;
 import spark.Response;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,13 +23,15 @@ public class AccountRouter {
     var sessionFactory = HibernateUtil.getSessionFactory();
     EntityManager em = sessionFactory.createEntityManager();
     em.getTransaction().begin();
-    Account entity = new Account(UUID.randomUUID(), "test", "someSuperSecurePassword",
-      Instant.now());
-    em.persist(entity);  // FIXME: detached entity passed to persist
-    List<Account> result =
-        em.createQuery("select a from Account a where id=:id", Account.class)
-            .setParameter("id", UUID.fromString(request.params("id")))
-            .getResultList();
+    try {
+      Account entity =
+          new Account(
+              UUID.randomUUID(), "test@qwerty.com", "someSuperSecurePassword", Instant.now());
+      em.persist(entity); // FIXME: detached entity passed to persist
+    } catch (PersistenceException exception) {
+      System.err.println(exception.getMessage());
+    }
+    List<Account> result = em.createQuery("select a from Account a", Account.class).getResultList();
     em.getTransaction().commit();
     em.close();
     return new Gson().toJson(result);
