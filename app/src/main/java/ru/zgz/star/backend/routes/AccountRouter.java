@@ -23,9 +23,8 @@ public class AccountRouter {
     em.getTransaction().begin();
     try {
       Account entity =
-          new Account(
-              UUID.randomUUID(), "test@qwerty.com", "someSuperSecurePassword", Instant.now());
-      em.persist(entity); // FIXME: detached entity passed to persist
+          new Account("test@qwerty.com", "someSuperSecurePassword", Instant.now());
+      em.persist(entity);
     } catch (PersistenceException exception) {
       System.err.println(exception.getMessage());
     }
