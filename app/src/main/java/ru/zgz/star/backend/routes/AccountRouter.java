@@ -26,7 +26,7 @@ public class AccountRouter {
     List<Account> result =
         em.createQuery("select a from Account a where id=:id", Account.class)
             .setParameter("id", UUID.fromString(request.params("id")))
-            .getResultList();  // FIXME: Unable to make field private final long java.time.Instant.seconds accessible
+            .getResultList();
     em.getTransaction().commit();
     em.close();
     return new Gson().toJson(result);
