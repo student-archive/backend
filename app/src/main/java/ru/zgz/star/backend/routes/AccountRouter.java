@@ -25,7 +25,10 @@ public class AccountRouter {
   public static String getExactAccount(Request request, Response response) {
     response.type("application/json");
     List<Account> result = new ArrayList<>();
-    try (SessionFactory sf = HibernateUtil.getSessionFactory()) { // Создание фабрики сессий
+    try (SessionFactory sf =
+        HibernateUtil
+            .getSessionFactory()) { // Создание фабрики сессий. Она автоматически закроется после
+                                    // завершения блока try
       EntityManager em = sf.createEntityManager(); // Создание менеждера сущностей
       em.getTransaction().begin(); // Открытие транзакций
       Account entity =
