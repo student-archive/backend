@@ -2,7 +2,6 @@ package ru.zgz.star.backend.routes;
 
 import com.google.gson.Gson;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceException;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ import spark.Response;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class AccountRouter {
 
