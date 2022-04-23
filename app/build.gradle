@@ -9,11 +9,22 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id "maven-publish"
 }
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+
+    // Use Spark-swagger's repository
+    maven {
+        name "Spark swagger"
+        url "https://maven.pkg.github.com/manusant/spark-swagger"
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_PAT")
+        }
+    }
 }
 
 dependencies {
@@ -25,6 +36,7 @@ dependencies {
 
     // Web framework
     implementation "com.sparkjava:spark-core:2.9.3"
+    implementation "io.github.manusant:spark-swagger:2.0.2"
 
     // ORM
     implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'
