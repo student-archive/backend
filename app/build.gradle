@@ -25,6 +25,8 @@ dependencies {
 
     // Web framework
     implementation "com.sparkjava:spark-core:2.9.3"
+    implementation 'io.swagger.core.v3:swagger-core:2.2.0'
+
 
     // ORM
     implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'
