@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.util.ClassUtil;
 
 import java.io.IOException;
@@ -29,24 +31,40 @@ import static spark.Spark.*;
     })
 public class App {
 
+  public static Logger logger = LoggerFactory.getLogger(App.class);
+
   /**
    * Executable method with definition of endpoints
    *
    * @param args Command-line arguments
    */
-  public static void main(String[] args) throws IOException, NoSuchFieldException {
-    for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routers")) {
+  public static void main(String[] args)
+      throws IOException, NoSuchFieldException, IllegalAccessException {
+    for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
+      logger.info("Found class: {}", cls.getName());
+      String basePath = (String) cls.getField("BASE_URL").get(cls);
       for (Method method : cls.getDeclaredMethods()) {
+        logger.info("Registering endpoint: {} by path {}", method.getName(), basePath);
         if (method.getName().startsWith("get")) {
-          get(cls.getDeclaredField("BASE_URL").toString(), method::invoke);
+          get(
+              basePath,
+              (req, res) -> method.invoke(cls.getDeclaredConstructor().newInstance(), req, res));
         } else if (method.getName().startsWith("post")) {
-          post(cls.getDeclaredField("BASE_URL").toString(), method::invoke);
+          post(
+              basePath,
+              (req, res) -> method.invoke(cls.getDeclaredConstructor().newInstance(), req, res));
         } else if (method.getName().startsWith("patch")) {
-          patch(cls.getDeclaredField("BASE_URL").toString(), method::invoke);
+          patch(
+              basePath,
+              (req, res) -> method.invoke(cls.getDeclaredConstructor().newInstance(), req, res));
         } else if (method.getName().startsWith("put")) {
-          put(cls.getDeclaredField("BASE_URL").toString(), method::invoke);
+          put(
+              basePath,
+              (req, res) -> method.invoke(cls.getDeclaredConstructor().newInstance(), req, res));
         } else if (method.getName().startsWith("delete")) {
-          delete(cls.getDeclaredField("BASE_URL").toString(), method::invoke);
+          delete(
+              basePath,
+              (req, res) -> method.invoke(cls.getDeclaredConstructor().newInstance(), req, res));
         } else {
           throw new IllegalArgumentException(
               "Method " + method.getName() + "in class " + cls + " is not supported");
