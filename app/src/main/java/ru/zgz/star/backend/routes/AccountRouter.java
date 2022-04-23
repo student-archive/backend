@@ -24,16 +24,13 @@ public class AccountRouter {
   public static String getExactAccount(Request request, Response response) {
     response.type("application/json");
     Account result;
-    try (SessionFactory sf =
-        HibernateUtil
-            .getSessionFactory()) { // Создание фабрики сессий. Она автоматически закроется после
-      // завершения блока try
-      EntityManager em = sf.createEntityManager(); // Создание менеждера сущностей
-      em.getTransaction().begin(); // Открытие транзакций
-      result = em.find(Account.class, UUID.fromString(request.params(":id")));
-      em.getTransaction().commit(); // Применение изменений (должно быть даже после селектов)
-      em.close(); // Закрытие менеджера сущностей
-    }
+    SessionFactory sf = HibernateUtil.getSessionFactory(); // Создание фабрики сессий
+    EntityManager em = sf.createEntityManager(); // Создание менеждера сущностей
+    em.getTransaction().begin(); // Открытие транзакций
+    result = em.find(Account.class, UUID.fromString(request.params(":id")));
+    em.getTransaction().commit(); // Применение изменений (должно быть даже после селектов)
+    em.close(); // Закрытие менеджера сущностей
+
     return new Gson().toJson(result);
   }
 
