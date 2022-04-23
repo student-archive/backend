@@ -1,18 +1,4 @@
-package ru.zgz.star.backend.routes;
-
-import com.google.gson.Gson;
-import jakarta.persistence.EntityManager;
-import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.zgz.star.backend.models.Account;
-import ru.zgz.star.backend.util.HibernateUtil;
-import spark.Request;
-import spark.Response;
-
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+package ru.zgz.star.backend.routers;
 
 //public class AccountRouter {
 //

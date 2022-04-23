@@ -1,11 +1,8 @@
-package ru.zgz.star.backend.routes;
+package ru.zgz.star.backend.routers;
 
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
-
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class PostQuizRouter {
 
