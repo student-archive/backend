@@ -1,4 +1,4 @@
-package ru.zgz.star.backend.routers;
+package ru.zgz.star.backend.routes;
 
 import com.google.gson.Gson;
 import jakarta.persistence.EntityManager;
@@ -29,12 +29,6 @@ public class AccountRouter {
                                     // завершения блока try
       EntityManager em = sf.createEntityManager(); // Создание менеждера сущностей
       em.getTransaction().begin(); // Открытие транзакций
-      Account entity =
-          new Account(
-              "test@qwerty.com",
-              "someSuperSecurePassword",
-              Instant.now()); // Создание нового объекта класса Account
-      em.persist(entity); // Сохранение записи созданной выше в БД
       result =
           em.createQuery("select a from Account a", Account.class)
               .getResultList(); // Селект всех аккаунтов в список моделей Account
