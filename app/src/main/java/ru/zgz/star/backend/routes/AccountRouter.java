@@ -13,6 +13,7 @@ import spark.Response;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AccountRouter {
 
@@ -22,20 +23,16 @@ public class AccountRouter {
 
   public static String getExactAccount(Request request, Response response) {
     response.type("application/json");
-    List<Account> result = new ArrayList<>();
+    Account result;
     try (SessionFactory sf =
         HibernateUtil
             .getSessionFactory()) { // Создание фабрики сессий. Она автоматически закроется после
-                                    // завершения блока try
+      // завершения блока try
       EntityManager em = sf.createEntityManager(); // Создание менеждера сущностей
       em.getTransaction().begin(); // Открытие транзакций
-      result =
-          em.createQuery("select a from Account a", Account.class)
-              .getResultList(); // Селект всех аккаунтов в список моделей Account
+      result = em.find(Account.class, UUID.fromString(request.params(":id")));
       em.getTransaction().commit(); // Применение изменений (должно быть даже после селектов)
       em.close(); // Закрытие менеджера сущностей
-    } catch (Exception err) {
-      logger.error(err.getMessage());
     }
     return new Gson().toJson(result);
   }
