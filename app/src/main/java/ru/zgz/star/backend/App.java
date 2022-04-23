@@ -66,6 +66,7 @@ public class App {
               basePath,
               (req, res) -> method.invoke(cls.getDeclaredConstructor().newInstance(), req, res));
         } else {
+          stop();
           throw new IllegalArgumentException(
               "Method " + method.getName() + "in class " + cls + " is not supported");
         }
