@@ -1,9 +1,12 @@
 package ru.zgz.star.backend.repository;
 
+import com.google.common.base.CaseFormat;
 import jakarta.persistence.EntityManager;
 import org.hibernate.SessionFactory;
 import ru.zgz.star.backend.util.HibernateUtil;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class DAO<T> {
@@ -22,6 +25,14 @@ public class DAO<T> {
   static void closeConnection(EntityManager em) {
     em.getTransaction().commit();
     em.close();
+  }
+
+  public List<T> findAll() {
+    EntityManager em = getEntityManager();
+    em.getTransaction().begin();
+    String table_name = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, "SomeInput");
+    return em.createQuery(String.format("select %s from %s", table_name, table_name), type)
+        .getResultList();
   }
 
   public T findById(UUID id) {
