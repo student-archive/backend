@@ -23,6 +23,8 @@ public class AccountRouter {
 
   public static String deleteExactAccount(Request request, Response response) {
     response.type("application/json");
+    DAO<Account> dao = new DAO<>(Account.class);
+    dao.delete(request.params("id"));
     return new Gson().toJson("OK");
   }
 
