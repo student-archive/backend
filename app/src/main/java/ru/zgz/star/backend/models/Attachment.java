@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Model for table <code>attachment</code>.
+ *
+ * <p>Storing attachments
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "attachment")
 public class Attachment {
