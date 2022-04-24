@@ -6,7 +6,6 @@ import org.hibernate.SessionFactory;
 import ru.zgz.star.backend.util.HibernateUtil;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public class DAO<T> {
