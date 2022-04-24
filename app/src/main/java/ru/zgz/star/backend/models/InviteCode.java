@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Model for table <code>invite_code</code>.
+ *
+ * <p>Storing invite codes
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "invite_code")
 public class InviteCode {

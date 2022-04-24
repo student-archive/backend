@@ -3,6 +3,13 @@ package ru.zgz.star.backend.models;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * Model for table <code>software</code>.
+ *
+ * <p>Storing softwares
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "software")
 public class Software {

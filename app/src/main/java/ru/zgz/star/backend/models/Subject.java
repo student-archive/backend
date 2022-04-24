@@ -2,6 +2,13 @@ package ru.zgz.star.backend.models;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * Model for table <code>subject</code>.
+ *
+ * <p>Storing subjects
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "subject")
 public class Subject {
