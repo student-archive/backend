@@ -1,16 +1,12 @@
 package ru.zgz.star.backend.routes;
 
 import com.google.gson.Gson;
-import jakarta.persistence.EntityManager;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.models.Account;
-import ru.zgz.star.backend.util.HibernateUtil;
+import ru.zgz.star.backend.repository.DAO;
 import spark.Request;
 import spark.Response;
-
-import java.util.UUID;
 
 public class AccountRouter {
 
@@ -20,14 +16,8 @@ public class AccountRouter {
 
   public static String getExactAccount(Request request, Response response) {
     response.type("application/json");
-    Account result;
-    SessionFactory sf = HibernateUtil.getSessionFactory(); // Создание фабрики сессий
-    EntityManager em = sf.createEntityManager(); // Создание менеждера сущностей
-    em.getTransaction().begin(); // Открытие транзакций
-    result = em.find(Account.class, UUID.fromString(request.params(":id")));
-    em.getTransaction().commit(); // Применение изменений (должно быть даже после селектов)
-    em.close(); // Закрытие менеджера сущностей
-
+    DAO<Account> dao = new DAO<>(Account.class);
+    Account result = dao.findById(request.params("id"));
     return new Gson().toJson(result);
   }
 
