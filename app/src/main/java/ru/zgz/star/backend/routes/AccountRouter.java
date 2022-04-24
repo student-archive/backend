@@ -11,13 +11,13 @@ import spark.Response;
 public class AccountRouter {
 
   public static String BASE_URL = "/account/:id";
-  public static Logger logger =
-      LoggerFactory.getLogger(AccountRouter.class); // Создание объекта логгера
+  public static Logger logger = LoggerFactory.getLogger(AccountRouter.class);
 
   public static String getExactAccount(Request request, Response response) {
     response.type("application/json");
     DAO<Account> dao = new DAO<>(Account.class);
     Account result = dao.findById(request.params("id"));
+    logger.info("Account {} found", result);
     return new Gson().toJson(result);
   }
 
@@ -25,6 +25,7 @@ public class AccountRouter {
     response.type("application/json");
     DAO<Account> dao = new DAO<>(Account.class);
     dao.delete(request.params("id"));
+    logger.info("Account {} deleted", request.params("id"));
     return new Gson().toJson("OK");
   }
 
