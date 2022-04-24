@@ -73,4 +73,11 @@ public class DAO<T> {
     em.remove(model);
     closeConnection(em);
   }
+
+  public void update(T model) {
+    EntityManager em = getEntityManager();
+    em.getTransaction().begin();
+    em.merge(model);
+    em.getTransaction().commit();
+  }
 }
