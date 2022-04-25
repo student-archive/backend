@@ -3,6 +3,13 @@ package ru.zgz.star.backend.models;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * Model for table <code>quiz_history</code>.
+ *
+ * <p>Storing history of quizzes walkthroughs
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "quiz_history")
 public class QuizHistory {

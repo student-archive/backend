@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Model for table <code>event</code>.
+ *
+ * <p>Storing events
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "event")
 public class Event {

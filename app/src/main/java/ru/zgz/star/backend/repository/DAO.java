@@ -16,25 +16,45 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Data access object
+ *
+ * @param <T> Model of database
+ */
 public class DAO<T> {
 
   public static Logger logger = LoggerFactory.getLogger(AccountRouter.class);
   private final Class<T> type;
 
+  /**
+   * Constructor for DAO
+   *
+   * @param tClass class instance
+   * <p>
+   * Usage:
+   * <pre>
+   * {@code DAO<Account> = new DAO<>(Account.class);}
+   *
+   */
   public DAO(Class<T> tClass) {
     this.type = tClass;
   }
 
-  static EntityManager getEntityManager() {
+  private static EntityManager getEntityManager() {
     SessionFactory sf = HibernateUtil.getSessionFactory();
     return sf.createEntityManager();
   }
 
-  static void closeConnection(EntityManager em) {
+  private static void closeConnection(EntityManager em) {
     em.getTransaction().commit();
     em.close();
   }
 
+  /**
+   * Finds all entities in database
+   *
+   * @return list of model's objects
+   */
   public List<T> findAll() {
     EntityManager em = getEntityManager();
     em.getTransaction().begin();
@@ -48,6 +68,12 @@ public class DAO<T> {
 
   }
 
+  /**
+   * Finds one entity by its ID
+   *
+   * @param id ID of row in database
+   * @return One entity
+   */
   public T findById(UUID id) {
     EntityManager em = getEntityManager();
     em.getTransaction().begin();
@@ -56,6 +82,12 @@ public class DAO<T> {
     return result;
   }
 
+  /**
+   * Finds one entity by its ID
+   *
+   * @param id ID of row in database
+   * @return One entity
+   */
   public T findById(String id) {
     EntityManager em = getEntityManager();
     em.getTransaction().begin();
@@ -64,6 +96,11 @@ public class DAO<T> {
     return result;
   }
 
+  /**
+   * Creates new row in database
+   *
+   * @param model Model instance
+   */
   public void save(T model) {
     EntityManager em = getEntityManager();
     em.getTransaction().begin();
@@ -71,6 +108,11 @@ public class DAO<T> {
     closeConnection(em);
   }
 
+  /**
+   * Deletes one entity by its ID
+   *
+   * @param id ID of row in database
+   */
   public void delete(UUID id) {
     EntityManager em = getEntityManager();
     em.getTransaction().begin();
@@ -79,6 +121,11 @@ public class DAO<T> {
     closeConnection(em);
   }
 
+  /**
+   * Deletes one entity by its ID
+   *
+   * @param id ID of row in database
+   */
   public void delete(String id) {
     EntityManager em = getEntityManager();
     em.getTransaction().begin();
@@ -87,6 +134,11 @@ public class DAO<T> {
     closeConnection(em);
   }
 
+  /**
+   * Updates entity
+   *
+   * @param model Edited entity
+   */
   public void update(T model) {
     EntityManager em = getEntityManager();
     em.getTransaction().begin();

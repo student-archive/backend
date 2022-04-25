@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Model for table <code>page</code>.
+ *
+ * <p>Storing attachments
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "page")
 public class Page {

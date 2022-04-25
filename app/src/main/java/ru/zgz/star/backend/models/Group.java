@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Model for table <code>group</code>.
+ *
+ * <p>Storing groups
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "group")
 public class Group {

@@ -6,6 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
+/**
+ * Model for table <code>quiz_variant</code>.
+ *
+ * <p>Storing variants for questions
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "quiz_variant")
 public class QuizVariant {

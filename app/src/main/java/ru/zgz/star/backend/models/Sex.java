@@ -4,6 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Model for table <code>sex</code>.
+ *
+ * <p>Storing sexes
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "sex")
 public class Sex {

@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Model for table <code>employee</code>.
+ *
+ * <p>Storing employees
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "employee")
 public class Employee {

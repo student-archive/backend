@@ -6,6 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
+/**
+ * Model for table <code>tutor</code>.
+ *
+ * <p>Storing tutors
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "tutor")
 public class Tutor {
