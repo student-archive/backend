@@ -1,18 +1,15 @@
 package ru.zgz.star.backend.repository;
 
-import com.google.common.base.CaseFormat;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.routes.AccountRouter;
 import ru.zgz.star.backend.util.HibernateUtil;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.UUID;
 
