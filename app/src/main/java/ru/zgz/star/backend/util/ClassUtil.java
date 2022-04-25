@@ -8,12 +8,9 @@ import java.util.stream.Collectors;
 
 public class ClassUtil {
   public static Set<Class<?>> findAllClasses(String packageName) throws IOException {
-    return ClassPath.from(ClassLoader.getSystemClassLoader())
-      .getAllClasses()
-      .stream()
-      .filter(clazz -> clazz.getPackageName()
-        .equalsIgnoreCase(packageName))
-      .map(clazz -> clazz.load())
-      .collect(Collectors.toSet());
+    return ClassPath.from(ClassLoader.getSystemClassLoader()).getAllClasses().stream()
+        .filter(clazz -> clazz.getPackageName().equalsIgnoreCase(packageName))
+        .map(clazz -> clazz.load())
+        .collect(Collectors.toSet());
   }
 }
