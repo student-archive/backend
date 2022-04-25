@@ -10,6 +10,7 @@ import java.util.UUID;
 
 /**
  * Data access object
+ *
  * @param <T> Model of database
  */
 public class DAO<T> {
@@ -18,12 +19,13 @@ public class DAO<T> {
 
   /**
    * Constructor for DAO
+   *
    * @param tClass class instance
-   * <p>Usage:
+   * <p>
+   * Usage:
    * <pre>
    * {@code DAO<Account> = new DAO<>(Account.class);}
-   * </pre>
-   * </p>
+   *
    */
   public DAO(Class<T> tClass) {
     this.type = tClass;
@@ -41,6 +43,7 @@ public class DAO<T> {
 
   /**
    * Finds all entities in database
+   *
    * @return list of model's objects
    */
   public List<T> findAll() {
@@ -53,6 +56,7 @@ public class DAO<T> {
 
   /**
    * Finds one entity by its ID
+   *
    * @param id ID of row in database
    * @return One entity
    */
@@ -66,6 +70,7 @@ public class DAO<T> {
 
   /**
    * Finds one entity by its ID
+   *
    * @param id ID of row in database
    * @return One entity
    */
@@ -79,6 +84,7 @@ public class DAO<T> {
 
   /**
    * Creates new row in database
+   *
    * @param model Model instance
    */
   public void save(T model) {
@@ -90,6 +96,7 @@ public class DAO<T> {
 
   /**
    * Deletes one entity by its ID
+   *
    * @param id ID of row in database
    */
   public void delete(UUID id) {
@@ -102,6 +109,7 @@ public class DAO<T> {
 
   /**
    * Deletes one entity by its ID
+   *
    * @param id ID of row in database
    */
   public void delete(String id) {
@@ -114,6 +122,7 @@ public class DAO<T> {
 
   /**
    * Updates entity
+   *
    * @param model Edited entity
    */
   public void update(T model) {
