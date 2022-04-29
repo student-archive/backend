@@ -34,6 +34,7 @@ public class DAO<T> {
    * Usage:
    * <pre>
    * {@code DAO<Account> = new DAO<>(Account.class);}
+   * </pre>
    *
    */
   public DAO(Class<T> tClass) {
