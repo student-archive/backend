@@ -1,9 +1,5 @@
 name: Google Code Style check
-on:
-  pull_request:
-    types:
-      - opened
-      - reopened
+on: pull_request
 
 jobs:
   checkstyle_job:
@@ -15,6 +11,7 @@ jobs:
       - name: Run check style
         uses: nikitasavinov/checkstyle-action@0.5.1
         with:
+          level: error
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: 'github-pr-check'
           tool_name: 'testtool'
