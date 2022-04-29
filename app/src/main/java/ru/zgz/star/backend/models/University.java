@@ -5,6 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Model for table <code>university</code>.
+ *
+ * <p>Storing universities
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "university")
 public class University {

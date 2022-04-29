@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Model for table <code>quiz_result</code>.
+ *
+ * <p>Storing results of quizzes walkthroughs
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "quiz_result")
 public class QuizResult {

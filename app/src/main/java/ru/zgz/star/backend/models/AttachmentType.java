@@ -6,6 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
+/**
+ * Model for table <code>attachment_type</code>.
+ *
+ * <p>Storing types of attachments
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "attachment_type")
 public class AttachmentType {

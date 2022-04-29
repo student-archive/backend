@@ -3,6 +3,13 @@ package ru.zgz.star.backend.models;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * Model for table <code>user</code>.
+ *
+ * <p>Storing users
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "user")
 public class User {

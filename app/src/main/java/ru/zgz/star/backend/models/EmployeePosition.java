@@ -6,6 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
+/**
+ * Model for table <code>employee_position</code>.
+ *
+ * <p>Storing positions of employees
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "employee_position")
 public class EmployeePosition {

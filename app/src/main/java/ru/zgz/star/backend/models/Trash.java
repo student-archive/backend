@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Model for table <code>trash</code>.
+ *
+ * <p>Storing deleted elements
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "trash")
 public class Trash {

@@ -34,7 +34,9 @@ public class App {
   public static Logger logger = LoggerFactory.getLogger(App.class);
 
   /**
-   * Executable method with definition of endpoints
+   * Executable method with definition of endpoints.
+   *
+   * <p>Automatically collects created methods by correct HTTP verbs
    *
    * @param args Command-line arguments
    */
@@ -44,7 +46,11 @@ public class App {
       logger.info("Found class: {}", cls.getName());
       String basePath = (String) cls.getField("BASE_URL").get(cls);
       for (Method method : cls.getDeclaredMethods()) {
-        logger.info("Registering endpoint: {} by path {}", method.getName(), basePath);
+        logger.info(
+            "Registering endpoint: {}.{} by path {}",
+            cls.getSimpleName(),
+            method.getName(),
+            basePath);
         if (method.getName().startsWith("get")) {
           get(
               basePath,

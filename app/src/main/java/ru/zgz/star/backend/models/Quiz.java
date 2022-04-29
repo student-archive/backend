@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Model for table <code>quiz</code>.
+ *
+ * <p>Storing quizzes
+ *
+ * @author ironalex
+ */
 @Entity
 @Table(name = "quiz")
 public class Quiz {

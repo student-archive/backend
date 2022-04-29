@@ -5,6 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Model for table <code>certificate</code>.
+ *
+ * <p>Storing certificates
+ *
+ * @author dadyarri
+ */
 @Entity
 @Table(name = "certificate")
 public class Certificate {

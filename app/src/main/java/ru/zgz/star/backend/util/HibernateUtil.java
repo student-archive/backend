@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.zgz.star.backend.models.Account;
 
+/** Set of utils to work with hibernate */
 public class HibernateUtil {
   private static final SessionFactory sessionFactory;
 
@@ -24,6 +25,11 @@ public class HibernateUtil {
     }
   }
 
+  /**
+   * Gets session factory
+   *
+   * @return session factory object
+   */
   public static SessionFactory getSessionFactory() {
     return sessionFactory;
   }
