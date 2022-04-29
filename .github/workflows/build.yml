@@ -2,8 +2,6 @@ name: Build Java
 
 on:
   push:
-    branches-ignore:
-      - master
   pull_request:
     types:
       - opened
