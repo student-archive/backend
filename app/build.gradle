@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
 
     // Gradle Plugins
-    implementation 'io.swagger.core.v3:swagger-gradle-plugin:2.1.13'
+    implementation 'io.swagger.core.v3:swagger-gradle-plugin:2.2.0'
 }
 
 application {
