@@ -1,5 +1,9 @@
 name: Google Code Style check
-on: pull_request
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
 
 jobs:
   checkstyle_job:
