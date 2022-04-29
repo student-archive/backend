@@ -1,0 +1,27 @@
+name: Build Java
+
+on:
+  push:
+    branches-ignore:
+      - master
+  pull_request:
+    types:
+      - opened
+      - reopened
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: zulu
+          cache: gradle
+      - run: ./gradlew build
