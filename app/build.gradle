@@ -40,7 +40,7 @@ dependencies {
 
     // ORM
     implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'
-    implementation 'org.hibernate:hibernate-gradle-plugin:5.6.7.Final'
+    implementation 'org.hibernate:hibernate-gradle-plugin:5.6.8.Final'
 
     // PostgreSQL Driver
     implementation 'org.postgresql:postgresql:42.3.1'
