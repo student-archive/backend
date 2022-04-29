@@ -20,12 +20,15 @@ import java.util.UUID;
 @Table(name = "event_priority")
 public class EventPriority {
 
-  @Id @GeneratedValue(generator = "UUID")
+  @Id
+  @GeneratedValue(generator = "UUID")
   @GenericGenerator(name = "uuid", strategy = "uuid2")
   @Column(name = "id")
   private UUID id;
+
   @Column(name = "priority_name")
   private String priorityName;
+
   @Column(name = "priority_description")
   private String priorityDescription;
 
