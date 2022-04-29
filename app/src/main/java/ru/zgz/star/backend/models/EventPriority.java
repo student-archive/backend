@@ -1,9 +1,12 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import org.hibernate.annotations.GenericGenerator;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.util.UUID;
 
 /**
@@ -17,8 +20,13 @@ import java.util.UUID;
 @Table(name = "event_priority")
 public class EventPriority {
 
+  @Id @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+  @Column(name = "priority_name")
   private String priorityName;
+  @Column(name = "priority_description")
   private String priorityDescription;
 
   /**
@@ -35,8 +43,6 @@ public class EventPriority {
    *
    * @return ID of user
    */
-  @Id
-  @GeneratedValue
   public UUID getId() {
     return id;
   }
