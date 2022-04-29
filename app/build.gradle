@@ -72,5 +72,5 @@ apply plugin: 'java'
 
 javadoc {
     source = sourceSets.main.allJava
-    destinationDir = file(new File(projectDir, '../../docs/javadoc'))
+    destinationDir = file(new File(projectDir, '../../docs/docs'))
 }
