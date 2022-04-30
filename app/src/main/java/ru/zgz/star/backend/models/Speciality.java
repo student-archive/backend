@@ -1,9 +1,11 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
@@ -17,21 +19,33 @@ import java.util.UUID;
 @Entity
 @Table(name = "speciality")
 public class Speciality {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "speciality_name")
   private String specialityName;
 
-  public void setId(UUID id) {
-    this.id = id;
+  public Speciality() {}
+
+  public Speciality(String specialityName) {
+    this.specialityName = specialityName;
   }
 
-  @Id
-  @GeneratedValue
+  public Speciality setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
   public UUID getId() {
     return id;
   }
 
-  public void setSpecialityName(String specialityName) {
+  public Speciality setSpecialityName(String specialityName) {
     this.specialityName = specialityName;
+    return this;
   }
 
   public String getSpecialityName() {
