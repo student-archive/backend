@@ -1,10 +1,12 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Set;
 import java.util.UUID;
@@ -19,17 +21,32 @@ import java.util.UUID;
 @Entity
 @Table(name = "question")
 public class Question {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "question_text")
   private String questionText;
+
   @OneToMany private Set<QuizVariant> variants;
+
+  public Question() {}
+
+  public Question(String questionText, Set<QuizVariant> variants) {
+    this.questionText = questionText;
+    this.variants = variants;
+  }
 
   /**
    * Sets value for ID
    *
    * @param id New ID of question
    */
-  public void setId(UUID id) {
+  public Question setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   /**
@@ -37,8 +54,6 @@ public class Question {
    *
    * @return ID of question
    */
-  @Id
-  @GeneratedValue
   public UUID getId() {
     return id;
   }
@@ -48,8 +63,9 @@ public class Question {
    *
    * @param questionText New text of question
    */
-  public void setQuestionText(String questionText) {
+  public Question setQuestionText(String questionText) {
     this.questionText = questionText;
+    return this;
   }
 
   /**
@@ -66,8 +82,9 @@ public class Question {
    *
    * @param variants New set of variants
    */
-  public void setVariants(Set<QuizVariant> variants) {
+  public Question setVariants(Set<QuizVariant> variants) {
     this.variants = variants;
+    return this;
   }
 
   /**

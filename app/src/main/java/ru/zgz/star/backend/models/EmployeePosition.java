@@ -1,9 +1,12 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.UUID;
 
 /**
@@ -16,24 +19,36 @@ import java.util.UUID;
 @Entity
 @Table(name = "employee_position")
 public class EmployeePosition {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "position")
   private String positionName;
 
-  @Id
-  @GeneratedValue
+  public EmployeePosition() {}
+
+  public EmployeePosition(String positionName) {
+    this.positionName = positionName;
+  }
+
   public UUID getId() {
     return id;
   }
 
-  public void setId(UUID id) {
+  public EmployeePosition setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   public String getPositionName() {
     return positionName;
   }
 
-  public void setPositionName(String positionName) {
+  public EmployeePosition setPositionName(String positionName) {
     this.positionName = positionName;
+    return this;
   }
 }

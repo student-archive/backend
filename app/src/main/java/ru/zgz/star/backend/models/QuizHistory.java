@@ -1,10 +1,12 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
@@ -18,40 +20,54 @@ import java.util.UUID;
 @Entity
 @Table(name = "quiz_history")
 public class QuizHistory {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
 
   @ManyToOne private Question question;
   @ManyToOne private QuizVariant selectedVariant;
   @ManyToOne private User user;
 
-  public void setId(UUID id) {
-    this.id = id;
+  public QuizHistory() {}
+
+  public QuizHistory(Question question, QuizVariant selectedVariant, User user) {
+    this.question = question;
+    this.selectedVariant = selectedVariant;
+    this.user = user;
   }
 
-  @Id
-  @GeneratedValue
+  public QuizHistory setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
   public UUID getId() {
     return id;
   }
 
-  public void setQuestion(Question question) {
+  public QuizHistory setQuestion(Question question) {
     this.question = question;
+    return this;
   }
 
   public Question getQuestion() {
     return question;
   }
 
-  public void setSelectedVariant(QuizVariant selectedVariant) {
+  public QuizHistory setSelectedVariant(QuizVariant selectedVariant) {
     this.selectedVariant = selectedVariant;
+    return this;
   }
 
   public QuizVariant getSelectedVariant() {
     return selectedVariant;
   }
 
-  public void setUser(User user) {
+  public QuizHistory setUser(User user) {
     this.user = user;
+    return this;
   }
 
   public User getUser() {

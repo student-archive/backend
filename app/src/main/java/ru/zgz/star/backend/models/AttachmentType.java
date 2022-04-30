@@ -1,9 +1,12 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.UUID;
 
 /**
@@ -16,21 +19,33 @@ import java.util.UUID;
 @Entity
 @Table(name = "attachment_type")
 public class AttachmentType {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "type_name")
   private String typeName;
 
-  public void setId(UUID id) {
-    this.id = id;
+  public AttachmentType() {}
+
+  public AttachmentType(String typeName) {
+    this.typeName = typeName;
   }
 
-  @Id
-  @GeneratedValue
+  public AttachmentType setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
   public UUID getId() {
     return id;
   }
 
-  public void setTypeName(String typeName) {
+  public AttachmentType setTypeName(String typeName) {
     this.typeName = typeName;
+    return this;
   }
 
   public String getTypeName() {
