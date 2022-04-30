@@ -24,7 +24,7 @@ public class Sex {
 
   public Sex() {}
 
-  public Sex(String sexName){
+  public Sex(String sexName) {
     this.sexName = sexName;
   }
 

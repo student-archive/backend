@@ -29,7 +29,7 @@ public class Role {
 
   public Role() {}
 
-  public Role(String roleName,String roleDescription){
+  public Role(String roleName, String roleDescription) {
     this.roleName = roleName;
     this.roleDescription = roleDescription;
   }
@@ -38,7 +38,6 @@ public class Role {
     this.id = id;
     return this;
   }
-
 
   public UUID getId() {
     return id;

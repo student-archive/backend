@@ -29,15 +29,16 @@ public class QuizResult {
   private Instant quizSubmitDate;
 
   @Column(name = "quiz_id")
-  @ManyToOne private Quiz quiz;
+  @ManyToOne
+  private Quiz quiz;
 
   @Column(name = "user_id")
-  @ManyToOne private User user;
+  @ManyToOne
+  private User user;
 
   public QuizResult() {}
 
-  public QuizResult(
-    Integer result,Instant quizSubmitDate) {
+  public QuizResult(Integer result, Instant quizSubmitDate) {
     this.result = result;
     this.quizSubmitDate = quizSubmitDate;
   }

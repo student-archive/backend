@@ -32,7 +32,7 @@ public class Trash {
 
   public Trash() {}
 
-  public Trash(UUID deletedId,Instant deletingDate ,Group group) {
+  public Trash(UUID deletedId, Instant deletingDate, Group group) {
     this.deletedId = deletedId;
     this.deletingDate = deletingDate;
     this.group = group;
@@ -42,7 +42,6 @@ public class Trash {
     this.id = id;
     return this;
   }
-
 
   public UUID getId() {
     return id;

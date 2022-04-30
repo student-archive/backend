@@ -44,14 +44,20 @@ public class Tutor {
 
   public Tutor() {}
 
-  public Tutor(String firstName,String lastName,String patronymic,String email,String phone,String link,Boolean isWorking) {
+  public Tutor(
+      String firstName,
+      String lastName,
+      String patronymic,
+      String email,
+      String phone,
+      String link,
+      Boolean isWorking) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.patronymic = patronymic;
     this.email = email;
     this.phone = link;
     this.isWorking = isWorking;
-
   }
 
   public UUID getId() {

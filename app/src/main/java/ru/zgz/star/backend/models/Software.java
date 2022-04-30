@@ -29,9 +29,9 @@ public class Software {
 
   @ManyToOne private Subject subject;
 
-  public Software(){}
+  public Software() {}
 
-  public Software(String description,String link){
+  public Software(String description, String link) {
     this.description = description;
     this.link = link;
   }
@@ -40,7 +40,6 @@ public class Software {
     this.id = id;
     return this;
   }
-
 
   public UUID getId() {
     return id;

@@ -18,6 +18,7 @@ public class University {
   @GenericGenerator(name = "uuid", strategy = "uuid2")
   @Column(name = "id")
   private String id;
+
   @Column(name = "university_name")
   private String universityName;
 
@@ -26,7 +27,6 @@ public class University {
   public University(String universityName) {
     this.universityName = universityName;
   }
-
 
   public String getId() {
     return id;

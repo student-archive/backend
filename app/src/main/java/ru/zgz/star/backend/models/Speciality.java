@@ -35,7 +35,6 @@ public class Speciality {
     return this;
   }
 
-
   public UUID getId() {
     return id;
   }

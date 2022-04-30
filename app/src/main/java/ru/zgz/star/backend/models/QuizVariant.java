@@ -29,7 +29,7 @@ public class QuizVariant {
 
   public QuizVariant() {}
 
-  public QuizVariant(String quizVariantText,Boolean isCorrect) {
+  public QuizVariant(String quizVariantText, Boolean isCorrect) {
     this.quizVariantText = quizVariantText;
     this.isCorrect = isCorrect;
   }
@@ -38,7 +38,6 @@ public class QuizVariant {
     this.id = id;
     return this;
   }
-
 
   public UUID getId() {
     return id;

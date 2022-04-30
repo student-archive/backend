@@ -37,7 +37,7 @@ public class User {
 
   public User() {}
 
-  public User(String firstName,String lastName,String avatarLink) {
+  public User(String firstName, String lastName, String avatarLink) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.avatarLink = avatarLink;
@@ -47,7 +47,6 @@ public class User {
     this.id = id;
     return this;
   }
-
 
   public UUID getId() {
     return id;
