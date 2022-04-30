@@ -43,7 +43,8 @@ public class Attachment {
   public Attachment() {}
 
   /**
-   * Creates new attachment
+   * Creates new attachment.
+   *
    * @param link link of attachment
    * @param author author of attachment
    * @param checksum checksum of file
