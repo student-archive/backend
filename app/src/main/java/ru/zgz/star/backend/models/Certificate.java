@@ -1,9 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>certificate</code>.
@@ -15,42 +13,62 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "certificate")
 public class Certificate {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private String id;
+
+  @Column(name = "certificate_name")
   private String certificateName;
+
+  @Column(name = "certificate_description")
   private String certificateDescription;
+
+  @Column(name = "office")
   private String office;
 
-  @Id
-  @GeneratedValue
+  public Certificate() {}
+
+  public Certificate(String certificateName, String certificateDescription, String office) {
+    this.certificateName = certificateName;
+    this.certificateDescription = certificateDescription;
+    this.office = office;
+  }
+
   public String getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public Certificate setId(String id) {
     this.id = id;
+    return this;
   }
 
   public String getCertificateName() {
     return certificateName;
   }
 
-  public void setCertificateName(String name) {
+  public Certificate setCertificateName(String name) {
     this.certificateName = name;
+    return this;
   }
 
   public String getCertificateDescription() {
     return certificateDescription;
   }
 
-  public void setCertificateDescription(String description) {
+  public Certificate setCertificateDescription(String description) {
     this.certificateDescription = description;
+    return this;
   }
 
   public String getOffice() {
     return office;
   }
 
-  public void setOffice(String office) {
+  public Certificate setOffice(String office) {
     this.office = office;
+    return this;
   }
 }
