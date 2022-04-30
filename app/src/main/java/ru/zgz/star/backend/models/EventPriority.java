@@ -32,13 +32,21 @@ public class EventPriority {
   @Column(name = "priority_description")
   private String priorityDescription;
 
+  public EventPriority() {}
+
+  public EventPriority(String priorityName, String priorityDescription) {
+    this.priorityName = priorityName;
+    this.priorityDescription = priorityDescription;
+  }
+
   /**
    * Sets value for ID
    *
    * @param id New ID of event priority
    */
-  public void setId(UUID id) {
+  public EventPriority setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   /**
@@ -55,8 +63,9 @@ public class EventPriority {
    *
    * @param priorityName New name of event priority
    */
-  public void setPriorityName(String priorityName) {
+  public EventPriority setPriorityName(String priorityName) {
     this.priorityName = priorityName;
+    return this;
   }
 
   /**
@@ -73,8 +82,9 @@ public class EventPriority {
    *
    * @param priorityDescription New name of event priority
    */
-  public void setPriorityDescription(String priorityDescription) {
+  public EventPriority setPriorityDescription(String priorityDescription) {
     this.priorityDescription = priorityDescription;
+    return this;
   }
 
   /**
