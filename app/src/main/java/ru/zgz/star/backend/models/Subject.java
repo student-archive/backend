@@ -1,5 +1,5 @@
 package ru.zgz.star.backend.models;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.UUID;
 
 /**
