@@ -1,10 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
@@ -18,40 +15,58 @@ import java.util.UUID;
 @Entity
 @Table(name = "software")
 public class Software {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "description")
   private String description;
+
+  @Column(name = "link")
   private String link;
 
   @ManyToOne private Subject subject;
 
-  public void setId(UUID id) {
-    this.id = id;
+  public Software(){}
+
+  public Software(String description,String link){
+    this.description = description;
+    this.link = link;
   }
 
-  @Id
-  @GeneratedValue
+  public Software setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+
   public UUID getId() {
     return id;
   }
 
-  public void setDescription(String description) {
+  public Software setDescription(String description) {
     this.description = description;
+    return this;
   }
 
   public String getDescription() {
     return description;
   }
 
-  public void setLink(String link) {
+  public Software setLink(String link) {
     this.link = link;
+    return this;
   }
 
   public String getLink() {
     return link;
   }
 
-  public void setSubject(Subject subject) {
+  public Software setSubject(Subject subject) {
     this.subject = subject;
+    return this;
   }
 
   public Subject getSubject() {
