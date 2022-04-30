@@ -28,7 +28,10 @@ public class QuizResult {
   @Column(name = "quiz_submit_date")
   private Instant quizSubmitDate;
 
+  @Column(name = "quiz_id")
   @ManyToOne private Quiz quiz;
+
+  @Column(name = "user_id")
   @ManyToOne private User user;
 
   public QuizResult() {}
