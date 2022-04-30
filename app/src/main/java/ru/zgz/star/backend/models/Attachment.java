@@ -1,6 +1,12 @@
 package ru.zgz.star.backend.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Set;
@@ -21,10 +27,13 @@ public class Attachment {
   @GenericGenerator(name = "uuid", strategy = "uuid2")
   @Column(name = "id")
   private UUID id;
+
   @Column(name = "link")
   private String link;
+
   @Column(name = "author")
   private String author;
+
   @Column(name = "checksum")
   private String checksum;
 
@@ -33,13 +42,15 @@ public class Attachment {
 
   public Attachment() {}
 
-  public Attachment(String link, String author, String checksum, AttachmentType type, Set<Page> page) {
+  public Attachment(
+      String link, String author, String checksum, AttachmentType type, Set<Page> page) {
     this.link = link;
     this.author = author;
     this.checksum = checksum;
     this.type = type;
     this.page = page;
   }
+
   /**
    * Sets value for ID
    *
