@@ -28,7 +28,6 @@ public class Subject {
   private UUID id;
 
   @ManyToOne
-  @JoinColumn(name = "group_id")
   @Column(name = "group_id")
   private Group group;
 
