@@ -1,12 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
@@ -21,37 +16,57 @@ import java.util.UUID;
 @Table(name = "subject")
 public class Subject {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
 
   @ManyToOne
   @JoinColumn(name = "group_id")
+
+  @Column(name = "group_id")
   private Group group;
+
+  @Column(name = "subject_name")
   private String subjectName;
+
+  @Column(name = "semester")
   private int semester;
+
+  public Subject() {}
+
+  public Subject(Group group,String subjectName,int semester) {
+    this.group = group;
+    this.subjectName = subjectName;
+    this.semester = semester;
+  }
 
   public UUID getId() {
     return id;
   }
-  public void setId(UUID id) {
+  public Subject setId(UUID id) {
     this.id = id;
+    return this;
   }
   public Group getGroup() {
     return group;
   }
-  public void setGroup(Group group) {
+  public Subject setGroup(Group group) {
     this.group = group;
+    return this;
   }
   public String getSubjectName() {
     return subjectName;
   }
-  public void setSubjectName(String subjectName) {
+  public Subject setSubjectName(String subjectName) {
     this.subjectName = subjectName;
+    return this;
   }
   public int getSemester() {
     return semester;
   }
-  public void setSemester(int semester) {
+  public Subject setSemester(int semester) {
     this.semester = semester;
+    return this;
   }
 }
