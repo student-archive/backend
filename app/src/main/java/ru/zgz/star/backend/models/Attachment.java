@@ -1,6 +1,8 @@
 package ru.zgz.star.backend.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,21 +16,38 @@ import java.util.UUID;
 @Entity
 @Table(name = "attachment")
 public class Attachment {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+  @Column(name = "link")
   private String link;
+  @Column(name = "author")
   private String author;
+  @Column(name = "checksum")
   private String checksum;
 
   @ManyToOne private AttachmentType type;
   @ManyToMany private Set<Page> page;
 
+  public Attachment() {}
+
+  public Attachment(String link, String author, String checksum, AttachmentType type, Set<Page> page) {
+    this.link = link;
+    this.author = author;
+    this.checksum = checksum;
+    this.type = type;
+    this.page = page;
+  }
   /**
    * Sets value for ID
    *
    * @param id New ID of attachment
    */
-  public void setId(UUID id) {
+  public Attachment setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   /**
@@ -36,8 +55,6 @@ public class Attachment {
    *
    * @return ID of attachment
    */
-  @Id
-  @GeneratedValue
   public UUID getId() {
     return id;
   }
@@ -47,8 +64,9 @@ public class Attachment {
    *
    * @param link New link of attachment
    */
-  public void setLink(String link) {
+  public Attachment setLink(String link) {
     this.link = link;
+    return this;
   }
 
   /**
@@ -65,8 +83,9 @@ public class Attachment {
    *
    * @param author New author of attachment
    */
-  public void setAuthor(String author) {
+  public Attachment setAuthor(String author) {
     this.author = author;
+    return this;
   }
 
   /**
@@ -83,8 +102,9 @@ public class Attachment {
    *
    * @param checksum New checksum of attachment
    */
-  public void setChecksum(String checksum) {
+  public Attachment setChecksum(String checksum) {
     this.checksum = checksum;
+    return this;
   }
 
   /**
@@ -101,8 +121,9 @@ public class Attachment {
    *
    * @param type New type of attachment
    */
-  public void setType(AttachmentType type) {
+  public Attachment setType(AttachmentType type) {
     this.type = type;
+    return this;
   }
 
   /**
@@ -114,8 +135,9 @@ public class Attachment {
     return type;
   }
 
-  public void setPage(Set<Page> page) {
+  public Attachment setPage(Set<Page> page) {
     this.page = page;
+    return this;
   }
 
   /**
