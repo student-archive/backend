@@ -44,8 +44,6 @@ public class QuizResult {
     return this;
   }
 
-  @Id
-  @GeneratedValue
   public UUID getId() {
     return id;
   }
