@@ -1,6 +1,13 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,8 +32,8 @@ public class Quiz {
   @Column(name = "quiz_description")
   private String quizDescription;
 
-  @Column(name = "amount_of_questions")
-  private Integer amountOfQuestions;
+  @Column(name = "questions_amount")
+  private Integer questionsAmount;
 
   @Column(name = "subject_id")
   @ManyToOne
@@ -60,12 +67,12 @@ public class Quiz {
     return quizDescription;
   }
 
-  public void setAmountOfQuestions(Integer amountOfQuestions) {
-    this.amountOfQuestions = amountOfQuestions;
+  public void setQuestionsAmount(Integer amountOfQuestions) {
+    this.questionsAmount = amountOfQuestions;
   }
 
-  public Integer getAmountOfQuestions() {
-    return amountOfQuestions;
+  public Integer getQuestionsAmount() {
+    return questionsAmount;
   }
 
   public void setSubject(Subject subject) {
