@@ -42,6 +42,14 @@ public class Attachment {
 
   public Attachment() {}
 
+  /**
+   * Creates new attachment
+   * @param link link of attachment
+   * @param author author of attachment
+   * @param checksum checksum of file
+   * @param type type of attachment
+   * @param page pages of attachment
+   */
   public Attachment(
       String link, String author, String checksum, AttachmentType type, Set<Page> page) {
     this.link = link;
