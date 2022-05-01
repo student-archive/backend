@@ -20,4 +20,4 @@ jobs:
           java-version: 17
           distribution: zulu
           cache: gradle
-      - run: ./gradlew test
+      - run: ./gradlew test -PexcludeTests
