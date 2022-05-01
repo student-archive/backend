@@ -24,6 +24,7 @@ repositories {
 dependencies {
     // Spock for testing.
     testImplementation 'org.spockframework:spock-core:2.2-M1-groovy-4.0'
+    testImplementation 'com.mashape.unirest:unirest-java:1.4.9'
 
 
     // This dependency is used by the application.
