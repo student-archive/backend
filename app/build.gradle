@@ -67,6 +67,8 @@ application {
 test {
     if (project.hasProperty('excludeTests')) {
         exclude '**' // temporary thing until we can configure deployment
+    } else {
+        useJUnitPlatform()
     }
 }
 
