@@ -13,10 +13,13 @@ public class HibernateUtil {
     try {
       var cfg = new Configuration();
       Dotenv dotenv = Dotenv.load();
-      cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
       cfg.setProperty("hibernate.connection.username", dotenv.get("DATABASE_USER"));
       cfg.setProperty("hibernate.connection.password", dotenv.get("DATABASE_PASSWORD"));
-      cfg.addAnnotatedClass(Account.class);
+      if (dotenv.get("ENV").equals("PROD")) {
+        cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
+      } else if (dotenv.get("ENV").equals("DEV")) {
+        cfg.setProperty("hibernate.connection.url", dotenv.get("TEST_DATABASE_URL"));
+      }
 
       sessionFactory = cfg.buildSessionFactory();
     } catch (Throwable ex) {
