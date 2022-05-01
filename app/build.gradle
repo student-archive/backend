@@ -63,9 +63,10 @@ application {
     mainClass = 'ru.zgz.star.backend.App'
 }
 
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+test {
+    if (project.hasProperty('excludeTests')) {
+        exclude '**' // temporary thing until we can configure deployment
+    }
 }
 
 apply plugin: 'java'
