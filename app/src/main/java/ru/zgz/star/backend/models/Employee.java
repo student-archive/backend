@@ -64,9 +64,9 @@ public class Employee {
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
-    name = "employee_certificate",
-    joinColumns = @JoinColumn(name = "employee_id"),
-    inverseJoinColumns = @JoinColumn(name = "certificate_id"))
+      name = "employee_certificate",
+      joinColumns = @JoinColumn(name = "employee_id"),
+      inverseJoinColumns = @JoinColumn(name = "certificate_id"))
   private Set<Certificate> certificates;
 
   public Employee() {}
