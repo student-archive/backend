@@ -2,10 +2,11 @@ name: Java
 
 on:
   push:
+    paths:
+      - '**.java'
   pull_request:
-    types:
-      - opened
-      - reopened
+    paths:
+      - '**.java'
     branches:
       - master
 
