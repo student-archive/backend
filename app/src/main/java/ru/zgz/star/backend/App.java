@@ -42,6 +42,9 @@ public class App {
    */
   public static void main(String[] args)
       throws IOException, NoSuchFieldException, IllegalAccessException {
+
+    get("/ping", (req, res) -> "pong");
+
     for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
       logger.info("Found class: {}", cls.getName());
       String basePath = (String) cls.getField("BASE_URL").get(cls);
