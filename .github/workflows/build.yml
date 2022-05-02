@@ -1,4 +1,4 @@
-name: Build Java
+name: Java
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-    name: Build project
+    name: Compile
     runs-on: ubuntu-latest
 
     steps:
