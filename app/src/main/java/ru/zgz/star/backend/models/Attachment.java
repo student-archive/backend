@@ -31,7 +31,7 @@ public class Attachment {
   @Column(name = "id")
   private UUID id;
 
-  @Column(name = "link")
+  @Column(name = "attachment_link")
   private String link;
 
   @Column(name = "author")
