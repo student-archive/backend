@@ -1,9 +1,12 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -38,7 +41,13 @@ public class Attachment {
   private String checksum;
 
   @ManyToOne private AttachmentType type;
-  @ManyToMany private Set<Page> page;
+
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "page_attachment",
+      joinColumns = @JoinColumn(name = "attachment_id"),
+      inverseJoinColumns = @JoinColumn(name = "page_id"))
+  private Set<Page> page;
 
   public Attachment() {}
 

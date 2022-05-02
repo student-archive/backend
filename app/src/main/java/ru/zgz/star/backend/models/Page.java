@@ -32,7 +32,8 @@ public class Page {
   private String link;
 
   @ManyToOne private Subject subject;
-  @ManyToMany private Set<Attachment> attachment;
+  @ManyToMany(mappedBy = "page")
+  private Set<Attachment> attachment;
 
   public Page() {}
 
