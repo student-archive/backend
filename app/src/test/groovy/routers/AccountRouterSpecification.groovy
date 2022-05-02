@@ -3,19 +3,13 @@ package routers
 import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
 import com.mashape.unirest.http.Unirest
-import ru.zgz.star.backend.util.SparkStarterUtil
 import spock.lang.Shared
-import spock.lang.Specification
 
-class AccountRouterSpecification extends Specification {
+class AccountRouterSpecification extends BaseRouterSpecification {
     @Shared
             BASE_URL = "http://localhost:4567/account"
     @Shared
             id = "ebbce63a-ece0-4aec-9b95-0eefb63113e6"
-
-    def setupSpec() {
-        new SparkStarterUtil().startSparkAppIfNotRunning(4567)
-    }
 
     def "GET request should return valid json"() {
         given:
@@ -53,9 +47,5 @@ class AccountRouterSpecification extends Specification {
         response.getStatus() == 200
         account != null
         account.get("id").getAsString() == id.toString()
-    }
-
-    def cleanupSpec() {
-        new SparkStarterUtil().killServer()
     }
 }
