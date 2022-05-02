@@ -45,6 +45,10 @@ dependencies {
     // ORM
     implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'
     implementation 'org.hibernate:hibernate-gradle-plugin:5.6.8.Final'
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
+    implementation 'jakarta.el:jakarta.el-api:4.0.0'
+    implementation 'org.glassfish:jakarta.el:4.0.0'
+
 
     // PostgreSQL Driver
     implementation 'org.postgresql:postgresql:42.3.4'
