@@ -18,7 +18,7 @@ public class ClassUtil {
   public static Set<Class<?>> findAllClasses(String packageName) throws IOException {
     return ClassPath.from(ClassLoader.getSystemClassLoader()).getAllClasses().stream()
         .filter(clazz -> clazz.getPackageName().equalsIgnoreCase(packageName))
-        .map(clazz -> clazz.load())
+        .map(ClassPath.ClassInfo::load)
         .collect(Collectors.toSet());
   }
 }

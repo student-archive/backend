@@ -1,17 +1,16 @@
-name: Google Code Style check
-on: pull_request
+name: Style check
+on: [ pull_request ]
 
 jobs:
-  checkstyle_job:
+  style:
+    name: Google
     runs-on: ubuntu-latest
-    name: Check style
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Run check style
+      - uses: actions/checkout@v2
+      - name: Code style
         uses: nikitasavinov/checkstyle-action@0.5.1
         with:
           level: error
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: 'github-pr-check'
-          tool_name: 'testtool'
+          reporter: 'github-pr-review'
+          tool_name: 'Code Style'
