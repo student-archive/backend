@@ -2,12 +2,13 @@ package ru.zgz.star.backend.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.zgz.star.backend.App;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import ru.zgz.star.backend.App;
 import spark.Spark;
 
+/** Utility class to start a spark server in a test environment. */
 public class SparkStarterUtil {
 
   public static Logger logger = LoggerFactory.getLogger(SparkStarterUtil.class);
@@ -16,7 +17,7 @@ public class SparkStarterUtil {
   protected int sparkPort = 4567;
 
   /**
-   * Checks if Spark server is running
+   * Checks if Spark server is running.
    *
    * @return running status
    */
