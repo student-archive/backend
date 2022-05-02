@@ -14,9 +14,7 @@ class AccountRouterSpecification extends Specification {
             id = "ebbce63a-ece0-4aec-9b95-0eefb63113e6"
 
     def setupSpec() {
-        reportInfo("Start server")
         new SparkStarterUtil().startSparkAppIfNotRunning(4567)
-        reportInfo("Server started")
     }
 
     def "GET request should return valid json"() {
