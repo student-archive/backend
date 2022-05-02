@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -34,11 +33,11 @@ public class Account {
   private String passwordHash;
 
   @Column(name = "last_active_date")
-  private Instant lastActiveDate;
+  private int lastActiveDate;
 
   public Account() {}
 
-  public Account(String email, String passwordHash, Instant lastActiveDate) {
+  public Account(String email, String passwordHash, int lastActiveDate) {
     this.email = email;
     this.passwordHash = passwordHash;
     this.lastActiveDate = lastActiveDate;
@@ -106,7 +105,7 @@ public class Account {
    *
    * @param lastActiveDate New login date
    */
-  public Account setLastActiveDate(Instant lastActiveDate) {
+  public Account setLastActiveDate(int lastActiveDate) {
     this.lastActiveDate = lastActiveDate;
     return this;
   }
@@ -116,7 +115,7 @@ public class Account {
    *
    * @return last login date of user
    */
-  public Instant getLastActiveDate() {
+  public int getLastActiveDate() {
     return lastActiveDate;
   }
 }

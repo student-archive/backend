@@ -42,6 +42,9 @@ public class App {
    */
   public static void main(String[] args)
       throws IOException, NoSuchFieldException, IllegalAccessException {
+
+    get("/ping", (req, res) -> "pong");
+
     for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
       logger.info("Found class: {}", cls.getName());
       String basePath = (String) cls.getField("BASE_URL").get(cls);
@@ -77,6 +80,10 @@ public class App {
               "Method " + method.getName() + "in class " + cls + " is not supported");
         }
       }
+      internalServerError((req, res) -> {
+        res.type("application/json");
+        return "{\"message\":\"Internal server error\"}";
+      });
     }
   }
 }

@@ -1,6 +1,5 @@
 package ru.zgz.star.backend.util;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.zgz.star.backend.models.Account;
@@ -12,11 +11,18 @@ public class HibernateUtil {
   static {
     try {
       var cfg = new Configuration();
-      Dotenv dotenv = Dotenv.load();
-      cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
-      cfg.setProperty("hibernate.connection.username", dotenv.get("DATABASE_USER"));
-      cfg.setProperty("hibernate.connection.password", dotenv.get("DATABASE_PASSWORD"));
+      cfg.setProperty("hibernate.connection.username", System.getenv("DATABASE_USER"));
+      cfg.setProperty("hibernate.connection.password", System.getenv("DATABASE_PASSWORD"));
+      if (System.getenv("ENV").equals("PROD")) {
+        cfg.setProperty("hibernate.connection.url", System.getenv("DATABASE_URL"));
+      } else if (System.getenv("ENV").equals("DEV")) {
+        cfg.setProperty("hibernate.connection.url", System.getenv("TEST_DATABASE_URL"));
+      }
+
       cfg.addAnnotatedClass(Account.class);
+
+      // TODO: Add this instead of above, when (relations between) models will be ready
+      //  ClassUtil.findAllClasses("ru.zgz.star.backend.models").forEach(cfg::addAnnotatedClass);
 
       sessionFactory = cfg.buildSessionFactory();
     } catch (Throwable ex) {
