@@ -6,10 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>invite_code</code>.
@@ -34,13 +32,13 @@ public class InviteCode {
   private boolean isValid;
 
   @Column(name = "activated_date")
-  private Instant activationDate;
+  private int activationDate;
 
   @ManyToOne private Account account;
 
   public InviteCode() {}
 
-  public InviteCode(String inviteCode, boolean isValid, Instant activationDate, Account account) {
+  public InviteCode(String inviteCode, boolean isValid, int activationDate, Account account) {
     this.inviteCode = inviteCode;
     this.isValid = isValid;
     this.activationDate = activationDate;
@@ -83,11 +81,11 @@ public class InviteCode {
     return this;
   }
 
-  public Instant getActivationDate() {
+  public int getActivationDate() {
     return activationDate;
   }
 
-  public InviteCode setActivationDate(Instant activationDate) {
+  public InviteCode setActivationDate(int activationDate) {
     this.activationDate = activationDate;
     return this;
   }

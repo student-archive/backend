@@ -6,10 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>trash</code>.
@@ -31,13 +29,13 @@ public class Trash {
   private UUID deletedId;
 
   @Column(name = "deleted_date")
-  private Instant deletingDate;
+  private int deletingDate;
 
   @ManyToOne private Group group;
 
   public Trash() {}
 
-  public Trash(UUID deletedId, Instant deletingDate, Group group) {
+  public Trash(UUID deletedId, int deletingDate, Group group) {
     this.deletedId = deletedId;
     this.deletingDate = deletingDate;
     this.group = group;
@@ -61,12 +59,12 @@ public class Trash {
     return deletedId;
   }
 
-  public Trash setDeletingDate(Instant deletingDate) {
+  public Trash setDeletingDate(int deletingDate) {
     this.deletingDate = deletingDate;
     return this;
   }
 
-  public Instant getDeletingDate() {
+  public int getDeletingDate() {
     return deletingDate;
   }
 

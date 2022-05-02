@@ -6,10 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>event</code>.
@@ -34,7 +32,7 @@ public class Event {
   private String eventDescription;
 
   @Column(name = "event_date")
-  private Instant eventDate;
+  private int eventDate;
 
   @ManyToOne private EventPriority eventPriority;
   @ManyToOne private User user;
@@ -42,7 +40,7 @@ public class Event {
 
   public Event() {}
 
-  public Event(String eventText, String eventDescription, Instant eventDate) {
+  public Event(String eventText, String eventDescription, int eventDate) {
     this.eventText = eventText;
     this.eventDescription = eventDescription;
     this.eventDate = eventDate;
@@ -75,12 +73,12 @@ public class Event {
     return eventDescription;
   }
 
-  public Event setEventDate(Instant eventDate) {
+  public Event setEventDate(int eventDate) {
     this.eventDate = eventDate;
     return this;
   }
 
-  public Instant getEventDate() {
+  public int getEventDate() {
     return eventDate;
   }
 

@@ -6,10 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>quiz_result</code>.
@@ -28,10 +26,10 @@ public class QuizResult {
   private UUID id;
 
   @Column(name = "result")
-  private Integer result;
+  private int result;
 
   @Column(name = "quiz_submit_date")
-  private Instant quizSubmitDate;
+  private int quizSubmitDate;
 
   @Column(name = "quiz_id")
   @ManyToOne
@@ -43,7 +41,7 @@ public class QuizResult {
 
   public QuizResult() {}
 
-  public QuizResult(Integer result, Instant quizSubmitDate) {
+  public QuizResult(int result, int quizSubmitDate) {
     this.result = result;
     this.quizSubmitDate = quizSubmitDate;
   }
@@ -57,21 +55,21 @@ public class QuizResult {
     return id;
   }
 
-  public QuizResult setResult(Integer result) {
+  public QuizResult setResult(int result) {
     this.result = result;
     return this;
   }
 
-  public Integer getResult() {
+  public int getResult() {
     return result;
   }
 
-  public QuizResult setQuizSubmitDate(Instant quizSubmitDate) {
+  public QuizResult setQuizSubmitDate(int quizSubmitDate) {
     this.quizSubmitDate = quizSubmitDate;
     return this;
   }
 
-  public Instant getQuizSubmitDate() {
+  public int getQuizSubmitDate() {
     return quizSubmitDate;
   }
 
