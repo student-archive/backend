@@ -69,5 +69,5 @@ jobs:
         with:
           level: error
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: 'github-pr-check'
+          reporter: 'github-pr-review'
           tool_name: 'Code Style'
