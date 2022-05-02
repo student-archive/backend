@@ -2,11 +2,12 @@ package ru.zgz.star.backend.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.zgz.star.backend.App;
+import spark.Spark;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import ru.zgz.star.backend.App;
-import spark.Spark;
 
 /** Utility class to start a spark server in a test environment. */
 public class SparkStarterUtil {
