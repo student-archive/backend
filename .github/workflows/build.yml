@@ -58,16 +58,3 @@ jobs:
           TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
           DATABASE_USER: ${{ secrets.DATABASE_USER }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-
-  style:
-    name: Style check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Code style
-        uses: nikitasavinov/checkstyle-action@0.5.1
-        with:
-          level: error
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: 'github-pr-review'
-          tool_name: 'Code Style'
