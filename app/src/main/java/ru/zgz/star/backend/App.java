@@ -80,6 +80,10 @@ public class App {
               "Method " + method.getName() + "in class " + cls + " is not supported");
         }
       }
+      internalServerError((req, res) -> {
+        res.type("application/json");
+        return "{\"message\":\"Internal server error\"}";
+      });
     }
   }
 }
