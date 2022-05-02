@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.Set;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -32,6 +34,8 @@ public class Certificate {
   @Column(name = "office")
   private String office;
 
+  @ManyToMany(mappedBy = "certificates")
+  public Set<Employee> employees;
   public Certificate() {}
 
   public Certificate(String certificateName, String certificateDescription, String office) {
@@ -73,6 +77,15 @@ public class Certificate {
 
   public Certificate setOffice(String office) {
     this.office = office;
+    return this;
+  }
+
+  public Set<Employee> getEmployees() {
+    return employees;
+  }
+
+  public Certificate setEmployees(Set<Employee> employees) {
+    this.employees = employees;
     return this;
   }
 }

@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.Set;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
@@ -28,6 +30,9 @@ public class Speciality {
   @Column(name = "speciality_name")
   private String specialityName;
 
+  @ManyToMany(mappedBy = "specialities")
+  public Set<Employee> employees;
+
   public Speciality() {}
 
   public Speciality(String specialityName) {
@@ -50,5 +55,14 @@ public class Speciality {
 
   public String getSpecialityName() {
     return specialityName;
+  }
+
+  public Set<Employee> getEmployees() {
+    return employees;
+  }
+
+  public Speciality setEmployees(Set<Employee> employees) {
+    this.employees = employees;
+    return this;
   }
 }

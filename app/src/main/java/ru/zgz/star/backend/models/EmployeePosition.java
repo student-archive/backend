@@ -4,10 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.util.Set;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>employee_position</code>.
@@ -27,6 +28,9 @@ public class EmployeePosition {
 
   @Column(name = "position")
   private String positionName;
+
+  @ManyToMany(mappedBy = "positions")
+  public Set<Employee> employees;
 
   public EmployeePosition() {}
 
@@ -49,6 +53,15 @@ public class EmployeePosition {
 
   public EmployeePosition setPositionName(String positionName) {
     this.positionName = positionName;
+    return this;
+  }
+
+  public Set<Employee> getEmployees() {
+    return employees;
+  }
+
+  public EmployeePosition setEmployees(Set<Employee> employees) {
+    this.employees = employees;
     return this;
   }
 }

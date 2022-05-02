@@ -1,9 +1,12 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -45,9 +48,26 @@ public class Employee {
   @Column(name = "link")
   private String link;
 
-  @ManyToMany private Set<Speciality> specialities;
-  @ManyToMany private Set<EmployeePosition> positions;
-  @ManyToMany private Set<Certificate> certificates;
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "speciality_employee",
+      joinColumns = @JoinColumn(name = "employee_id"),
+      inverseJoinColumns = @JoinColumn(name = "speciality_id"))
+  private Set<Speciality> specialities;
+
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "employee_employee_position",
+      joinColumns = @JoinColumn(name = "employee_id"),
+      inverseJoinColumns = @JoinColumn(name = "employee_position_id"))
+  private Set<EmployeePosition> positions;
+
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+    name = "employee_certificate",
+    joinColumns = @JoinColumn(name = "employee_id"),
+    inverseJoinColumns = @JoinColumn(name = "certificate_id"))
+  private Set<Certificate> certificates;
 
   public Employee() {}
 
