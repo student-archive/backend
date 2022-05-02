@@ -27,5 +27,5 @@ jobs:
         env:
           ENV: DEV
           TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
-          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
