@@ -1,9 +1,9 @@
 package routers
 
-
 import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
 import com.mashape.unirest.http.Unirest
+import ru.zgz.star.backend.util.SparkStarterUtil
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -12,6 +12,12 @@ class AccountRouterSpecification extends Specification {
             BASE_URL = "http://localhost:4567/account"
     @Shared
             id = "ebbce63a-ece0-4aec-9b95-0eefb63113e6"
+
+    def setupSpec() {
+        reportInfo("Start server")
+        new SparkStarterUtil().startSparkAppIfNotRunning(4567)
+        reportInfo("Server started")
+    }
 
     def "GET request should return valid json"() {
         given:
@@ -26,7 +32,7 @@ class AccountRouterSpecification extends Specification {
         notThrown(JsonParseException)
     }
 
-    def "GET request should return exactly one account" () {
+    def "GET request should return exactly one account"() {
         given:
         def response = Unirest.get("${BASE_URL}/${id}").asJson()
 
@@ -37,7 +43,6 @@ class AccountRouterSpecification extends Specification {
         response.getStatus() == 200
         notThrown(IllegalStateException)
     }
-
 
     def "GET request should return account with requested id"() {
         given:
@@ -50,5 +55,9 @@ class AccountRouterSpecification extends Specification {
         response.getStatus() == 200
         account != null
         account.get("id").getAsString() == id.toString()
+    }
+
+    def cleanupSpec() {
+        new SparkStarterUtil().killServer()
     }
 }
