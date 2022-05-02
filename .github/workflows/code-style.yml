@@ -1,10 +1,10 @@
-name: Google Code Style check
+name: Code Style
 on: pull_request
 
 jobs:
   checkstyle_job:
     runs-on: ubuntu-latest
-    name: Check style
+    name: Google
     steps:
       - name: Checkout
         uses: actions/checkout@v2
