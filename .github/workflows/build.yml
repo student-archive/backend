@@ -60,7 +60,7 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
 
   style:
-    name: Tests
+    name: Style check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
