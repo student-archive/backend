@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.Collection;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
@@ -46,6 +48,9 @@ public class Tutor {
   @Column(name = "is_working")
   private boolean isWorking;
 
+  @ManyToMany(mappedBy = "tutors")
+  private Collection<Subject> subjects;
+
   public Tutor() {}
 
   public Tutor(
@@ -60,7 +65,8 @@ public class Tutor {
     this.lastName = lastName;
     this.patronymic = patronymic;
     this.email = email;
-    this.phone = link;
+    this.phone = phone;
+    this.link = link;
     this.isWorking = isWorking;
   }
 
@@ -134,5 +140,13 @@ public class Tutor {
   public Tutor setIsWorking(boolean isWorking) {
     this.isWorking = isWorking;
     return this;
+  }
+
+  public Collection<Subject> getSubjects() {
+    return subjects;
+  }
+
+  public void setSubjects(Collection<Subject> subjects) {
+    this.subjects = subjects;
   }
 }

@@ -4,10 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.util.Set;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>attachment_type</code>.
@@ -27,6 +28,9 @@ public class AttachmentType {
 
   @Column(name = "type_name")
   private String typeName;
+
+  @OneToMany(mappedBy = "type")
+  private Set<Attachment> attachment;
 
   public AttachmentType() {}
 
@@ -50,5 +54,14 @@ public class AttachmentType {
 
   public String getTypeName() {
     return typeName;
+  }
+
+  public Set<Attachment> getAttachment() {
+    return attachment;
+  }
+
+  public AttachmentType setAttachment(Set<Attachment> attachment) {
+    this.attachment = attachment;
+    return this;
   }
 }

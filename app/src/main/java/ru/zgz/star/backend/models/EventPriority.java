@@ -1,13 +1,14 @@
 package ru.zgz.star.backend.models;
 
 import jakarta.persistence.Column;
-import org.hibernate.annotations.GenericGenerator;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Set;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>event_priority</code>.
@@ -31,6 +32,9 @@ public class EventPriority {
 
   @Column(name = "priority_description")
   private String priorityDescription;
+
+  @OneToMany(mappedBy = "eventPriority")
+  private Set<Event> events;
 
   public EventPriority() {}
 
@@ -94,5 +98,14 @@ public class EventPriority {
    */
   public String getPriorityDescription() {
     return priorityDescription;
+  }
+
+  public Set<Event> getEvents() {
+    return events;
+  }
+
+  public EventPriority setEvents(Set<Event> events) {
+    this.events = events;
+    return this;
   }
 }

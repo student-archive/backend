@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -30,7 +32,15 @@ public class Question {
   @Column(name = "question_text")
   private String questionText;
 
-  @OneToMany private Set<QuizVariant> variants;
+  @ManyToOne
+  @JoinColumn(name = "quiz_id")
+  private Quiz quiz;
+
+  @OneToMany(mappedBy = "question")
+  private Set<QuizVariant> variants;
+
+  @OneToMany(mappedBy = "question")
+  private Set<QuizHistory> quizHistories;
 
   public Question() {}
 
@@ -94,5 +104,23 @@ public class Question {
    */
   public Set<QuizVariant> getVariants() {
     return variants;
+  }
+
+  public Quiz getQuiz() {
+    return quiz;
+  }
+
+  public Question setQuiz(Quiz quiz) {
+    this.quiz = quiz;
+    return this;
+  }
+
+  public Set<QuizHistory> getQuizHistories() {
+    return quizHistories;
+  }
+
+  public Question setQuizHistories(Set<QuizHistory> quizHistories) {
+    this.quizHistories = quizHistories;
+    return this;
   }
 }

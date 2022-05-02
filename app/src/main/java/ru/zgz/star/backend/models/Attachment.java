@@ -40,7 +40,9 @@ public class Attachment {
   @Column(name = "checksum")
   private String checksum;
 
-  @ManyToOne private AttachmentType type;
+  @ManyToOne
+  @JoinColumn(name = "type_id", nullable = false)
+  private AttachmentType type;
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(

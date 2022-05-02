@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Set;
 import org.hibernate.annotations.GenericGenerator;
@@ -32,6 +33,9 @@ public class Speciality {
 
   @ManyToMany(mappedBy = "specialities")
   public Set<Employee> employees;
+
+  @OneToMany(mappedBy = "speciality")
+  private Set<Group> groups;
 
   public Speciality() {}
 
@@ -63,6 +67,15 @@ public class Speciality {
 
   public Speciality setEmployees(Set<Employee> employees) {
     this.employees = employees;
+    return this;
+  }
+
+  public Set<Group> getGroups() {
+    return groups;
+  }
+
+  public Speciality setGroups(Set<Group> groups) {
+    this.groups = groups;
     return this;
   }
 }

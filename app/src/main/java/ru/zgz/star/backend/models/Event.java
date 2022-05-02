@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
@@ -34,9 +35,17 @@ public class Event {
   @Column(name = "event_date")
   private int eventDate;
 
-  @ManyToOne private EventPriority eventPriority;
-  @ManyToOne private User user;
-  @ManyToOne private Group group;
+  @ManyToOne
+  @JoinColumn(name = "event_priority_id")
+  private EventPriority eventPriority;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "group_id")
+  private Group group;
 
   /** Instantiates a new Event. */
   public Event() {}

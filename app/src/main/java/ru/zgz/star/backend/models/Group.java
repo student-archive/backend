@@ -4,9 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Collection;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Set;
@@ -31,9 +33,22 @@ public class Group {
   @Column(name = "group_name")
   private String groupName;
 
-  @ManyToOne private University university;
-  @ManyToOne private Speciality speciality;
-  @OneToMany private Set<User> users;
+  @ManyToOne
+  @JoinColumn(name = "university_id", nullable = false)
+  private University university;
+
+  @ManyToOne
+  @JoinColumn(name = "speciality_id")
+  private Speciality speciality;
+
+  @OneToMany(mappedBy = "group")
+  private Set<User> users;
+
+  @OneToMany(mappedBy = "group")
+  private Set<Event> events;
+
+  @OneToMany(mappedBy = "group")
+  private Collection<Trash> trash;
 
   public Group() {}
 
@@ -87,5 +102,22 @@ public class Group {
   public Group setUniversity(University university) {
     this.university = university;
     return this;
+  }
+
+  public Set<Event> getEvents() {
+    return events;
+  }
+
+  public Group setEvents(Set<Event> events) {
+    this.events = events;
+    return this;
+  }
+
+  public Collection<Trash> getTrash() {
+    return trash;
+  }
+
+  public void setTrash(Collection<Trash> trash) {
+    this.trash = trash;
   }
 }

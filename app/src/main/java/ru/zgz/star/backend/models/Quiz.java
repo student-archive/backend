@@ -4,13 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
 import java.util.Set;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>quiz</code>.
@@ -37,9 +37,15 @@ public class Quiz {
   @Column(name = "questions_amount")
   private int questionsAmount;
 
-  @ManyToOne private Subject subject;
+  @ManyToOne
+  @JoinColumn(name = "subject_id")
+  private Subject subject;
 
-  @OneToMany private Set<Question> questions;
+  @OneToMany(mappedBy = "quiz")
+  private Set<Question> questions;
+
+  @OneToMany(mappedBy = "quiz")
+  private Set<QuizResult> quizResults;
 
   public Quiz() {}
 
@@ -107,5 +113,14 @@ public class Quiz {
 
   public Set<Question> getQuestions() {
     return questions;
+  }
+
+  public Set<QuizResult> getQuizResults() {
+    return quizResults;
+  }
+
+  public Quiz setQuizResults(Set<QuizResult> quizResults) {
+    this.quizResults = quizResults;
+    return this;
   }
 }

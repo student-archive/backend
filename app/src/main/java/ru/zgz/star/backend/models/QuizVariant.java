@@ -4,10 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.util.Set;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>quiz_variant</code>.
@@ -30,6 +33,13 @@ public class QuizVariant {
 
   @Column(name = "is_correct")
   private Boolean isCorrect;
+
+  @ManyToOne
+  @JoinColumn(name = "question_id", nullable = false)
+  private Question question;
+
+  @OneToMany(mappedBy = "selectedVariant")
+  private Set<QuizHistory> quizHistories;
 
   public QuizVariant() {}
 
@@ -63,5 +73,23 @@ public class QuizVariant {
 
   public Boolean getCorrect() {
     return isCorrect;
+  }
+
+  public Question getQuestion() {
+    return question;
+  }
+
+  public QuizVariant setQuestion(Question question) {
+    this.question = question;
+    return this;
+  }
+
+  public Set<QuizHistory> getQuizHistories() {
+    return quizHistories;
+  }
+
+  public QuizVariant setQuizHistories(Set<QuizHistory> quizHistories) {
+    this.quizHistories = quizHistories;
+    return this;
   }
 }

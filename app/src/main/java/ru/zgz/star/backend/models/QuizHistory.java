@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -26,9 +27,17 @@ public class QuizHistory {
   @Column(name = "id")
   private UUID id;
 
-  @ManyToOne private Question question;
-  @ManyToOne private QuizVariant selectedVariant;
-  @ManyToOne private User user;
+  @ManyToOne
+  @JoinColumn(name = "question_id")
+  private Question question;
+
+  @ManyToOne
+  @JoinColumn(name = "selected_variant_id")
+  private QuizVariant selectedVariant;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
   public QuizHistory() {}
 

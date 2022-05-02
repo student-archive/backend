@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
@@ -31,12 +32,12 @@ public class QuizResult {
   @Column(name = "quiz_submit_date")
   private int quizSubmitDate;
 
-  @Column(name = "quiz_id")
   @ManyToOne
+  @JoinColumn(name = "quiz_id")
   private Quiz quiz;
 
-  @Column(name = "user_id")
   @ManyToOne
+  @JoinColumn(name = "user_id")
   private User user;
 
   public QuizResult() {}

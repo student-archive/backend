@@ -4,10 +4,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.util.Set;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>account</code>.
@@ -34,6 +36,12 @@ public class Account {
 
   @Column(name = "last_active_date")
   private int lastActiveDate;
+
+  @OneToMany(mappedBy = "account")
+  private Set<InviteCode> inviteCodes;
+
+  @OneToOne(mappedBy = "account", optional = false)
+  private User user;
 
   public Account() {}
 
@@ -117,5 +125,22 @@ public class Account {
    */
   public int getLastActiveDate() {
     return lastActiveDate;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public Set<InviteCode> getInviteCodes() {
+    return inviteCodes;
+  }
+
+  public Account setInviteCodes(Set<InviteCode> inviteCodes) {
+    this.inviteCodes = inviteCodes;
+    return this;
   }
 }

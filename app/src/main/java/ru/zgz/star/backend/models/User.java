@@ -1,15 +1,18 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.util.Set;
 import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>user</code>.
@@ -36,10 +39,33 @@ public class User {
   @Column(name = "avatar_link")
   private String avatarLink;
 
-  @ManyToOne private Role role;
-  @OneToOne private Account account;
-  @ManyToOne private Group group;
-  @ManyToOne private Sex sex;
+  @ManyToOne
+  @JoinColumn(name = "role_id", nullable = false)
+  private Role role;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "account_id")
+  private Account account;
+
+  @ManyToOne
+  @JoinColumn(name = "group_id", nullable = false)
+  private Group group;
+
+  @ManyToOne
+  @JoinColumn(name = "sex_id", nullable = false)
+  private Sex sex;
+
+  @OneToMany(mappedBy = "user")
+  private Set<Event> events;
+
+  @OneToMany(mappedBy = "user")
+  private Set<QuizHistory> quizHistories;
+
+  @OneToMany(mappedBy = "user")
+  private Set<QuizResult> quizResults;
+
+  @OneToMany(mappedBy = "user")
+  private Set<Event> event;
 
   public User() {}
 
@@ -119,5 +145,39 @@ public class User {
   public User setSex(Sex sex) {
     this.sex = sex;
     return this;
+  }
+
+  public Set<Event> getEvents() {
+    return events;
+  }
+
+  public User setEvents(Set<Event> events) {
+    this.events = events;
+    return this;
+  }
+
+  public Set<QuizHistory> getQuizHistories() {
+    return quizHistories;
+  }
+
+  public User setQuizHistories(Set<QuizHistory> quizHistories) {
+    this.quizHistories = quizHistories;
+    return this;
+  }
+
+  public Set<Event> getEvent() {
+    return event;
+  }
+
+  public void setEvent(Set<Event> event) {
+    this.event = event;
+  }
+
+  public Set<QuizResult> getQuizResults() {
+    return quizResults;
+  }
+
+  public void setQuizResults(Set<QuizResult> quizResults) {
+    this.quizResults = quizResults;
   }
 }
