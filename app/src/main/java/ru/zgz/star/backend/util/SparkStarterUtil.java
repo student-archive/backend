@@ -3,17 +3,23 @@ package ru.zgz.star.backend.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.App;
-import spark.Spark;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import spark.Spark;
 
 public class SparkStarterUtil {
 
   public static Logger logger = LoggerFactory.getLogger(SparkStarterUtil.class);
+
+  /** The Spark port. */
   protected int sparkPort = 4567;
 
+  /**
+   * Checks if Spark server is running
+   *
+   * @return running status
+   */
   public boolean isRunning() {
     try {
       HttpURLConnection con =
@@ -24,10 +30,22 @@ public class SparkStarterUtil {
     }
   }
 
+  /**
+   * Start server.
+   *
+   * @throws IOException the io exception
+   * @throws NoSuchFieldException the no such field exception
+   * @throws IllegalAccessException the illegal access exception
+   */
   public void startServer() throws IOException, NoSuchFieldException, IllegalAccessException {
     App.main(null);
   }
 
+  /**
+   * Start spark app if not running.
+   *
+   * @param expectedPort the expected port
+   */
   public void startSparkAppIfNotRunning(int expectedPort) {
     sparkPort = expectedPort;
 
@@ -38,7 +56,10 @@ public class SparkStarterUtil {
         startServer();
         logger.info("Running spark to start");
       }
-    } catch (IllegalStateException | IOException | NoSuchFieldException | IllegalAccessException e) {
+    } catch (IllegalStateException
+        | IOException
+        | NoSuchFieldException
+        | IllegalAccessException e) {
       e.printStackTrace();
       logger.error("TODO: Investigate - " + e.getMessage());
     }
@@ -70,14 +91,12 @@ public class SparkStarterUtil {
     logger.warn("Server might not have started");
   }
 
+  /** Kill server. */
   public void killServer() {
 
     Spark.stop();
     Spark.awaitStop();
 
-    // TODO: trust the awaitStop
-
-    // wait until server has stopped
     int tries = 10;
     while (tries > 0) {
 
@@ -100,6 +119,11 @@ public class SparkStarterUtil {
     logger.info("Server might not have stopped");
   }
 
+  /**
+   * Gets port.
+   *
+   * @return the port
+   */
   public int getPort() {
     return sparkPort;
   }
