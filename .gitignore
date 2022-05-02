@@ -148,3 +148,4 @@ replay_pid*
 build
 
 .env
+!gradle/wrapper/gradle-wrapper.jar

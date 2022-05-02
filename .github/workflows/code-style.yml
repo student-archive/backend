@@ -1,0 +1,17 @@
+name: Google Code Style check
+on: pull_request
+
+jobs:
+  checkstyle_job:
+    runs-on: ubuntu-latest
+    name: Check style
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run check style
+        uses: nikitasavinov/checkstyle-action@0.5.1
+        with:
+          level: error
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: 'github-pr-check'
+          tool_name: 'testtool'

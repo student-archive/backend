@@ -1,9 +1,11 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>university</code>.
@@ -15,24 +17,36 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "university")
 public class University {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private String id;
+
+  @Column(name = "university_name")
   private String universityName;
 
-  @Id
-  @GeneratedValue
+  public University() {}
+
+  public University(String universityName) {
+    this.universityName = universityName;
+  }
+
   public String getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public University setId(String id) {
     this.id = id;
+    return this;
   }
 
   public String getUniversityName() {
     return universityName;
   }
 
-  public void setUniversityName(String universityName) {
+  public University setUniversityName(String universityName) {
     this.universityName = universityName;
+    return this;
   }
 }

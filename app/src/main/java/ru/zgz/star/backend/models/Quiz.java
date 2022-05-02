@@ -1,6 +1,14 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,7 +23,8 @@ import java.util.UUID;
 @Table(name = "quiz")
 public class Quiz {
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
   @Column(name = "id")
   private UUID id;
 
@@ -25,59 +34,75 @@ public class Quiz {
   @Column(name = "quiz_description")
   private String quizDescription;
 
-  @Column(name = "amount_of_questions")
-  private Integer amountOfQuestions;
+  @Column(name = "questions_amount")
+  private Integer questionsAmount;
 
-  @Column(name = "subject_id")
-  @ManyToOne
-  private Subject subject;
+  @ManyToOne private Subject subject;
 
   @OneToMany private Set<Question> questions;
 
   public Quiz() {}
 
-  public void setId(UUID id) {
+  public Quiz(
+      String quizName,
+      String quizDescription,
+      Integer questionsAmount,
+      Subject subject,
+      Set<Question> questions) {
+    this.quizName = quizName;
+    this.questionsAmount = questionsAmount;
+    this.subject = subject;
+    this.questions = questions;
+  }
+
+  public Quiz setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   public UUID getId() {
     return id;
   }
 
-  public void setQuizName(String quizName) {
+  public Quiz setQuizName(String quizName) {
     this.quizName = quizName;
+    return this;
   }
 
   public String getQuizName() {
     return quizName;
   }
 
-  public void setQuizDescription(String quizDescription) {
+  public Quiz setQuizDescription(String quizDescription) {
     this.quizDescription = quizDescription;
+    return this;
   }
 
   public String getQuizDescription() {
     return quizDescription;
   }
 
-  public void setAmountOfQuestions(Integer amountOfQuestions) {
-    this.amountOfQuestions = amountOfQuestions;
+  public Quiz setQuestionsAmount(Integer amountOfQuestions) {
+    this.questionsAmount = amountOfQuestions;
+    return this;
   }
 
-  public Integer getAmountOfQuestions() {
-    return amountOfQuestions;
+  public Integer getQuestionsAmount() {
+    return questionsAmount;
   }
 
-  public void setSubject(Subject subject) {
+  public Quiz setSubject(Subject subject) {
     this.subject = subject;
+    return this;
   }
 
   public Subject getSubject() {
     return subject;
   }
 
-  public void setQuestions(Set<Question> questions) {
+  public Quiz setQuestions(Set<Question> questions) {
     this.questions = questions;
+    return this;
   }
 
   public Set<Question> getQuestions() {

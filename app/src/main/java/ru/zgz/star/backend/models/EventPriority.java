@@ -1,9 +1,12 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import org.hibernate.annotations.GenericGenerator;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.util.UUID;
 
 /**
@@ -17,17 +20,33 @@ import java.util.UUID;
 @Table(name = "event_priority")
 public class EventPriority {
 
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "priority_name")
   private String priorityName;
+
+  @Column(name = "priority_description")
   private String priorityDescription;
+
+  public EventPriority() {}
+
+  public EventPriority(String priorityName, String priorityDescription) {
+    this.priorityName = priorityName;
+    this.priorityDescription = priorityDescription;
+  }
 
   /**
    * Sets value for ID
    *
    * @param id New ID of event priority
    */
-  public void setId(UUID id) {
+  public EventPriority setId(UUID id) {
     this.id = id;
+    return this;
   }
 
   /**
@@ -35,8 +54,6 @@ public class EventPriority {
    *
    * @return ID of user
    */
-  @Id
-  @GeneratedValue
   public UUID getId() {
     return id;
   }
@@ -46,8 +63,9 @@ public class EventPriority {
    *
    * @param priorityName New name of event priority
    */
-  public void setPriorityName(String priorityName) {
+  public EventPriority setPriorityName(String priorityName) {
     this.priorityName = priorityName;
+    return this;
   }
 
   /**
@@ -64,8 +82,9 @@ public class EventPriority {
    *
    * @param priorityDescription New name of event priority
    */
-  public void setPriorityDescription(String priorityDescription) {
+  public EventPriority setPriorityDescription(String priorityDescription) {
     this.priorityDescription = priorityDescription;
+    return this;
   }
 
   /**

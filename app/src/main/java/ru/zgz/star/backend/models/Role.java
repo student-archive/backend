@@ -1,9 +1,12 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.UUID;
 
 /**
@@ -16,30 +19,46 @@ import java.util.UUID;
 @Entity
 @Table(name = "role")
 public class Role {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "role_name")
   private String roleName;
+
+  @Column(name = "role_description")
   private String roleDescription;
 
-  public void setId(UUID id) {
-    this.id = id;
+  public Role() {}
+
+  public Role(String roleName, String roleDescription) {
+    this.roleName = roleName;
+    this.roleDescription = roleDescription;
   }
 
-  @Id
-  @GeneratedValue
+  public Role setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
   public UUID getId() {
     return id;
   }
 
-  public void setRoleName(String roleName) {
+  public Role setRoleName(String roleName) {
     this.roleName = roleName;
+    return this;
   }
 
   public String getRoleName() {
     return roleName;
   }
 
-  public void setRoleDescription(String roleDescription) {
+  public Role setRoleDescription(String roleDescription) {
     this.roleDescription = roleDescription;
+    return this;
   }
 
   public String getRoleDescription() {

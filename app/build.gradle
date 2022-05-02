@@ -9,6 +9,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'groovy'
 }
 
 repositories {
@@ -21,11 +22,12 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    // Spock for testing.
+    testImplementation 'org.spockframework:spock-core:2.2-M1-groovy-4.0'
+
 
     // This dependency is used by the application.
-    implementation 'com.google.guava:guava:30.1.1-jre'
+    implementation 'com.google.guava:guava:31.1-jre'
 
     // Spark
     implementation "com.sparkjava:spark-core:2.9.3"
@@ -37,10 +39,10 @@ dependencies {
 
     // ORM
     implementation 'org.hibernate.orm:hibernate-core:6.0.0.Final'
-    implementation 'org.hibernate:hibernate-gradle-plugin:5.6.7.Final'
+    implementation 'org.hibernate:hibernate-gradle-plugin:5.6.8.Final'
 
     // PostgreSQL Driver
-    implementation 'org.postgresql:postgresql:42.3.1'
+    implementation 'org.postgresql:postgresql:42.3.4'
 
     // Logging
     implementation 'org.slf4j:slf4j-simple:1.7.36'
@@ -52,7 +54,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
 
     // Gradle Plugins
-    implementation 'io.swagger.core.v3:swagger-gradle-plugin:2.1.13'
+    implementation 'io.swagger.core.v3:swagger-gradle-plugin:2.2.0'
 }
 
 application {
@@ -69,4 +71,5 @@ apply plugin: 'java'
 
 javadoc {
     source = sourceSets.main.allJava
+    destinationDir = file(new File(projectDir, '../../docs/docs'))
 }

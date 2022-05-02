@@ -1,6 +1,8 @@
 package ru.zgz.star.backend.routers;
 
 import com.google.gson.Gson;
+import ru.zgz.star.backend.models.EventPriority;
+import ru.zgz.star.backend.repository.DAO;
 import spark.Request;
 import spark.Response;
 
@@ -12,6 +14,7 @@ public class EventPrioritiesRouter {
 
   public static String getPriorities(Request request, Response response) {
     response.type("application/json");
-    return new Gson().toJson(IntStream.range(1, 6).boxed().collect(Collectors.toList()));
+    DAO<EventPriority> dao = new DAO<>(EventPriority.class);
+    return new Gson().toJson(dao.findAll());
   }
 }

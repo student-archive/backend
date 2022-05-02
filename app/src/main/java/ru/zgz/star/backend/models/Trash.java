@@ -1,6 +1,13 @@
 package ru.zgz.star.backend.models;
 
-import javax.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -14,40 +21,58 @@ import java.util.UUID;
 @Entity
 @Table(name = "trash")
 public class Trash {
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @Column(name = "id")
   private UUID id;
+
+  @Column(name = "deleted_id")
   private UUID deletedId;
+
+  @Column(name = "deleted_date")
   private Instant deletingDate;
 
   @ManyToOne private Group group;
 
-  public void setId(UUID id) {
-    this.id = id;
+  public Trash() {}
+
+  public Trash(UUID deletedId, Instant deletingDate, Group group) {
+    this.deletedId = deletedId;
+    this.deletingDate = deletingDate;
+    this.group = group;
   }
 
-  @Id
-  @GeneratedValue
+  public Trash setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
   public UUID getId() {
     return id;
   }
 
-  public void setDeletedId(UUID deletedId) {
+  public Trash setDeletedId(UUID deletedId) {
     this.deletedId = deletedId;
+    return this;
   }
 
   public UUID getDeletedId() {
     return deletedId;
   }
 
-  public void setDeletingDate(Instant deletingDate) {
+  public Trash setDeletingDate(Instant deletingDate) {
     this.deletingDate = deletingDate;
+    return this;
   }
 
   public Instant getDeletingDate() {
     return deletingDate;
   }
 
-  public void setGroup(Group group) {
+  public Trash setGroup(Group group) {
     this.group = group;
+    return this;
   }
 
   public Group getGroup() {
