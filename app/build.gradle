@@ -26,6 +26,9 @@ dependencies {
     testImplementation 'org.spockframework:spock-core:2.2-M1-groovy-4.0'
     testImplementation 'com.mashape.unirest:unirest-java:1.4.9'
     testImplementation "com.despegar:spark-test:1.1.8"
+    testImplementation( "com.athaydes:spock-reports:2.3.0-groovy-3.0" ) {
+        transitive = false
+    }
 
 
     // This dependency is used by the application.
