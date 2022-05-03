@@ -1,9 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -39,14 +37,10 @@ public class Account {
   @Column(name = "last_active_date")
   private Integer lastActiveDate;
 
-  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "account")
   private Set<InviteCode> inviteCodes;
 
-  @OneToOne(
-      mappedBy = "account",
-      optional = false,
-      cascade = CascadeType.ALL,
-      fetch = FetchType.EAGER)
+  @OneToOne(mappedBy = "account", optional = false)
   private User user;
 
   public Account() {}
