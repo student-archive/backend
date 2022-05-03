@@ -2,10 +2,13 @@ package ru.zgz.star.backend.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import ru.zgz.star.backend.models.Account;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Set of utils to work with hibernate */
 public class HibernateUtil {
+
+  public static Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
   private static final SessionFactory sessionFactory;
 
   static {
@@ -18,6 +21,8 @@ public class HibernateUtil {
       } else if (System.getenv("ENV").equals("DEV")) {
         cfg.setProperty("hibernate.connection.url", System.getenv("TEST_DATABASE_URL"));
       }
+
+      cfg.setProperty("hibernate.globally_quoted_identifiers", "true");
 
       ClassUtil.findAllClasses("ru.zgz.star.backend.models").forEach(cfg::addAnnotatedClass);
 
