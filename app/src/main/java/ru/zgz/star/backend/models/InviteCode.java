@@ -30,10 +30,10 @@ public class InviteCode {
   private String inviteCode;
 
   @Column(name = "is_valid")
-  private boolean isValid;
+  private Boolean isValid;
 
   @Column(name = "activated_date")
-  private int activationDate;
+  private Integer activationDate;
 
   @ManyToOne
   @JoinColumn(name = "account_id", nullable = false)
@@ -50,7 +50,7 @@ public class InviteCode {
    * @param activationDate the activation date
    * @param account the account
    */
-  public InviteCode(String inviteCode, boolean isValid, int activationDate, Account account) {
+  public InviteCode(String inviteCode, Boolean isValid, Integer activationDate, Account account) {
     this.inviteCode = inviteCode;
     this.isValid = isValid;
     this.activationDate = activationDate;
@@ -122,7 +122,7 @@ public class InviteCode {
    *
    * @return the is valid
    */
-  public boolean getIsValid() {
+  public Boolean getIsValid() {
     return isValid;
   }
 
@@ -132,7 +132,7 @@ public class InviteCode {
    * @param isValid the is valid
    * @return the is valid
    */
-  public InviteCode setIsValid(boolean isValid) {
+  public InviteCode setIsValid(Boolean isValid) {
     this.isValid = isValid;
     return this;
   }
@@ -142,7 +142,7 @@ public class InviteCode {
    *
    * @return the activation date
    */
-  public int getActivationDate() {
+  public Integer getActivationDate() {
     return activationDate;
   }
 
@@ -152,7 +152,7 @@ public class InviteCode {
    * @param activationDate the activation date
    * @return the activation date
    */
-  public InviteCode setActivationDate(int activationDate) {
+  public InviteCode setActivationDate(Integer activationDate) {
     this.activationDate = activationDate;
     return this;
   }

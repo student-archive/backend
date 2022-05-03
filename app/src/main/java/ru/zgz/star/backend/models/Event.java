@@ -33,7 +33,7 @@ public class Event {
   private String eventDescription;
 
   @Column(name = "event_date")
-  private int eventDate;
+  private Integer eventDate;
 
   @ManyToOne
   @JoinColumn(name = "event_priority_id")
@@ -57,7 +57,7 @@ public class Event {
    * @param eventDescription the event description
    * @param eventDate the event date
    */
-  public Event(String eventText, String eventDescription, int eventDate) {
+  public Event(String eventText, String eventDescription, Integer eventDate) {
     this.eventText = eventText;
     this.eventDescription = eventDescription;
     this.eventDate = eventDate;
@@ -129,7 +129,7 @@ public class Event {
    * @param eventDate the event date
    * @return the event date
    */
-  public Event setEventDate(int eventDate) {
+  public Event setEventDate(Integer eventDate) {
     this.eventDate = eventDate;
     return this;
   }
@@ -139,7 +139,7 @@ public class Event {
    *
    * @return the event date
    */
-  public int getEventDate() {
+  public Integer getEventDate() {
     return eventDate;
   }
 

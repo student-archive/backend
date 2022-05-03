@@ -55,11 +55,11 @@ public class Subject {
   private String subjectName;
 
   @Column(name = "semester")
-  private int semester;
+  private Integer semester;
 
   public Subject() {}
 
-  public Subject(Group group, String subjectName, int semester) {
+  public Subject(Group group, String subjectName, Integer semester) {
     this.group = group;
     this.subjectName = subjectName;
     this.semester = semester;
@@ -92,11 +92,11 @@ public class Subject {
     return this;
   }
 
-  public int getSemester() {
+  public Integer getSemester() {
     return semester;
   }
 
-  public Subject setSemester(int semester) {
+  public Subject setSemester(Integer semester) {
     this.semester = semester;
     return this;
   }

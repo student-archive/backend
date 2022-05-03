@@ -1,7 +1,9 @@
 package ru.zgz.star.backend.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -35,17 +37,21 @@ public class Account {
   private String passwordHash;
 
   @Column(name = "last_active_date")
-  private int lastActiveDate;
+  private Integer lastActiveDate;
 
-  @OneToMany(mappedBy = "account")
+  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private Set<InviteCode> inviteCodes;
 
-  @OneToOne(mappedBy = "account", optional = false)
+  @OneToOne(
+      mappedBy = "account",
+      optional = false,
+      cascade = CascadeType.ALL,
+      fetch = FetchType.EAGER)
   private User user;
 
   public Account() {}
 
-  public Account(String email, String passwordHash, int lastActiveDate) {
+  public Account(String email, String passwordHash, Integer lastActiveDate) {
     this.email = email;
     this.passwordHash = passwordHash;
     this.lastActiveDate = lastActiveDate;
@@ -113,7 +119,7 @@ public class Account {
    *
    * @param lastActiveDate New login date
    */
-  public Account setLastActiveDate(int lastActiveDate) {
+  public Account setLastActiveDate(Integer lastActiveDate) {
     this.lastActiveDate = lastActiveDate;
     return this;
   }
@@ -123,7 +129,7 @@ public class Account {
    *
    * @return last login date of user
    */
-  public int getLastActiveDate() {
+  public Integer getLastActiveDate() {
     return lastActiveDate;
   }
 

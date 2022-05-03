@@ -27,10 +27,10 @@ public class QuizResult {
   private UUID id;
 
   @Column(name = "result")
-  private int result;
+  private Integer result;
 
   @Column(name = "quiz_submit_date")
-  private int quizSubmitDate;
+  private Integer quizSubmitDate;
 
   @ManyToOne
   @JoinColumn(name = "quiz_id")
@@ -42,7 +42,7 @@ public class QuizResult {
 
   public QuizResult() {}
 
-  public QuizResult(int result, int quizSubmitDate) {
+  public QuizResult(Integer result, Integer quizSubmitDate) {
     this.result = result;
     this.quizSubmitDate = quizSubmitDate;
   }
@@ -56,21 +56,21 @@ public class QuizResult {
     return id;
   }
 
-  public QuizResult setResult(int result) {
+  public QuizResult setResult(Integer result) {
     this.result = result;
     return this;
   }
 
-  public int getResult() {
+  public Integer getResult() {
     return result;
   }
 
-  public QuizResult setQuizSubmitDate(int quizSubmitDate) {
+  public QuizResult setQuizSubmitDate(Integer quizSubmitDate) {
     this.quizSubmitDate = quizSubmitDate;
     return this;
   }
 
-  public int getQuizSubmitDate() {
+  public Integer getQuizSubmitDate() {
     return quizSubmitDate;
   }
 

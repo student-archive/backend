@@ -16,7 +16,7 @@ public class SparkStarterUtil {
   public static Logger logger = LoggerFactory.getLogger(SparkStarterUtil.class);
 
   /** The Spark port. */
-  protected int sparkPort = 4567;
+  protected Integer sparkPort = 4567;
 
   /**
    * Checks if Spark server is running.
@@ -49,7 +49,7 @@ public class SparkStarterUtil {
    *
    * @param expectedPort the expected port
    */
-  public void startSparkAppIfNotRunning(int expectedPort) {
+  public void startSparkAppIfNotRunning(Integer expectedPort) {
     sparkPort = expectedPort;
 
     try {
@@ -127,7 +127,7 @@ public class SparkStarterUtil {
    *
    * @return the port
    */
-  public int getPort() {
+  public Integer getPort() {
     return sparkPort;
   }
 }

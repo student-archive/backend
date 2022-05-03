@@ -30,7 +30,7 @@ public class Trash {
   private UUID deletedId;
 
   @Column(name = "deleted_date")
-  private int deletingDate;
+  private Integer deletingDate;
 
   @ManyToOne
   @JoinColumn(name = "group_id")
@@ -46,7 +46,7 @@ public class Trash {
    * @param deletingDate the deleting date
    * @param group the group
    */
-  public Trash(UUID deletedId, int deletingDate, Group group) {
+  public Trash(UUID deletedId, Integer deletingDate, Group group) {
     this.deletedId = deletedId;
     this.deletingDate = deletingDate;
     this.group = group;
@@ -98,7 +98,7 @@ public class Trash {
    * @param deletingDate the deleting date
    * @return the deleting date
    */
-  public Trash setDeletingDate(int deletingDate) {
+  public Trash setDeletingDate(Integer deletingDate) {
     this.deletingDate = deletingDate;
     return this;
   }
@@ -108,7 +108,7 @@ public class Trash {
    *
    * @return the deleting date
    */
-  public int getDeletingDate() {
+  public Integer getDeletingDate() {
     return deletingDate;
   }
 

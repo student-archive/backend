@@ -35,7 +35,7 @@ public class Quiz {
   private String quizDescription;
 
   @Column(name = "questions_amount")
-  private int questionsAmount;
+  private Integer questionsAmount;
 
   @ManyToOne
   @JoinColumn(name = "subject_id")
@@ -52,7 +52,7 @@ public class Quiz {
   public Quiz(
       String quizName,
       String quizDescription,
-      int questionsAmount,
+      Integer questionsAmount,
       Subject subject,
       Set<Question> questions) {
     this.quizName = quizName;
@@ -88,12 +88,12 @@ public class Quiz {
     return quizDescription;
   }
 
-  public Quiz setQuestionsAmount(int amountOfQuestions) {
+  public Quiz setQuestionsAmount(Integer amountOfQuestions) {
     this.questionsAmount = amountOfQuestions;
     return this;
   }
 
-  public int getQuestionsAmount() {
+  public Integer getQuestionsAmount() {
     return questionsAmount;
   }
 

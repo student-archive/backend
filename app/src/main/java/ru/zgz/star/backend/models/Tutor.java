@@ -46,7 +46,7 @@ public class Tutor {
   private String link;
 
   @Column(name = "is_working")
-  private boolean isWorking;
+  private Boolean isWorking;
 
   @ManyToMany(mappedBy = "tutors")
   private Collection<Subject> subjects;
@@ -133,11 +133,11 @@ public class Tutor {
     return this;
   }
 
-  public boolean isIsWorking() {
+  public Boolean isIsWorking() {
     return isWorking;
   }
 
-  public Tutor setIsWorking(boolean isWorking) {
+  public Tutor setIsWorking(Boolean isWorking) {
     this.isWorking = isWorking;
     return this;
   }
