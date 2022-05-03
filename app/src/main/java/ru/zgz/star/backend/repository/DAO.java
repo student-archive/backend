@@ -4,14 +4,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.zgz.star.backend.routes.AccountRouter;
-import ru.zgz.star.backend.util.HibernateUtil;
-
 import java.util.List;
 import java.util.UUID;
+import org.hibernate.SessionFactory;
+import ru.zgz.star.backend.util.HibernateUtil;
 
 /**
  * Data access object
@@ -19,8 +15,6 @@ import java.util.UUID;
  * @param <T> Model of database
  */
 public class DAO<T> {
-
-  public static Logger logger = LoggerFactory.getLogger(AccountRouter.class);
   private final Class<T> type;
 
   /**
