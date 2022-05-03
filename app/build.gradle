@@ -47,7 +47,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-gradle-plugin:5.6.8.Final'
     implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
     implementation 'jakarta.el:jakarta.el-api:4.0.0'
-    implementation 'org.glassfish:jakarta.el:4.0.0'
+    implementation 'org.glassfish:jakarta.el:4.0.2'
 
 
     // PostgreSQL Driver
