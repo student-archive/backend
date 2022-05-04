@@ -3,8 +3,6 @@ package ru.zgz.star.backend.routes;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.zgz.star.backend.models.Account;
-import ru.zgz.star.backend.repository.DAO;
 import spark.Request;
 import spark.Response;
 
@@ -15,16 +13,16 @@ public class AccountRouter {
 
   public static String getExactAccount(Request request, Response response) {
     response.type("application/json");
-    DAO<Account> dao = new DAO<>(Account.class);
-    Account result = dao.findById(request.params("id"));
-    logger.info("Account {} found", result);
-    return new Gson().toJson(result);
+//    List<Account> accounts = new QAccount().findList();
+//    DAO<Account> dao = new DAO<>(Account.class);
+//    String result = dao.findById(request.params("id"));
+//    logger.info("Account {} found", result);
+//    return result;
+    return "";
   }
 
   public static String deleteExactAccount(Request request, Response response) {
     response.type("application/json");
-    DAO<Account> dao = new DAO<>(Account.class);
-    dao.delete(request.params("id"));
     logger.info("Account {} deleted", request.params("id"));
     return new Gson().toJson("OK");
   }

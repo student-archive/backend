@@ -1,13 +1,12 @@
 package ru.zgz.star.backend.models;
 
+import io.ebean.Model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Model for table <code>account</code>.
@@ -18,11 +17,9 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "account")
-public class Account {
+public class Account extends Model {
 
   @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
   @Column(name = "id")
   private UUID id;
 

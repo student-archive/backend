@@ -7,9 +7,10 @@
  */
 
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
     id 'groovy'
+    id 'idea'
+    id 'java'
     id 'io.ebean' version '13.6.0'
 }
 

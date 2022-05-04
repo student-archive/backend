@@ -3,8 +3,10 @@ package routers
 import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
 import com.mashape.unirest.http.Unirest
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class AccountRouterSpecification extends BaseRouterSpecification {
     @Shared
             BASE_URL = "http://localhost:4567/account"
