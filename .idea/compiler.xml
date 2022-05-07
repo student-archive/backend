@@ -7,7 +7,7 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ebean/querybean-generator/13.6.0/aa23f5381e0cc4dd8dd33b5ca0fc9cd981e0e118/querybean-generator-13.6.0.jar" />
         </processorPath>
-        <module name="backend.app.main" />
+        <module name="backend.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />
