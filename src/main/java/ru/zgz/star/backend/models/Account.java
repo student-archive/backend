@@ -19,6 +19,12 @@ public class Account {
 
   public Account() {}
 
+  /**
+   * Instantiates new Account
+   * @param email account's email
+   * @param passwordHash account's hash of password
+   * @param lastActiveDate account's last login date
+   */
   public Account(String email, String passwordHash, Integer lastActiveDate) {
     this.email = email;
     this.passwordHash = passwordHash;
