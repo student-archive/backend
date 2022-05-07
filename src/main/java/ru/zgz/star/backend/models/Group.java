@@ -1,19 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.util.Collection;
-
-
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,38 +11,20 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "group")
-public class Group extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+
+public class Group {
+
   private UUID id;
-
-  @Column(name = "group_name")
   private String groupName;
-
-  @ManyToOne
-  @JoinColumn(name = "university_id", nullable = false)
   private University university;
-
-  @ManyToOne
-  @JoinColumn(name = "speciality_id")
   private Speciality speciality;
-
-  @OneToMany(mappedBy = "group")
-  private Set<User> users;
-
-  @OneToMany(mappedBy = "group")
-  private Set<Event> events;
-
-  @OneToMany(mappedBy = "group")
+  private List<User> users;
+  private List<Event> events;
   private Collection<Trash> trash;
 
   public Group() {}
 
-  public Group(String groupName, University university, Speciality speciality, Set<User> users) {
+  public Group(String groupName, University university, Speciality speciality, List<User> users) {
     this.groupName = groupName;
     this.university = university;
     this.speciality = speciality;
@@ -88,11 +58,11 @@ public class Group extends Model {
     return groupName;
   }
 
-  public Set<User> getUsers() {
+  public List<User> getUsers() {
     return users;
   }
 
-  public Group setUsers(Set<User> users) {
+  public Group setUsers(List<User> users) {
     this.users = users;
     return this;
   }
@@ -106,11 +76,11 @@ public class Group extends Model {
     return this;
   }
 
-  public Set<Event> getEvents() {
+  public List<Event> getEvents() {
     return events;
   }
 
-  public Group setEvents(Set<Event> events) {
+  public Group setEvents(List<Event> events) {
     this.events = events;
     return this;
   }

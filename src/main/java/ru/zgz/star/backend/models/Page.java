@@ -1,18 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -22,28 +10,17 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "page")
-public class Page extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+
+public class Page {
+
   private UUID id;
-
-  @Column(name = "link")
   private String link;
-
-  @ManyToOne
-  @JoinColumn(name = "subject_id")
   private Subject subject;
-
-  @ManyToMany(mappedBy = "page")
-  private Set<Attachment> attachment;
+  private List<Attachment> attachment;
 
   public Page() {}
 
-  public Page(String link, Subject subject, Set<Attachment> attachment) {
+  public Page(String link, Subject subject, List<Attachment> attachment) {
     this.link = link;
     this.subject = subject;
     this.attachment = attachment;
@@ -76,12 +53,12 @@ public class Page extends Model {
     return subject;
   }
 
-  public Page setAttachment(Set<Attachment> attachment) {
+  public Page setAttachment(List<Attachment> attachment) {
     this.attachment = attachment;
     return this;
   }
 
-  public Set<Attachment> getAttachment() {
+  public List<Attachment> getAttachment() {
     return attachment;
   }
 }

@@ -1,19 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
-
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,53 +10,17 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "employee")
-public class Employee extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class Employee {
   private UUID id;
-
-  @Column(name = "first_name")
   private String firstName;
-
-  @Column(name = "last_name")
   private String lastName;
-
-  @Column(name = "patronymic")
   private String patronymic;
-
-  @Column(name = "email")
   private String email;
-
-  @Column(name = "phone")
   private String phone;
-
-  @Column(name = "link")
   private String link;
-
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "speciality_employee",
-      joinColumns = @JoinColumn(name = "employee_id"),
-      inverseJoinColumns = @JoinColumn(name = "speciality_id"))
-  private Set<Speciality> specialities;
-
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "employee_employee_position",
-      joinColumns = @JoinColumn(name = "employee_id"),
-      inverseJoinColumns = @JoinColumn(name = "employee_position_id"))
-  private Set<EmployeePosition> positions;
-
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "employee_certificate",
-      joinColumns = @JoinColumn(name = "employee_id"),
-      inverseJoinColumns = @JoinColumn(name = "certificate_id"))
-  private Set<Certificate> certificates;
+  private List<Speciality> specialities;
+  private List<EmployeePosition> positions;
+  private List<Certificate> certificates;
 
   public Employee() {}
 
@@ -80,9 +31,9 @@ public class Employee extends Model {
       String email,
       String phone,
       String link,
-      Set<Speciality> specialities,
-      Set<EmployeePosition> positions,
-      Set<Certificate> certificates) {
+      List<Speciality> specialities,
+      List<EmployeePosition> positions,
+      List<Certificate> certificates) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.patronymic = patronymic;
@@ -157,29 +108,29 @@ public class Employee extends Model {
     return this;
   }
 
-  public Set<EmployeePosition> getPositions() {
+  public List<EmployeePosition> getPositions() {
     return positions;
   }
 
-  public Employee setPositions(Set<EmployeePosition> positions) {
+  public Employee setPositions(List<EmployeePosition> positions) {
     this.positions = positions;
     return this;
   }
 
-  public Set<Speciality> getSpecialities() {
+  public List<Speciality> getSpecialities() {
     return specialities;
   }
 
-  public Employee setSpeciality(Set<Speciality> specialities) {
+  public Employee setSpeciality(List<Speciality> specialities) {
     this.specialities = specialities;
     return this;
   }
 
-  public Set<Certificate> getCertificates() {
+  public List<Certificate> getCertificates() {
     return certificates;
   }
 
-  public Employee setCertificates(Set<Certificate> certificates) {
+  public Employee setCertificates(List<Certificate> certificates) {
     this.certificates = certificates;
     return this;
   }

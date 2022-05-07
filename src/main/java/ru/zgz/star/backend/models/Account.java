@@ -1,11 +1,5 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import java.util.UUID;
 
 /**
@@ -15,27 +9,12 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "account")
-public class Account extends Model {
-
-  @Id
-  @Column(name = "id")
+public class Account {
   private UUID id;
-
-  @Column(name = "email")
   private String email;
-
-  @Column(name = "password_hash")
   private String passwordHash;
-
-  @Column(name = "last_active_date")
   private Integer lastActiveDate;
-
-  @OneToOne(mappedBy = "account")
   private InviteCode inviteCode;
-
-  @OneToOne(mappedBy = "account", optional = false)
   private User user;
 
   public Account() {}

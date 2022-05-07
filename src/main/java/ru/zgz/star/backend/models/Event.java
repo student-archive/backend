@@ -1,14 +1,5 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.util.UUID;
 
 
@@ -19,34 +10,14 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "event")
-public class Event extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+
+public class Event {
   private UUID id;
-
-  @Column(name = "event_text")
   private String eventText;
-
-  @Column(name = "event_description")
   private String eventDescription;
-
-  @Column(name = "event_date")
   private Integer eventDate;
-
-  @ManyToOne
-  @JoinColumn(name = "event_priority_id")
   private EventPriority eventPriority;
-
-  @ManyToOne
-  @JoinColumn(name = "user_id")
   private User user;
-
-  @ManyToOne
-  @JoinColumn(name = "group_id")
   private Group group;
 
   /** Instantiates a new Event. */

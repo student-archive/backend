@@ -1,17 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
-
-
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -21,23 +10,11 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "speciality")
-public class Speciality extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class Speciality {
   private UUID id;
-
-  @Column(name = "speciality_name")
   private String specialityName;
-
-  @ManyToMany(mappedBy = "specialities")
-  public Set<Employee> employees;
-
-  @OneToMany(mappedBy = "speciality")
-  private Set<Group> groups;
+  public List<Employee> employees;
+  private List<Group> groups;
 
   public Speciality() {}
 
@@ -63,20 +40,20 @@ public class Speciality extends Model {
     return specialityName;
   }
 
-  public Set<Employee> getEmployees() {
+  public List<Employee> getEmployees() {
     return employees;
   }
 
-  public Speciality setEmployees(Set<Employee> employees) {
+  public Speciality setEmployees(List<Employee> employees) {
     this.employees = employees;
     return this;
   }
 
-  public Set<Group> getGroups() {
+  public List<Group> getGroups() {
     return groups;
   }
 
-  public Speciality setGroups(Set<Group> groups) {
+  public Speciality setGroups(List<Group> groups) {
     this.groups = groups;
     return this;
   }

@@ -1,16 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.util.UUID;
-
 
 /**
  * Model for table <code>quiz_result</code>.
@@ -19,27 +9,12 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "quiz_result")
-public class QuizResult extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class QuizResult {
+
   private UUID id;
-
-  @Column(name = "result")
   private Integer result;
-
-  @Column(name = "quiz_submit_date")
   private Integer quizSubmitDate;
-
-  @ManyToOne
-  @JoinColumn(name = "quiz_id")
   private Quiz quiz;
-
-  @ManyToOne
-  @JoinColumn(name = "user_id")
   private User user;
 
   public QuizResult() {}

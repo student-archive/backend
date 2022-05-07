@@ -1,15 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
-
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Model for table <code>university</code>.
@@ -18,20 +10,11 @@ import java.util.Set;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "university")
-public class University extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
-  private String id;
+public class University {
 
-  @Column(name = "university_name")
+  private UUID id;
   private String universityName;
-
-  @OneToMany(mappedBy = "university")
-  private Set<Group> groups;
+  private List<Group> groups;
 
   public University() {}
 
@@ -39,11 +22,11 @@ public class University extends Model {
     this.universityName = universityName;
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public University setId(String id) {
+  public University setId(UUID id) {
     this.id = id;
     return this;
   }
@@ -57,11 +40,11 @@ public class University extends Model {
     return this;
   }
 
-  public Set<Group> getGroups() {
+  public List<Group> getGroups() {
     return groups;
   }
 
-  public University setGroups(Set<Group> groups) {
+  public University setGroups(List<Group> groups) {
     this.groups = groups;
     return this;
   }

@@ -1,13 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.OneToOne;
 import java.util.UUID;
 
 
@@ -18,22 +11,12 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "invite_code")
-public class InviteCode extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+
+public class InviteCode {
+
   private UUID id;
-
-  @Column(name = "invite_code")
   private String inviteCode;
-
-  @Column(name = "is_valid")
   private Boolean isValid;
-
-  @Column(name = "activated_date")
   private Integer activationDate;
 
   @OneToOne(optional = false)

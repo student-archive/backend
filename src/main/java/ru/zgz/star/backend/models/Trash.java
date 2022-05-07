@@ -1,16 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.util.UUID;
-
 
 /**
  * Model for table <code>trash</code>.
@@ -19,23 +9,10 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "trash")
-public class Trash extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class Trash {
   private UUID id;
-
-  @Column(name = "deleted_id")
   private UUID deletedId;
-
-  @Column(name = "deleted_date")
   private Integer deletingDate;
-
-  @ManyToOne
-  @JoinColumn(name = "group_id")
   private Group group;
 
   /** Instantiates a new Trash. */

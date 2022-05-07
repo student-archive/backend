@@ -1,21 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-
 
 /**
  * Model for table <code>subject</code>.
@@ -24,39 +10,14 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "subject")
-public class Subject extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class Subject {
   private UUID id;
-
-  @ManyToOne
-  @JoinColumn(name = "group_id")
   private Group group;
-
-  @OneToMany(mappedBy = "subject")
-  private Set<Page> pages;
-
-  @OneToMany(mappedBy = "subject")
-  private Set<Quiz> quizzes;
-
-  @OneToMany(mappedBy = "subject")
-  private Set<Software> software;
-
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "subject_tutor",
-      joinColumns = @JoinColumn(name = "subject_id"),
-      inverseJoinColumns = @JoinColumn(name = "tutor_id"))
-  private Set<Tutor> tutors;
-
-  @Column(name = "subject_name")
+  private List<Page> pages;
+  private List<Quiz> quizzes;
+  private List<Software> software;
+  private List<Tutor> tutors;
   private String subjectName;
-
-  @Column(name = "semester")
   private Integer semester;
 
   public Subject() {}
@@ -103,38 +64,38 @@ public class Subject extends Model {
     return this;
   }
 
-  public Set<Page> getPages() {
+  public List<Page> getPages() {
     return pages;
   }
 
-  public Subject setPages(Set<Page> pages) {
+  public Subject setPages(List<Page> pages) {
     this.pages = pages;
     return this;
   }
 
-  public Set<Quiz> getQuizzes() {
+  public List<Quiz> getQuizzes() {
     return quizzes;
   }
 
-  public Subject setQuizzes(Set<Quiz> quizzes) {
+  public Subject setQuizzes(List<Quiz> quizzes) {
     this.quizzes = quizzes;
     return this;
   }
 
-  public Set<Software> getSoftware() {
+  public List<Software> getSoftware() {
     return software;
   }
 
-  public Subject setSoftware(Set<Software> software) {
+  public Subject setSoftware(List<Software> software) {
     this.software = software;
     return this;
   }
 
-  public Set<Tutor> getTutors() {
+  public List<Tutor> getTutors() {
     return tutors;
   }
 
-  public Subject setTutors(Set<Tutor> tutors) {
+  public Subject setTutors(List<Tutor> tutors) {
     this.tutors = tutors;
     return this;
   }

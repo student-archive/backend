@@ -1,16 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import java.util.Collection;
-
-
 import java.util.UUID;
 
 /**
@@ -20,37 +10,15 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "tutor")
-public class Tutor extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class Tutor {
   private UUID id;
-
-  @Column(name = "first_name")
   private String firstName;
-
-  @Column(name = "last_name")
   private String lastName;
-
-  @Column(name = "patronymic")
   private String patronymic;
-
-  @Column(name = "email")
   private String email;
-
-  @Column(name = "phone")
   private String phone;
-
-  @Column(name = "link")
   private String link;
-
-  @Column(name = "is_working")
   private Boolean isWorking;
-
-  @ManyToMany(mappedBy = "tutors")
   private Collection<Subject> subjects;
 
   public Tutor() {}

@@ -1,12 +1,5 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 /**
  * Model for table <code>sex</code>.
  *
@@ -14,14 +7,8 @@ import javax.persistence.Table;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "sex")
-public class Sex extends Model {
-  @Id
-  @Column(name = "id")
+public class Sex {
   private Short id;
-
-  @Column(name = "sex_name")
   private String sexName;
 
   public Sex() {}

@@ -1,18 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-
 
 /**
  * Model for table <code>quiz</code>.
@@ -21,33 +10,14 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "quiz")
-public class Quiz extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class Quiz {
   private UUID id;
-
-  @Column(name = "quiz_name")
   private String quizName;
-
-  @Column(name = "quiz_description")
   private String quizDescription;
-
-  @Column(name = "questions_amount")
   private Integer questionsAmount;
-
-  @ManyToOne
-  @JoinColumn(name = "subject_id")
   private Subject subject;
-
-  @OneToMany(mappedBy = "quiz")
-  private Set<Question> questions;
-
-  @OneToMany(mappedBy = "quiz")
-  private Set<QuizResult> quizResults;
+  private List<Question> questions;
+  private List<QuizResult> quizResults;
 
   public Quiz() {}
 
@@ -56,8 +26,9 @@ public class Quiz extends Model {
       String quizDescription,
       Integer questionsAmount,
       Subject subject,
-      Set<Question> questions) {
+      List<Question> questions) {
     this.quizName = quizName;
+    this.quizDescription = quizDescription;
     this.questionsAmount = questionsAmount;
     this.subject = subject;
     this.questions = questions;
@@ -108,20 +79,20 @@ public class Quiz extends Model {
     return subject;
   }
 
-  public Quiz setQuestions(Set<Question> questions) {
+  public Quiz setQuestions(List<Question> questions) {
     this.questions = questions;
     return this;
   }
 
-  public Set<Question> getQuestions() {
+  public List<Question> getQuestions() {
     return questions;
   }
 
-  public Set<QuizResult> getQuizResults() {
+  public List<QuizResult> getQuizResults() {
     return quizResults;
   }
 
-  public Quiz setQuizResults(Set<QuizResult> quizResults) {
+  public Quiz setQuizResults(List<QuizResult> quizResults) {
     this.quizResults = quizResults;
     return this;
   }

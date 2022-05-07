@@ -1,16 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-
 
 /**
  * Model for table <code>role</code>.
@@ -19,23 +10,12 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "role")
-public class Role extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class Role {
+
   private UUID id;
-
-  @Column(name = "role_name")
   private String roleName;
-
-  @Column(name = "role_description")
   private String roleDescription;
-
-  @OneToMany(mappedBy = "role")
-  private Set<User> users;
+  private List<User> users;
 
   public Role() {}
 
@@ -71,11 +51,11 @@ public class Role extends Model {
     return roleDescription;
   }
 
-  public Set<User> getUsers() {
+  public List<User> getUsers() {
     return users;
   }
 
-  public Role setUsers(Set<User> users) {
+  public Role setUsers(List<User> users) {
     this.users = users;
     return this;
   }

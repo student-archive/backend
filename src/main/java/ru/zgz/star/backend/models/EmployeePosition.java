@@ -1,14 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -19,20 +11,11 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "employee_position")
-public class EmployeePosition extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+
+public class EmployeePosition {
   private UUID id;
-
-  @Column(name = "position")
   private String positionName;
-
-  @ManyToMany(mappedBy = "positions")
-  public Set<Employee> employees;
+  public List<Employee> employees;
 
   public EmployeePosition() {}
 
@@ -58,11 +41,11 @@ public class EmployeePosition extends Model {
     return this;
   }
 
-  public Set<Employee> getEmployees() {
+  public List<Employee> getEmployees() {
     return employees;
   }
 
-  public EmployeePosition setEmployees(Set<Employee> employees) {
+  public EmployeePosition setEmployees(List<Employee> employees) {
     this.employees = employees;
     return this;
   }

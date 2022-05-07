@@ -1,14 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -19,20 +11,11 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "attachment_type")
-public class AttachmentType extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+
+public class AttachmentType {
   private UUID id;
-
-  @Column(name = "type_name")
   private String typeName;
-
-  @OneToMany(mappedBy = "type")
-  private Set<Attachment> attachment;
+  private List<Attachment> attachment;
 
   public AttachmentType() {}
 
@@ -58,11 +41,11 @@ public class AttachmentType extends Model {
     return typeName;
   }
 
-  public Set<Attachment> getAttachment() {
+  public List<Attachment> getAttachment() {
     return attachment;
   }
 
-  public AttachmentType setAttachment(Set<Attachment> attachment) {
+  public AttachmentType setAttachment(List<Attachment> attachment) {
     this.attachment = attachment;
     return this;
   }

@@ -1,14 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -18,26 +10,13 @@ import java.util.Set;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "certificate")
-public class Certificate extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+
+public class Certificate {
   private String id;
-
-  @Column(name = "certificate_name")
   private String certificateName;
-
-  @Column(name = "certificate_description")
   private String certificateDescription;
-
-  @Column(name = "office")
   private String office;
-
-  @ManyToMany(mappedBy = "certificates")
-  public Set<Employee> employees;
+  public List<Employee> employees;
   public Certificate() {}
 
   public Certificate(String certificateName, String certificateDescription, String office) {
@@ -82,11 +61,11 @@ public class Certificate extends Model {
     return this;
   }
 
-  public Set<Employee> getEmployees() {
+  public List<Employee> getEmployees() {
     return employees;
   }
 
-  public Certificate setEmployees(Set<Employee> employees) {
+  public Certificate setEmployees(List<Employee> employees) {
     this.employees = employees;
     return this;
   }

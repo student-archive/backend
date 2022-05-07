@@ -1,20 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -24,33 +10,13 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "attachment")
-public class Attachment extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  @Column(name = "id")
+public class Attachment {
   private UUID id;
-
-  @Column(name = "attachment_link")
   private String link;
-
-  @Column(name = "author")
   private String author;
-
-  @Column(name = "checksum")
   private String checksum;
-
-  @ManyToOne
-  @JoinColumn(name = "type_id", nullable = false)
   private AttachmentType type;
-
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "page_attachment",
-      joinColumns = @JoinColumn(name = "attachment_id"),
-      inverseJoinColumns = @JoinColumn(name = "page_id"))
-  private Set<Page> page;
+  private List<Page> page;
 
   public Attachment() {}
 
@@ -64,7 +30,7 @@ public class Attachment extends Model {
    * @param page pages of attachment
    */
   public Attachment(
-      String link, String author, String checksum, AttachmentType type, Set<Page> page) {
+      String link, String author, String checksum, AttachmentType type, List<Page> page) {
     this.link = link;
     this.author = author;
     this.checksum = checksum;
@@ -167,7 +133,7 @@ public class Attachment extends Model {
     return type;
   }
 
-  public Attachment setPage(Set<Page> page) {
+  public Attachment setPage(List<Page> page) {
     this.page = page;
     return this;
   }
@@ -177,7 +143,7 @@ public class Attachment extends Model {
    *
    * @return Pages of attachment
    */
-  public Set<Page> getPage() {
+  public List<Page> getPage() {
     return page;
   }
 }

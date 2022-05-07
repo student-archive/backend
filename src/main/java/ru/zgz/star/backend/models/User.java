@@ -1,20 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import java.util.Set;
 import java.util.UUID;
-
 
 /**
  * Model for table <code>user</code>.
@@ -23,51 +9,15 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-@Entity
-@Table(name = "user")
-public class User extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class User {
   private UUID id;
-
-  @Column(name = "first_name")
   private String firstName;
-
-  @Column(name = "last_name")
   private String lastName;
-
-  @Column(name = "avatar_link")
   private String avatarLink;
-
-  @ManyToOne
-  @JoinColumn(name = "role_id", nullable = false)
   private Role role;
-
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "account_id")
   private Account account;
-
-  @ManyToOne
-  @JoinColumn(name = "group_id", nullable = false)
   private Group group;
-
-  @ManyToOne
-  @JoinColumn(name = "sex_id", nullable = false)
   private Sex sex;
-
-  @OneToMany(mappedBy = "user")
-  private Set<Event> events;
-
-  @OneToMany(mappedBy = "user")
-  private Set<QuizHistory> quizHistories;
-
-  @OneToMany(mappedBy = "user")
-  private Set<QuizResult> quizResults;
-
-  @OneToMany(mappedBy = "user")
-  private Set<Event> event;
 
   public User() {}
 
@@ -147,39 +97,5 @@ public class User extends Model {
   public User setSex(Sex sex) {
     this.sex = sex;
     return this;
-  }
-
-  public Set<Event> getEvents() {
-    return events;
-  }
-
-  public User setEvents(Set<Event> events) {
-    this.events = events;
-    return this;
-  }
-
-  public Set<QuizHistory> getQuizHistories() {
-    return quizHistories;
-  }
-
-  public User setQuizHistories(Set<QuizHistory> quizHistories) {
-    this.quizHistories = quizHistories;
-    return this;
-  }
-
-  public Set<Event> getEvent() {
-    return event;
-  }
-
-  public void setEvent(Set<Event> event) {
-    this.event = event;
-  }
-
-  public Set<QuizResult> getQuizResults() {
-    return quizResults;
-  }
-
-  public void setQuizResults(Set<QuizResult> quizResults) {
-    this.quizResults = quizResults;
   }
 }

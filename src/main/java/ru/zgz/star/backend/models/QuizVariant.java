@@ -1,18 +1,7 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-
 
 /**
  * Model for table <code>quiz_variant</code>.
@@ -21,27 +10,13 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "quiz_variant")
-public class QuizVariant extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class QuizVariant {
+
   private UUID id;
-
-  @Column(name = "quiz_variant_text")
   private String quizVariantText;
-
-  @Column(name = "is_correct")
   private Boolean isCorrect;
-
-  @ManyToOne
-  @JoinColumn(name = "question_id", nullable = false)
   private Question question;
-
-  @OneToMany(mappedBy = "selectedVariant")
-  private Set<QuizHistory> quizHistories;
+  private List<QuizHistory> quizHistories;
 
   public QuizVariant() {}
 
@@ -86,11 +61,11 @@ public class QuizVariant extends Model {
     return this;
   }
 
-  public Set<QuizHistory> getQuizHistories() {
+  public List<QuizHistory> getQuizHistories() {
     return quizHistories;
   }
 
-  public QuizVariant setQuizHistories(Set<QuizHistory> quizHistories) {
+  public QuizVariant setQuizHistories(List<QuizHistory> quizHistories) {
     this.quizHistories = quizHistories;
     return this;
   }

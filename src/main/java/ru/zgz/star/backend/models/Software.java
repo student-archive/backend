@@ -1,16 +1,5 @@
 package ru.zgz.star.backend.models;
 
-import io.ebean.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-
 import java.util.UUID;
 
 /**
@@ -20,23 +9,11 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-@Entity
-@Table(name = "software")
-public class Software extends Model {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  
-  @Column(name = "id")
+public class Software {
+
   private UUID id;
-
-  @Column(name = "description")
   private String description;
-
-  @Column(name = "link")
   private String link;
-
-  @ManyToOne
-  @JoinColumn(name = "subject_id")
   private Subject subject;
 
   public Software() {}
