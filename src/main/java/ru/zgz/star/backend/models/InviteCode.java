@@ -1,8 +1,6 @@
 package ru.zgz.star.backend.models;
 
-import jakarta.persistence.OneToOne;
 import java.util.UUID;
-
 
 /**
  * Model for table <code>invite_code</code>.
@@ -11,15 +9,12 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-
 public class InviteCode {
 
   private UUID id;
   private String inviteCode;
   private Boolean isValid;
   private Integer activationDate;
-
-  @OneToOne(optional = false)
   private Account account;
 
   /** Instantiates a new Invite code. */
