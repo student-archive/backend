@@ -8,7 +8,7 @@ group 'ru.zgz.star'
 version '1.0-SNAPSHOT'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
@@ -37,15 +37,15 @@ dependencies {
 }
 
 test {
-    testLogging.showStandardStreams = true
-    if (project.hasProperty('excludeTests')) {
-        exclude '**'
-    } else {
-        useJUnitPlatform()
-    }
+  testLogging.showStandardStreams = true
+  if (project.hasProperty('excludeTests')) {
+    exclude '**'
+  } else {
+    useJUnitPlatform()
+  }
 }
 
 javadoc {
-    source = sourceSets.main.allJava
-    destinationDir = file(new File(projectDir, '../docs/docs'))
+  source = sourceSets.main.allJava
+  destinationDir = file(new File(projectDir, '../docs/docs'))
 }
