@@ -2,7 +2,6 @@ plugins {
   id 'application'
   id 'idea'
   id 'groovy'
-  id 'io.ebean' version '11.41.1'
 }
 
 group 'ru.zgz.star'
@@ -17,9 +16,7 @@ dependencies {
   implementation 'org.postgresql:postgresql:42.3.4'
 
   // ORM
-  implementation 'io.ebean:ebean:13.6.0'
-  implementation 'io.ebean:ebean-querybean:13.6.0'
-  annotationProcessor 'io.ebean:querybean-generator:13.6.0'
+
 
   // Testing
   testImplementation 'io.ebean:ebean-test:13.6.0'
@@ -47,10 +44,6 @@ test {
     } else {
         useJUnitPlatform()
     }
-}
-
-ebean {
-    debugLevel = 1
 }
 
 javadoc {

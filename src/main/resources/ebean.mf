@@ -1,5 +1,0 @@
-entity-packages: ru.zgz.star.backend.models
-transactional-packages: ru.zgz.star.backend
-querybean-packages: ru.zgz.star.backend
-profile-location: true
-
