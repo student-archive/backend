@@ -1,9 +1,8 @@
 package ru.zgz.star.backend.util;
 
 import com.google.common.reflect.ClassPath;
-
 import java.io.IOException;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /** Set of tools for classes */
@@ -15,10 +14,10 @@ public class ClassUtil {
    * @return Set of classes
    * @throws IOException if package was not found
    */
-  public static Set<Class<?>> findAllClasses(String packageName) throws IOException {
+  public static List<Class<?>> findAllClasses(String packageName) throws IOException {
     return ClassPath.from(ClassLoader.getSystemClassLoader()).getAllClasses().stream()
         .filter(clazz -> clazz.getPackageName().equalsIgnoreCase(packageName))
         .map(ClassPath.ClassInfo::load)
-        .collect(Collectors.toSet());
+        .collect(Collectors.toList());
   }
 }
