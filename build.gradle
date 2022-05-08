@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
   // Database driver
-  implementation 'org.postgresql:postgresql:42.3.4'
+  implementation 'org.postgresql:postgresql:42.3.5'
 
   // ORM
 
