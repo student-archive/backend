@@ -1,6 +1,7 @@
 package ru.zgz.star.backend.routes;
 
 import com.google.gson.Gson;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.daos.AccountDao;
@@ -22,6 +23,8 @@ public class AccountRouter {
 
   public static String deleteExactAccount(Request request, Response response) {
     response.type("application/json");
+    AccountDao dao = new AccountDao();
+    dao.deleteById(UUID.fromString(request.params("id")));
     logger.info("Account {} deleted", request.params("id"));
     return new Gson().toJson("OK");
   }
