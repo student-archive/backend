@@ -31,6 +31,7 @@ public class AccountDao {
       query.setInt(3, user.getLastActiveDate());
       query.executeUpdate();
       query.close();
+      connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -52,5 +53,32 @@ public class AccountDao {
       e.printStackTrace();
     }
     return accounts;
+  }
+
+  public Account getByEmail(String email) {
+    try {
+      PreparedStatement query = connection.prepareStatement("select * from \"account\" where \"email\"=?");
+      query.setString(1, email);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return new Account(rs.getString("email"), rs.getString(3), rs.getInt(4));
+      } else {
+        return null;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  @SuppressWarnings("SqlWithoutWhere")
+  public void deleteAll() {
+    try {
+      Statement st = connection.createStatement();
+      st.executeUpdate("delete from account");
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 }
