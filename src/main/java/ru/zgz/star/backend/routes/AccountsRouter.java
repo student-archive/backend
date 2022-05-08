@@ -1,4 +1,4 @@
-package ru.zgz.star.backend.routers;
+package ru.zgz.star.backend.routes;
 
 import com.google.gson.Gson;
 import spark.Request;
