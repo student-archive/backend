@@ -20,6 +20,22 @@ class AccountDAOSpecification extends Specification {
       fetched.lastActiveDate == added.lastActiveDate
   }
 
+  def "Get by Id should return same Account as get by email"() {
+    given: "Creating data access object"
+      AccountDao dao = new AccountDao()
+
+    when: "Fetching account by id and by email"
+      Account gotByEmail = dao.getByEmail("test@example.com")
+      Account gotById = dao.getById((String)gotByEmail.id.toString())
+
+    then: "Fetched accounts should match"
+      gotByEmail.id == gotById.id
+      gotByEmail.email == gotById.email
+      gotByEmail.passwordHash == gotById.passwordHash
+      gotByEmail.lastActiveDate == gotById.lastActiveDate
+
+  }
+
   def "Select from accounts table should return 1 row"() {
     given: "Creating data access object"
       AccountDao dao = new AccountDao()
