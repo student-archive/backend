@@ -10,10 +10,10 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":app:test" />
+          <option value=":test" />
         </list>
       </option>
-      <option name="vmOptions" />
+      <option name="vmOptions" value="-Doracle.jdbc.Trace=true" />
     </ExternalSystemSettings>
     <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>

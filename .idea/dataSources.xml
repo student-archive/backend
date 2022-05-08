@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://212.193.48.172:10000/star</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="testStar@remote" uuid="7f1cb510-3a2b-476a-83ad-9feafe74eddd">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://212.193.48.172:10000/star_test</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

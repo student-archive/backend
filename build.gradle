@@ -1,0 +1,51 @@
+plugins {
+  id 'application'
+  id 'idea'
+  id 'groovy'
+}
+
+group 'ru.zgz.star'
+version '1.0-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  // Database driver
+  implementation 'org.postgresql:postgresql:42.3.4'
+
+  // ORM
+
+
+  // Testing
+  testImplementation 'org.spockframework:spock-core:2.2-M1-groovy-4.0'
+  testImplementation 'com.mashape.unirest:unirest-java:1.4.9'
+
+  // Pack of libraries
+  implementation 'com.google.guava:guava:31.1-jre'
+
+  // Web framework
+  implementation 'com.sparkjava:spark-core:2.9.3'
+
+  // Logging
+  implementation 'org.slf4j:slf4j-simple:1.7.36'
+
+  // JSON Parser
+  implementation 'com.google.code.gson:gson:2.9.0'
+
+}
+
+test {
+  testLogging.showStandardStreams = true
+  if (project.hasProperty('excludeTests')) {
+    exclude '**'
+  } else {
+    useJUnitPlatform()
+  }
+}
+
+javadoc {
+  source = sourceSets.main.allJava
+  destinationDir = file(new File(projectDir, '../docs/docs'))
+}
