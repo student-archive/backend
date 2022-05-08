@@ -11,25 +11,37 @@ import java.util.UUID;
 import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.util.DbUtil;
 
+/** DAO for account table. */
 public class AccountDao {
   private final Connection connection;
 
+  /** Instantiates a new Account dao. */
   public AccountDao() {
     this.connection = DbUtil.getConnection();
   }
 
+  /**
+   * Instantiates a new Account dao.
+   *
+   * @param connection the connection
+   */
   public AccountDao(Connection connection) {
     this.connection = connection;
   }
 
-  public void add(Account user) {
+  /**
+   * Create new account.
+   *
+   * @param account the account
+   */
+  public void add(Account account) {
     try {
       PreparedStatement query =
           connection.prepareStatement(
               "insert into account(email, password_hash, last_active_date) values (?, ?, ?);");
-      query.setString(1, user.getEmail());
-      query.setString(2, user.getPasswordHash());
-      query.setInt(3, user.getLastActiveDate());
+      query.setString(1, account.getEmail());
+      query.setString(2, account.getPasswordHash());
+      query.setInt(3, account.getLastActiveDate());
       query.executeUpdate();
       query.close();
       connection.commit();
@@ -38,6 +50,11 @@ public class AccountDao {
     }
   }
 
+  /**
+   * Gets all accounts.
+   *
+   * @return list of accounts
+   */
   public List<Account> getAll() {
     List<Account> accounts = new ArrayList<>();
     try {
@@ -57,6 +74,12 @@ public class AccountDao {
     return accounts;
   }
 
+  /**
+   * Gets exact account by id.
+   *
+   * @param id id of account
+   * @return exact account
+   */
   public Account getById(String id) {
     try {
       PreparedStatement query =
@@ -70,6 +93,12 @@ public class AccountDao {
     }
   }
 
+  /**
+   * Gets exact account by email.
+   *
+   * @param email email of account
+   * @return exact account
+   */
   public Account getByEmail(String email) {
     try {
       PreparedStatement query =
@@ -83,6 +112,11 @@ public class AccountDao {
     }
   }
 
+  /**
+   * Delete exact account by id.
+   *
+   * @param id id of account
+   */
   public void deleteById(UUID id) {
     try {
       PreparedStatement st = connection.prepareStatement("delete from account where id=?");
@@ -93,6 +127,7 @@ public class AccountDao {
     }
   }
 
+  /** Delete all accounts. */
   @SuppressWarnings("SqlWithoutWhere")
   public void deleteAll() {
     try {
