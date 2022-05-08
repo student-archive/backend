@@ -83,6 +83,16 @@ public class AccountDao {
     }
   }
 
+  public void deleteById(UUID id) {
+    try {
+      PreparedStatement st = connection.prepareStatement("delete from account where id=?");
+      st.setObject(1, id);
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   @SuppressWarnings("SqlWithoutWhere")
   public void deleteAll() {
     try {
