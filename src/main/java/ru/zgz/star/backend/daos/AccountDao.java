@@ -55,13 +55,33 @@ public class AccountDao {
     return accounts;
   }
 
+  public Account getById(String id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select * from \"account\" where \"id\"=?");
+      query.setString(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return new Account(
+            rs.getString("email"), rs.getString("password_hash"), rs.getInt("last_active_date"));
+      } else {
+        return null;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   public Account getByEmail(String email) {
     try {
-      PreparedStatement query = connection.prepareStatement("select * from \"account\" where \"email\"=?");
+      PreparedStatement query =
+          connection.prepareStatement("select * from \"account\" where \"email\"=?");
       query.setString(1, email);
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
-        return new Account(rs.getString("email"), rs.getString(3), rs.getInt(4));
+        return new Account(
+            rs.getString("email"), rs.getString("password_hash"), rs.getInt("last_active_date"));
       } else {
         return null;
       }
