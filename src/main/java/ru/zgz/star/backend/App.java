@@ -30,7 +30,7 @@ public class App {
       String basePath = (String) cls.getField("BASE_URL").get(cls);
       for (Method method : cls.getDeclaredMethods()) {
         logger.info(
-            "Registering endpoint: {}.{} by path {}",
+            "    Registering endpoint: {}.{} by path {}",
             cls.getSimpleName(),
             method.getName(),
             basePath);
