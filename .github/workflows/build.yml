@@ -11,6 +11,9 @@ on:
       - '**.groovy'
     branches:
       - master
+    types:
+      - 'opened'
+      - 'reopened'
 
 jobs:
   compile:
