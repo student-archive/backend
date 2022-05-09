@@ -41,6 +41,19 @@ class AccountsRouterSpecification extends BaseRouterSpecification {
       notThrown(JsonParseException)
   }
 
+  def "POST request should create new account"() {
+    given:
+      def response = Unirest.post("${BASE_URL}").body(new Gson().toJson(sampleAccount)).asString()
+
+    when:
+      def account = new Gson().fromJson(response.body, Account)
+
+    then:
+      response.getStatus() == 201
+      account != null
+      account.getEmail() == sampleAccount.getEmail()
+  }
+
   def cleanup() {
     def dao = new AccountDao()
     dao.deleteAll()
