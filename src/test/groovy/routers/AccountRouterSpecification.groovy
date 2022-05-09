@@ -80,6 +80,20 @@ class AccountRouterSpecification extends BaseRouterSpecification {
 
   }
 
+  def "PATCH request should successfully update one exact account"() {
+    given:
+      def emailAddress = new Faker().internet().emailAddress()
+      def response = Unirest.patch("${BASE_URL}/${this.sampleAccount.id.toString()}").body(new Gson().toJson(new Account().setEmail(emailAddress))).asString()
+
+    when:
+      Account updatedAccount = new Gson().fromJson(response.body, Account)
+
+    then:
+      response.getStatus() == 200
+      updatedAccount.id == sampleAccount.id
+      updatedAccount.email == emailAddress
+  }
+
   def cleanupSpec() {
     def dao = new AccountDao()
     dao.deleteAll()
