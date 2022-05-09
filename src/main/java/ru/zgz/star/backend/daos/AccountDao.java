@@ -29,6 +29,22 @@ public class AccountDao {
     this.connection = connection;
   }
 
+  public void update(Account account) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update account set email=?, password_hash=?, last_active_date=? where id=?");
+      query.setString(1, account.getEmail());
+      query.setString(2, account.getPasswordHash());
+      query.setInt(3, account.getLastActiveDate());
+      query.setObject(4, account.getId());
+      query.executeUpdate();
+      query.close();
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
   /**
    * Create new account.
    *
