@@ -1,20 +1,26 @@
 package daos
 
+import com.github.javafaker.Faker
 import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.models.Account
+import spock.lang.Shared
 import spock.lang.Specification
 
 class AccountDAOSpecification extends Specification {
+
+  @Shared
+          emailAddress = new Faker().internet().emailAddress()
+  
   def "Create new account in database and verify it"() {
     given: "Creating data access object"
       AccountDao dao = new AccountDao()
-      def added = new Account("test@example.com", "someSuperDuperSecurePassword", 1234)
+      def added = new Account(emailAddress, "someSuperDuperSecurePassword", 1234)
 
     when: "Adding new record"
       dao.add(added)
 
     then: "Fetching it and verifying"
-      def fetched = dao.getByEmail("test@example.com")
+      def fetched = dao.getByEmail(emailAddress)
       fetched.email == added.email
       fetched.passwordHash == added.passwordHash
       fetched.lastActiveDate == added.lastActiveDate
@@ -25,7 +31,7 @@ class AccountDAOSpecification extends Specification {
       AccountDao dao = new AccountDao()
 
     when: "Fetching account by id and by email"
-      Account gotByEmail = dao.getByEmail("test@example.com")
+      Account gotByEmail = dao.getByEmail(emailAddress)
       Account gotById = dao.getById((String)gotByEmail.id.toString())
 
     then: "Fetched accounts should match"
