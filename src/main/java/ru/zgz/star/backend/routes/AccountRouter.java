@@ -32,6 +32,30 @@ public class AccountRouter {
 
   public static String patchExactAccount(Request request, Response response) {
     response.type("application/json");
-    return new Gson().toJson("OK");
+    AccountDao dao = new AccountDao();
+
+    Account account = dao.getById(request.params("id"));
+
+    if (account == null) {
+      response.status(404);
+      throw new RuntimeException("Account not found");
+    }
+
+    Account body = new Gson().fromJson(request.body(), Account.class);
+
+    body.setId(account.getId());
+
+    if (body.getEmail() == null) {
+      body.setEmail(account.getEmail());
+    }
+    if (body.getPasswordHash() == null) {
+      body.setPasswordHash(account.getPasswordHash());
+    }
+    if (body.getLastActiveDate() == null) {
+      body.setLastActiveDate(account.getLastActiveDate());
+    }
+
+    dao.update(body);
+    return new Gson().toJson(body);
   }
 }
