@@ -19,8 +19,18 @@ public class AccountRouter {
   public static String getExactAccount(Request request, Response response) {
     response.type("application/json");
     AccountDao dao = new AccountDao();
-    Account account = dao.getById(request.params("id"));
-    return new Gson().toJson(account);
+    try {
+      if (dao.findById(UUID.fromString(request.params("id")))) {
+        Account account = dao.getById(request.params("id"));
+        return new Gson().toJson(account);
+      } else {
+        response.status(404);
+        throw new RuntimeException("Account not found");
+      }
+    } catch (IllegalArgumentException e) {
+      response.status(400);
+      throw new RuntimeException("Bad request");
+    }
   }
 
   public static String deleteExactAccount(Request request, Response response) {
