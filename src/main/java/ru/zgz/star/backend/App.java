@@ -71,8 +71,8 @@ public class App {
                     .toJson(
                         new ErrorResponse(
                             res.status(),
-                            "Internal Server Error",
-                            String.format("%s: %s", ex.getClass(), ex.getMessage()))));
+                            ex.getCause().getMessage(),
+                            ex.getCause().getClass().getSimpleName())));
           });
     }
   }
