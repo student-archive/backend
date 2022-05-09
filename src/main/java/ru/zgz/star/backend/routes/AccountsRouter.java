@@ -15,6 +15,7 @@ public class AccountsRouter {
   }
 
   public static String postAccounts(Request request, Response response) {
+    response.type("application/json");
     return new Gson().toJson("OK");
   }
 }
