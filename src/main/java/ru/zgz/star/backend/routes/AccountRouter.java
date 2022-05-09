@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.daos.AccountDao;
 import ru.zgz.star.backend.models.Account;
+import ru.zgz.star.backend.responses.DeletedResponse;
 import spark.Request;
 import spark.Response;
 
@@ -26,7 +27,7 @@ public class AccountRouter {
     AccountDao dao = new AccountDao();
     dao.deleteById(UUID.fromString(request.params("id")));
     logger.info("Account {} deleted", request.params("id"));
-    return new Gson().toJson("OK");
+    return new Gson().toJson(new DeletedResponse(UUID.fromString(request.params("id"))));
   }
 
   public static String patchExactAccount(Request request, Response response) {
