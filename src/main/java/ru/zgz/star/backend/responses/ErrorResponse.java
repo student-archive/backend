@@ -14,6 +14,12 @@ public class ErrorResponse {
     this.message = message;
   }
 
+  /**
+   * Constructor for error response.
+   * @param code http status code
+   * @param message error message
+   * @param exception exception, which happened
+   */
   public ErrorResponse(Integer code, String message, String exception) {
     this.code = code;
     this.message = message;
