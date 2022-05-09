@@ -6,6 +6,7 @@ import com.mashape.unirest.http.Unirest
 import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.models.Account
 import spock.lang.Shared
+import util.BaseRouterSpecification
 
 class AccountsRouterSpecification extends BaseRouterSpecification {
   @Shared

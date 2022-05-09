@@ -1,4 +1,4 @@
-package database
+package daos
 
 import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.models.Account
