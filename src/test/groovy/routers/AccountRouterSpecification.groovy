@@ -6,6 +6,7 @@ import com.google.gson.JsonParseException
 import com.mashape.unirest.http.Unirest
 import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.models.Account
+import ru.zgz.star.backend.responses.DeletedResponse
 import spock.lang.Shared
 import util.BaseRouterSpecification
 
@@ -19,7 +20,7 @@ class AccountRouterSpecification extends BaseRouterSpecification {
   @Shared
           emailAddress = new Faker().internet().emailAddress()
 
-  def setup() {
+  def setupSpec() {
     def dao = new AccountDao()
     dao.add(new Account()
             .setEmail(emailAddress)
@@ -66,7 +67,20 @@ class AccountRouterSpecification extends BaseRouterSpecification {
       account.id == sampleAccount.id
   }
 
-  def cleanup() {
+  def "DELETE request should successfully delete one exact account"() {
+    given:
+      def response = Unirest.delete("${BASE_URL}/${this.sampleAccount.id.toString()}").asString()
+
+    when:
+      DeletedResponse deletedAccount = new Gson().fromJson(response.body, DeletedResponse)
+
+    then:
+      response.getStatus() == 200
+      deletedAccount.deletedId == sampleAccount.id
+
+  }
+
+  def cleanupSpec() {
     def dao = new AccountDao()
     dao.deleteAll()
   }
