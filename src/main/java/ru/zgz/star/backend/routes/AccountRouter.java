@@ -73,4 +73,10 @@ public class AccountRouter {
       throw new RuntimeException("Bad request");
     }
   }
+
+  public static String put(Request request, Response response) {
+    response.type("application/json");
+    response.status(405);
+    throw new RuntimeException("Method not allowed");
+  }
 }
