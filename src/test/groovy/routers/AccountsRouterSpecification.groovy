@@ -30,7 +30,7 @@ class AccountsRouterSpecification extends BaseRouterSpecification {
 
   def "GET request should return valid json"() {
     given:
-      def response = Unirest.get(BASE_URL).asString()
+      def response = Unirest.get("${BASE_URL}").asString()
 
     when:
       def account = new Gson().fromJson(response.body, List<Account>)
