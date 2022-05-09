@@ -76,7 +76,7 @@ class AccountRouterSpecification extends BaseRouterSpecification {
 
   def "GET request should fail with illegal id"() {
     when:
-      def response = Unirest.patch("${BASE_URL}/1234").asString()
+      def response = Unirest.get("${BASE_URL}/1234").asString()
 
     then:
       response.getStatus() == 400
