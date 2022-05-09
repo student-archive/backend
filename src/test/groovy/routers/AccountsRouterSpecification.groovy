@@ -1,5 +1,6 @@
 package routers
 
+import com.github.javafaker.Faker
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.mashape.unirest.http.Unirest
@@ -15,13 +16,16 @@ class AccountsRouterSpecification extends BaseRouterSpecification {
   @Shared
           sampleAccount = null
 
+  @Shared
+          emailAddress = new Faker().internet().emailAddress()
+
   def setup() {
     def dao = new AccountDao()
     dao.add(new Account()
-            .setEmail("test@example.com")
+            .setEmail(emailAddress)
             .setPasswordHash("superDuperSecurePassword")
             .setLastActiveDate(1234567))
-    sampleAccount = dao.getByEmail("test@example.com")
+    sampleAccount = dao.getByEmail(emailAddress)
   }
 
   def "GET request should return valid json"() {
