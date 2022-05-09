@@ -1,7 +1,9 @@
 package ru.zgz.star.backend;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.zgz.star.backend.responses.ErrorResponse;
 import ru.zgz.star.backend.util.ClassUtil;
 
 import java.io.IOException;
@@ -60,10 +62,19 @@ public class App {
               "Method " + method.getName() + "in class " + cls + " is not supported");
         }
       }
-      internalServerError((req, res) -> {
-        res.type("application/json");
-        return "{\"message\":\"Internal server error\"}";
-      });
+      exception(
+          Exception.class,
+          (ex, req, res) -> {
+            res.type("application/json");
+            res.status(500);
+            res.body(
+                new Gson()
+                    .toJson(
+                        new ErrorResponse(
+                            500,
+                            "Internal Server Error",
+                            String.format("%s: %s", ex.getClass(), ex.getMessage()))));
+          });
     }
   }
 }
