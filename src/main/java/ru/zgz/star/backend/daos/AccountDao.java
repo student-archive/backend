@@ -31,6 +31,7 @@ public class AccountDao {
 
   /**
    * Updates account.
+   *
    * @param account updated account
    */
   public void update(Account account) {
