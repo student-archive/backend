@@ -29,6 +29,10 @@ public class AccountDao {
     this.connection = connection;
   }
 
+  /**
+   * Updates account.
+   * @param account updated account
+   */
   public void update(Account account) {
     try {
       PreparedStatement query =
