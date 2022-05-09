@@ -1,5 +1,8 @@
 package ru.zgz.star.backend.responses;
 
+/**
+ * Model, representing response which returned, when happened some shit on server.
+ */
 public class ErrorResponse {
   public Integer code;
   public String message;
