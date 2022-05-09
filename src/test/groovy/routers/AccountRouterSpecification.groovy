@@ -94,6 +94,21 @@ class AccountRouterSpecification extends BaseRouterSpecification {
       updatedAccount.email == emailAddress
   }
 
+  def "PATCH request should fail with missing id"() {
+    when:
+      def response = Unirest.patch("${BASE_URL}/becc9be4-93c1-4b1a-8a6b-1c2c410e4207").body(new Gson().toJson(new Account().setEmail(emailAddress))).asString()
+    then:
+      response.getStatus() == 404
+  }
+
+  def "PATCH request should fail with illegal id"() {
+    when:
+      def response = Unirest.patch("${BASE_URL}/1234").body(new Gson().toJson(new Account().setEmail(emailAddress))).asString()
+
+    then:
+      response.getStatus() == 400
+  }
+
   def cleanupSpec() {
     def dao = new AccountDao()
     dao.deleteAll()
