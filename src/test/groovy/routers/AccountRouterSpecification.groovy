@@ -139,6 +139,13 @@ class AccountRouterSpecification extends BaseRouterSpecification {
       response.getStatus() == 400
   }
 
+  def "PUT request should return MethodNotAllowed"() {
+    when:
+      def response = Unirest.put("${BASE_URL}/${this.sampleAccount.id.toString()}").asString()
+    then:
+      response.getStatus() == 405
+  }
+
   def cleanupSpec() {
     def dao = new AccountDao()
     dao.deleteAll()
