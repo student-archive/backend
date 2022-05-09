@@ -35,20 +35,22 @@ public class AccountRouter {
     response.type("application/json");
     AccountDao dao = new AccountDao();
 
-    Account account = dao.getById(request.params("id"));
-
-    if (account == null) {
-      response.status(404);
-      throw new RuntimeException("Account not found");
+    try {
+      if (dao.findById(UUID.fromString(request.params("id")))) {
+        logger.info("Account {} found", request.params("id"));
+        Account account = dao.getById(request.params("id"));
+        Account body = new Gson().fromJson(request.body(), Account.class);
+        body.setId(account.getId());
+        Account updated = (Account) ClassUtil.mergeObjects(body, account);
+        dao.update(updated);
+        return new Gson().toJson(updated);
+      } else {
+        response.status(404);
+        throw new RuntimeException("Account not found");
+      }
+    } catch (IllegalArgumentException e) {
+      response.status(400);
+      throw new RuntimeException("Bad request");
     }
-
-    Account body = new Gson().fromJson(request.body(), Account.class);
-
-    body.setId(account.getId());
-
-    Account updated = (Account) ClassUtil.mergeObjects(body, account);
-
-    dao.update(updated);
-    return new Gson().toJson(updated);
   }
 }
