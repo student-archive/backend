@@ -36,6 +36,7 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
 
   test:
+    needs: compile
     name: Tests
     runs-on: ubuntu-latest
     steps:
