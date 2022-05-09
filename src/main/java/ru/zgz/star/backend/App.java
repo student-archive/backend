@@ -66,12 +66,11 @@ public class App {
           Exception.class,
           (ex, req, res) -> {
             res.type("application/json");
-            res.status(500);
             res.body(
                 new Gson()
                     .toJson(
                         new ErrorResponse(
-                            500,
+                            res.status(),
                             "Internal Server Error",
                             String.format("%s: %s", ex.getClass(), ex.getMessage()))));
           });
