@@ -16,6 +16,7 @@ public class ErrorResponse {
 
   /**
    * Constructor for error response.
+   *
    * @param code http status code
    * @param message error message
    * @param exception exception, which happened
