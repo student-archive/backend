@@ -80,6 +80,21 @@ class AccountRouterSpecification extends BaseRouterSpecification {
 
   }
 
+  def "DELETE request should fail with missing id"() {
+    when:
+      def response = Unirest.delete("${BASE_URL}/becc9be4-93c1-4b1a-8a6b-1c2c410e4207").asString()
+    then:
+      response.getStatus() == 404
+  }
+
+  def "DELETE request should fail with illegal id"() {
+    when:
+      def response = Unirest.delete("${BASE_URL}/1234").asString()
+
+    then:
+      response.getStatus() == 400
+  }
+
   def "PATCH request should successfully update one exact account"() {
     given:
       def emailAddress = new Faker().internet().emailAddress()
