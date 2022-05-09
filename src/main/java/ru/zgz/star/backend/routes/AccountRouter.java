@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.daos.AccountDao;
 import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.responses.DeletedResponse;
+import ru.zgz.star.backend.util.ClassUtil;
 import spark.Request;
 import spark.Response;
 
@@ -45,17 +46,9 @@ public class AccountRouter {
 
     body.setId(account.getId());
 
-    if (body.getEmail() == null) {
-      body.setEmail(account.getEmail());
-    }
-    if (body.getPasswordHash() == null) {
-      body.setPasswordHash(account.getPasswordHash());
-    }
-    if (body.getLastActiveDate() == null) {
-      body.setLastActiveDate(account.getLastActiveDate());
-    }
+    Account updated = (Account) ClassUtil.mergeObjects(body, account);
 
-    dao.update(body);
-    return new Gson().toJson(body);
+    dao.update(updated);
+    return new Gson().toJson(updated);
   }
 }
