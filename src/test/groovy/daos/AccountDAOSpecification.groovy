@@ -11,6 +11,11 @@ class AccountDAOSpecification extends Specification {
   @Shared
           emailAddress = new Faker().internet().emailAddress()
 
+  def setupSpec() {
+    def dao = new AccountDao()
+    dao.deleteAll()
+  }
+
   def "Create new account in database and verify it"() {
     given: "Creating data access object"
       AccountDao dao = new AccountDao()

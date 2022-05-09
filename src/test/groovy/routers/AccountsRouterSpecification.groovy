@@ -19,6 +19,11 @@ class AccountsRouterSpecification extends BaseRouterSpecification {
   @Shared
           emailAddress = new Faker().internet().emailAddress()
 
+  def setupSpec() {
+    def dao = new AccountDao()
+    dao.deleteAll()
+  }
+
   def setup() {
     def dao = new AccountDao()
     dao.add(new Account()
@@ -57,5 +62,9 @@ class AccountsRouterSpecification extends BaseRouterSpecification {
   def cleanup() {
     def dao = new AccountDao()
     dao.deleteAll()
+  }
+
+  def cleanupSpec() {
+    cleanup()
   }
 }
