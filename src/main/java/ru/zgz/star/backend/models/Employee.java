@@ -22,13 +22,12 @@ public class Employee {
   private List<EmployeePosition> positions;
   private List<Certificate> certificates;
 
-  /**
-   * Instantiates a new empty employee.
-   */
+  /** Instantiates a new empty employee. */
   public Employee() {}
 
   /**
    * Instantiates a new employee with full set of data.
+   *
    * @param firstName first name of employee
    * @param lastName last name of employee
    * @param patronymic patronymic of employee
@@ -62,6 +61,7 @@ public class Employee {
 
   /**
    * Gets id of employee.
+   *
    * @return id of employee
    */
   public UUID getId() {
@@ -70,6 +70,7 @@ public class Employee {
 
   /**
    * Sets id of employee.
+   *
    * @param id id of employee
    * @return object with new id
    */
@@ -80,6 +81,7 @@ public class Employee {
 
   /**
    * Gets first name of employee.
+   *
    * @return first name of employee
    */
   public String getFirstName() {
@@ -88,6 +90,7 @@ public class Employee {
 
   /**
    * Sets first name of employee.
+   *
    * @param firstName first name of employee
    * @return object with new first name
    */
@@ -98,6 +101,7 @@ public class Employee {
 
   /**
    * Get last name of employee.
+   *
    * @return last name of employee
    */
   public String getLastName() {
@@ -106,6 +110,7 @@ public class Employee {
 
   /**
    * Sets last name of employee.
+   *
    * @param lastName last name of employee
    * @return object with new last name
    */
@@ -116,6 +121,7 @@ public class Employee {
 
   /**
    * Gets patronymic of employee.
+   *
    * @return patronymic of employee
    */
   public String getPatronymic() {
@@ -124,6 +130,7 @@ public class Employee {
 
   /**
    * Sets patronymic of employee.
+   *
    * @param patronymic patronymic of employee
    * @return object with new patronymic
    */
@@ -134,6 +141,7 @@ public class Employee {
 
   /**
    * Gets email of employee.
+   *
    * @return email of employee
    */
   public String getEmail() {
@@ -142,6 +150,7 @@ public class Employee {
 
   /**
    * Sets email of employee.
+   *
    * @param email email of employee
    * @return object with new email
    */
@@ -152,6 +161,7 @@ public class Employee {
 
   /**
    * Gets phone of employee.
+   *
    * @return phone of employee
    */
   public String getPhone() {
@@ -160,6 +170,7 @@ public class Employee {
 
   /**
    * Sets phone of employee.
+   *
    * @param phone phone of employee
    * @return object with new phone
    */
@@ -170,6 +181,7 @@ public class Employee {
 
   /**
    * Gets link to employee's profile.
+   *
    * @return link to employee's profile
    */
   public String getLink() {
@@ -178,6 +190,7 @@ public class Employee {
 
   /**
    * Sets link to employee's profile.
+   *
    * @param link link to employee's profile
    * @return object with new link
    */
@@ -188,6 +201,7 @@ public class Employee {
 
   /**
    * Gets positions of employee.
+   *
    * @return positions of employee
    */
   public List<EmployeePosition> getPositions() {
@@ -196,6 +210,7 @@ public class Employee {
 
   /**
    * Sets positions of employee.
+   *
    * @param positions positions of employee
    * @return object with new positions
    */
@@ -206,6 +221,7 @@ public class Employee {
 
   /**
    * Gets specialities of employee.
+   *
    * @return specialities of employee
    */
   public List<Speciality> getSpecialities() {
@@ -214,6 +230,7 @@ public class Employee {
 
   /**
    * Sets specialities of employee.
+   *
    * @param specialities specialities of employee
    * @return object with new specialities
    */
@@ -224,6 +241,7 @@ public class Employee {
 
   /**
    * Gets certificates of employee.
+   *
    * @return certificates of employee
    */
   public List<Certificate> getCertificates() {
@@ -232,6 +250,7 @@ public class Employee {
 
   /**
    * Sets certificates of employee.
+   *
    * @param certificates certificates of employee
    * @return object with new certificates
    */
