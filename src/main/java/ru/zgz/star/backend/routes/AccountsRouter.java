@@ -23,4 +23,22 @@ public class AccountsRouter {
     dao.add(account);
     return new Gson().toJson(account);
   }
+
+  public static String patch(Request request, Response response) {
+    response.type("application/json");
+    response.status(405);
+    throw new RuntimeException("Method not allowed");
+  }
+
+  public static String delete(Request request, Response response) {
+    response.type("application/json");
+    response.status(405);
+    throw new RuntimeException("Method not allowed");
+  }
+
+  public static String put(Request request, Response response) {
+    response.type("application/json");
+    response.status(405);
+    throw new RuntimeException("Method not allowed");
+  }
 }
