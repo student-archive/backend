@@ -14,22 +14,17 @@ import ru.zgz.star.backend.util.ClassUtil;
 import spark.Request;
 import spark.Response;
 
-/**
- * Router, which handles requests to /account/:id
- */
+/** Router, which handles requests to /account/:id. */
 public class AccountRouter {
 
-  /**
-   * Base path for all requests, which this router handles
-   */
+  /** Base path for all requests, which this router handles. */
   public static String BASE_URL = "/account/:id";
-  /**
-   * Logger for this class
-   */
+  /** Logger for this class */
   public static Logger logger = LoggerFactory.getLogger(AccountRouter.class);
 
   /**
-   * Handles GET request to /account/:id
+   * Handles GET request to /account/:id.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of exact account
@@ -54,7 +49,8 @@ public class AccountRouter {
   }
 
   /**
-   * Handles DELETE request to /account/:id
+   * Handles DELETE request to /account/:id.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of id of deleted account
@@ -79,7 +75,8 @@ public class AccountRouter {
   }
 
   /**
-   * Handles PATCH request to /account/:id
+   * Handles PATCH request to /account/:id.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of updated account
@@ -109,7 +106,8 @@ public class AccountRouter {
   }
 
   /**
-   * Handles PUT request to /account/:id
+   * Handles PUT request to /account/:id.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of 405 error
