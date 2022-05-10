@@ -17,6 +17,9 @@ public class Account {
   private InviteCode inviteCode;
   private User user;
 
+  /**
+   * Instantiates new empty Account
+   */
   public Account() {}
 
   /**
@@ -35,6 +38,7 @@ public class Account {
    * Sets value for ID
    *
    * @param id New ID of user
+   * @return object with new ID
    */
   public Account setId(UUID id) {
     this.id = id;
@@ -53,7 +57,8 @@ public class Account {
   /**
    * Sets value for username
    *
-   * @param email New ID of user
+   * @param email New email of user
+   * @return object with new email
    */
   public Account setEmail(String email) {
     this.email = email;
@@ -73,6 +78,7 @@ public class Account {
    * Sets value for hash of password
    *
    * @param passwordHash New hash of password
+   * @return object with new hash of password
    */
   public Account setPasswordHash(String passwordHash) {
     this.passwordHash = passwordHash;
@@ -92,6 +98,7 @@ public class Account {
    * Updates last date of login
    *
    * @param lastActiveDate New login date
+   * @return object with new login date
    */
   public Account setLastActiveDate(Integer lastActiveDate) {
     this.lastActiveDate = lastActiveDate;
@@ -107,18 +114,37 @@ public class Account {
     return lastActiveDate;
   }
 
+  /**
+   * Returns user
+   * @return associated user
+   */
   public User getUser() {
     return user;
   }
 
-  public void setUser(User user) {
+  /**
+   * Sets user
+   * @param user associated user
+   * @return object with new user
+   */
+  public Account setUser(User user) {
     this.user = user;
+    return this;
   }
 
+  /**
+   * Returns invite code
+   * @return invite code of user
+   */
   public InviteCode getInviteCodes() {
     return inviteCode;
   }
 
+  /**
+   * Sets invite code
+   * @param inviteCode new invite code of user
+   * @return object with new invite code
+   */
   public Account setInviteCodes(InviteCode inviteCode) {
     this.inviteCode = inviteCode;
     return this;

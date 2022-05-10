@@ -18,6 +18,9 @@ public class Attachment {
   private AttachmentType type;
   private List<Page> page;
 
+  /**
+   * Instantiates new empty attachment
+   */
   public Attachment() {}
 
   /**
@@ -42,6 +45,7 @@ public class Attachment {
    * Sets value for ID
    *
    * @param id New ID of attachment
+   * @return object with new ID
    */
   public Attachment setId(UUID id) {
     this.id = id;
@@ -61,6 +65,7 @@ public class Attachment {
    * Sets value for link
    *
    * @param link New link of attachment
+   * @return object with new link
    */
   public Attachment setLink(String link) {
     this.link = link;
@@ -80,6 +85,7 @@ public class Attachment {
    * Sets value for link
    *
    * @param author New author of attachment
+   * @return object with new author
    */
   public Attachment setAuthor(String author) {
     this.author = author;
@@ -99,6 +105,7 @@ public class Attachment {
    * Sets value for checksum
    *
    * @param checksum New checksum of attachment
+   * @return object with new checksum
    */
   public Attachment setChecksum(String checksum) {
     this.checksum = checksum;
@@ -118,6 +125,7 @@ public class Attachment {
    * Sets value for type
    *
    * @param type New type of attachment
+   * @return object with new type
    */
   public Attachment setType(AttachmentType type) {
     this.type = type;
@@ -133,6 +141,11 @@ public class Attachment {
     return type;
   }
 
+  /**
+   * Sets value for pages
+   * @param page New pages of attachment
+   * @return object with new pages
+   */
   public Attachment setPage(List<Page> page) {
     this.page = page;
     return this;
