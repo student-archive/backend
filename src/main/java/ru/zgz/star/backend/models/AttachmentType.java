@@ -15,11 +15,11 @@ public class AttachmentType {
   private String typeName;
   private List<Attachment> attachment;
 
-  /** Instantiates new empty attachment type */
+  /** Instantiates new empty attachment type. */
   public AttachmentType() {}
 
   /**
-   * Instantiates new attachment type
+   * Instantiates new attachment type.
    *
    * @param typeName name of type
    */
@@ -28,7 +28,7 @@ public class AttachmentType {
   }
 
   /**
-   * Sets id of type
+   * Sets id of type.
    *
    * @param id new id
    * @return object with new id
@@ -39,7 +39,7 @@ public class AttachmentType {
   }
 
   /**
-   * Gets id of type
+   * Gets id of type.
    *
    * @return id of type
    */
@@ -48,7 +48,7 @@ public class AttachmentType {
   }
 
   /**
-   * Sets name of type
+   * Sets name of type.
    *
    * @param typeName new name of type
    * @return object with new name of type
@@ -59,7 +59,7 @@ public class AttachmentType {
   }
 
   /**
-   * Gets name of type
+   * Gets name of type.
    *
    * @return name of type
    */
@@ -67,7 +67,8 @@ public class AttachmentType {
     return typeName;
   }
 
-  /** Sets list of attachments
+  /**
+   * Sets list of attachments.
    *
    * @return list of attachments
    */
@@ -76,7 +77,7 @@ public class AttachmentType {
   }
 
   /**
-   * Sets list of attachments
+   * Sets list of attachments.
    *
    * @param attachment list of attachments
    * @return object with new list of attachments

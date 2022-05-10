@@ -7,7 +7,7 @@ import spark.Response;
 /** Router, which handles requests to /event/:groupId. */
 public class EventRouter {
 
-  /** Base path for all requests, which this router handles */
+  /** Base path for all requests, which this router handles. */
   public static String BASE_URL = "/event/:groupId";
 
   /**
@@ -35,7 +35,7 @@ public class EventRouter {
   }
 
   /**
-   * Handles DELETE request to /event/:groupId
+   * Handles DELETE request to /event/:groupId.
    *
    * @param request request object
    * @param response response object
