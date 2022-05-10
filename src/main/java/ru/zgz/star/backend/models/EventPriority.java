@@ -21,6 +21,7 @@ public class EventPriority {
 
   /**
    * Instantiates a new object with specified parameters.
+   *
    * @param priorityName Name of event priority
    * @param priorityDescription Description of event priority
    */
@@ -30,7 +31,7 @@ public class EventPriority {
   }
 
   /**
-   * Sets value for ID
+   * Sets value for ID.
    *
    * @param id New ID of event priority
    * @return object with new event priority
@@ -41,7 +42,7 @@ public class EventPriority {
   }
 
   /**
-   * Returns ID
+   * Returns ID.
    *
    * @return ID of user
    */
@@ -50,7 +51,7 @@ public class EventPriority {
   }
 
   /**
-   * Sets value for priority name
+   * Sets value for priority name.
    *
    * @param priorityName New name of event priority
    * @return object with new event priority's name
@@ -61,7 +62,7 @@ public class EventPriority {
   }
 
   /**
-   * Returns name of event priority
+   * Returns name of event priority.
    *
    * @return Name of event priority
    */
@@ -70,7 +71,7 @@ public class EventPriority {
   }
 
   /**
-   * Sets value for priority name
+   * Sets value for priority name.
    *
    * @param priorityDescription New description of event priority
    * @return object with new event priority's description
@@ -81,7 +82,7 @@ public class EventPriority {
   }
 
   /**
-   * Returns name of event description
+   * Returns name of event description.
    *
    * @return Name of event description
    */
@@ -90,7 +91,8 @@ public class EventPriority {
   }
 
   /**
-   * Gets events list
+   * Gets events list.
+   *
    * @return events list
    */
   public List<Event> getEvents() {
@@ -98,7 +100,8 @@ public class EventPriority {
   }
 
   /**
-   * Sets events list
+   * Sets events list.
+   *
    * @param events new events list
    * @return object with new events list
    */

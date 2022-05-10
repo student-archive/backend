@@ -63,6 +63,7 @@ public class Certificate {
 
   /**
    * Sets the name of the certificate.
+   *
    * @param name new name of the certificate
    * @return object with the new name
    */
@@ -73,6 +74,7 @@ public class Certificate {
 
   /**
    * Gets the description of the certificate.
+   *
    * @return the description of the certificate
    */
   public String getCertificateDescription() {
@@ -81,6 +83,7 @@ public class Certificate {
 
   /**
    * Sets the description of the certificate.
+   *
    * @param description new description of the certificate
    * @return object with the new description
    */
@@ -91,6 +94,7 @@ public class Certificate {
 
   /**
    * Gets the office where the certificate is issuing.
+   *
    * @return the office where the certificate is issuing
    */
   public String getOffice() {
@@ -99,6 +103,7 @@ public class Certificate {
 
   /**
    * Sets the office where the certificate is issuing.
+   *
    * @param office new office where the certificate is issuing
    * @return object with the new office
    */
@@ -109,6 +114,7 @@ public class Certificate {
 
   /**
    * Gets the employees who issuing this certificate.
+   *
    * @return the employees who issuing this certificate
    */
   public List<Employee> getEmployees() {
@@ -117,6 +123,7 @@ public class Certificate {
 
   /**
    * Sets the employees who issuing this certificate.
+   *
    * @param employees new employees who issuing this certificate
    * @return object with the new employees
    */
