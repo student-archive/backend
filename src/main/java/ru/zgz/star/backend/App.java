@@ -11,8 +11,14 @@ import java.lang.reflect.Method;
 
 import static spark.Spark.*;
 
+/**
+ * Main class of the application.
+ */
 public class App {
 
+  /**
+   * Logger object of the class.
+   */
   public static Logger logger = LoggerFactory.getLogger(App.class);
 
   /**
@@ -21,6 +27,9 @@ public class App {
    * <p>Automatically collects created methods by correct HTTP verbs
    *
    * @param args Command-line arguments
+   * @throws IOException If an I/O error occurs
+   * @throws NoSuchFieldException If a class cannot be found
+   * @throws IllegalAccessException If a class is not accessible
    */
   public static void main(String[] args)
       throws IOException, NoSuchFieldException, IllegalAccessException {
