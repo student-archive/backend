@@ -7,6 +7,7 @@ import com.mashape.unirest.http.Unirest
 import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.models.Account
 import ru.zgz.star.backend.responses.DeletedResponse
+import ru.zgz.star.backend.responses.ErrorResponse
 import spock.lang.Shared
 import util.BaseRouterSpecification
 
@@ -140,10 +141,15 @@ class AccountRouterSpecification extends BaseRouterSpecification {
   }
 
   def "PUT request should return MethodNotAllowed"() {
-    when:
+    given:
       def response = Unirest.put("${BASE_URL}/${this.sampleAccount.id.toString()}").asString()
+
+    when:
+      ErrorResponse error = new Gson().fromJson(response.body, ErrorResponse)
+
     then:
       response.getStatus() == 405
+      error.message == "Method PUT is not allowed for this resource"
   }
 
   def cleanupSpec() {
