@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.daos.AccountDao;
-import ru.zgz.star.backend.exceptions.MethodNotAllowedException;
+import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.responses.DeletedResponse;
 import ru.zgz.star.backend.util.ClassUtil;

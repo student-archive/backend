@@ -2,7 +2,7 @@ package ru.zgz.star.backend.routes;
 
 import com.google.gson.Gson;
 import ru.zgz.star.backend.daos.AccountDao;
-import ru.zgz.star.backend.exceptions.MethodNotAllowedException;
+import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.models.Account;
 import spark.Request;
 import spark.Response;
