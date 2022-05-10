@@ -4,14 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Set of methods for working with database
- */
+/** Set of methods for working with database. */
 public class DbUtil {
   private static Connection connection = null;
 
   /**
-   * Returns or creates connection to database
+   * Returns or creates connection to database.
+   *
    * @return connection to database
    */
   public static Connection getConnection() {
