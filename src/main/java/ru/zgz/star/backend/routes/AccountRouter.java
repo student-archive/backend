@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.daos.AccountDao;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
+import ru.zgz.star.backend.exceptions.http.ResourceNotFoundException;
 import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.responses.DeletedResponse;
 import ru.zgz.star.backend.util.ClassUtil;
@@ -26,7 +27,8 @@ public class AccountRouter {
         return new Gson().toJson(account);
       } else {
         response.status(404);
-        throw new RuntimeException("Account not found");
+        throw new ResourceNotFoundException(
+          String.format("Account id=%s not found", request.params("id")));
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
@@ -44,7 +46,8 @@ public class AccountRouter {
         return new Gson().toJson(new DeletedResponse(UUID.fromString(request.params("id"))));
       } else {
         response.status(404);
-        throw new RuntimeException("Account not found");
+        throw new ResourceNotFoundException(
+          String.format("Account id=%s not found", request.params("id")));
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
@@ -67,7 +70,8 @@ public class AccountRouter {
         return new Gson().toJson(updated);
       } else {
         response.status(404);
-        throw new RuntimeException("Account not found");
+        throw new ResourceNotFoundException(
+            String.format("Account id=%s not found", request.params("id")));
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
