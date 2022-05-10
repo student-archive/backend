@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.daos.AccountDao;
+import ru.zgz.star.backend.exceptions.MethodNotAllowedException;
 import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.responses.DeletedResponse;
 import ru.zgz.star.backend.util.ClassUtil;
@@ -77,6 +78,6 @@ public class AccountRouter {
   public static String put(Request request, Response response) {
     response.type("application/json");
     response.status(405);
-    throw new RuntimeException("Method not allowed");
+    throw new MethodNotAllowedException("Method PUT is not allowed for this resource");
   }
 }
