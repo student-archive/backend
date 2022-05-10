@@ -53,7 +53,7 @@ public class AccountRouter {
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
-      throw new RuntimeException("Bad request");
+      throw new BadRequestException("Passed UUID is not valid");
     }
   }
 
@@ -77,7 +77,7 @@ public class AccountRouter {
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
-      throw new RuntimeException("Bad request");
+      throw new BadRequestException("Passed UUID is not valid");
     }
   }
 
