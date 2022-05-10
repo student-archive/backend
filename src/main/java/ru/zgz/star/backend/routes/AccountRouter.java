@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.daos.AccountDao;
+import ru.zgz.star.backend.exceptions.http.BadRequestException;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.exceptions.http.ResourceNotFoundException;
 import ru.zgz.star.backend.models.Account;
@@ -28,11 +29,12 @@ public class AccountRouter {
       } else {
         response.status(404);
         throw new ResourceNotFoundException(
-          String.format("Account id=%s not found", request.params("id")));
+            String.format("Account id=%s not found", request.params("id")));
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
-      throw new RuntimeException("Bad request");
+      throw new BadRequestException(
+          String.format("Given UUID (%s) is not valid", request.params("id")));
     }
   }
 
@@ -47,7 +49,7 @@ public class AccountRouter {
       } else {
         response.status(404);
         throw new ResourceNotFoundException(
-          String.format("Account id=%s not found", request.params("id")));
+            String.format("Account id=%s not found", request.params("id")));
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
