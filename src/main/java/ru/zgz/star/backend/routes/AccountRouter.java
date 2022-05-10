@@ -19,7 +19,7 @@ public class AccountRouter {
 
   /** Base path for all requests, which this router handles. */
   public static String BASE_URL = "/account/:id";
-  /** Logger for this class */
+  /** Logger for this class. */
   public static Logger logger = LoggerFactory.getLogger(AccountRouter.class);
 
   /**
