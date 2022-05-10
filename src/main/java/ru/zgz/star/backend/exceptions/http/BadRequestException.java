@@ -4,6 +4,7 @@ package ru.zgz.star.backend.exceptions.http;
 public class BadRequestException extends RuntimeException {
   /**
    * Instantiates a new Bad request exception.
+   *
    * @param message error message
    */
   public BadRequestException(String message) {

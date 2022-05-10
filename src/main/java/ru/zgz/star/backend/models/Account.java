@@ -17,13 +17,12 @@ public class Account {
   private InviteCode inviteCode;
   private User user;
 
-  /**
-   * Instantiates new empty Account
-   */
+  /** Instantiates new empty Account. */
   public Account() {}
 
   /**
-   * Instantiates new Account
+   * Instantiates new Account.
+   *
    * @param email account's email
    * @param passwordHash account's hash of password
    * @param lastActiveDate account's last login date
@@ -35,7 +34,7 @@ public class Account {
   }
 
   /**
-   * Sets value for ID
+   * Sets value for ID.
    *
    * @param id New ID of user
    * @return object with new ID
@@ -46,7 +45,7 @@ public class Account {
   }
 
   /**
-   * Returns ID
+   * Returns ID.
    *
    * @return ID of user
    */
@@ -55,7 +54,7 @@ public class Account {
   }
 
   /**
-   * Sets value for username
+   * Sets value for username.
    *
    * @param email New email of user
    * @return object with new email
@@ -66,7 +65,7 @@ public class Account {
   }
 
   /**
-   * Returns username
+   * Returns username.
    *
    * @return username of user
    */
@@ -75,7 +74,7 @@ public class Account {
   }
 
   /**
-   * Sets value for hash of password
+   * Sets value for hash of password.
    *
    * @param passwordHash New hash of password
    * @return object with new hash of password
@@ -86,7 +85,7 @@ public class Account {
   }
 
   /**
-   * Returns hash of password
+   * Returns hash of password.
    *
    * @return hash of password of user
    */
@@ -95,7 +94,7 @@ public class Account {
   }
 
   /**
-   * Updates last date of login
+   * Updates last date of login.
    *
    * @param lastActiveDate New login date
    * @return object with new login date
@@ -106,7 +105,7 @@ public class Account {
   }
 
   /**
-   * Returns last login date
+   * Returns last login date.
    *
    * @return last login date of user
    */
@@ -115,7 +114,8 @@ public class Account {
   }
 
   /**
-   * Returns user
+   * Returns user.
+   *
    * @return associated user
    */
   public User getUser() {
@@ -123,7 +123,8 @@ public class Account {
   }
 
   /**
-   * Sets user
+   * Sets user.
+   *
    * @param user associated user
    * @return object with new user
    */
@@ -133,7 +134,8 @@ public class Account {
   }
 
   /**
-   * Returns invite code
+   * Returns invite code.
+   *
    * @return invite code of user
    */
   public InviteCode getInviteCodes() {
@@ -141,7 +143,8 @@ public class Account {
   }
 
   /**
-   * Sets invite code
+   * Sets invite code.
+   *
    * @param inviteCode new invite code of user
    * @return object with new invite code
    */
