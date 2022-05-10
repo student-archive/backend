@@ -18,7 +18,7 @@ public class Attachment {
   private AttachmentType type;
   private List<Page> page;
 
-  /** Instantiates new empty attachment */
+  /** Instantiates new empty attachment. */
   public Attachment() {}
 
   /**
