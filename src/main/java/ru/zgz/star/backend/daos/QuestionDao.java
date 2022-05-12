@@ -39,8 +39,10 @@ public class QuestionDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into question( question_text) values (?);");
+              "insert into question(question_text, correct_answers_amount, total_answers_amount) values (?, ?, ?);");
       query.setString(1, question.getQuestionText());
+      query.setInt(2, question.getCorrectAnswersAmount());
+      query.setInt(3, question.getTotalAnswersAmount());
       query.executeUpdate();
       query.close();
       connection.commit();
