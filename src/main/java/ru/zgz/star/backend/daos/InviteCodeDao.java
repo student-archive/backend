@@ -210,7 +210,7 @@ public class InviteCodeDao {
       throw new IllegalArgumentException("Valid invite code must not have account");
     }
 
-    if (inviteCode.getIsValid() && (inviteCode.getActivationDate() != null || !isActivationDateEqualsZero)) {
+    if (inviteCode.getIsValid() && (!isActivationDateEqualsZero)) {
       throw new IllegalArgumentException("Valid invite code must not have activation date");
     }
   }
