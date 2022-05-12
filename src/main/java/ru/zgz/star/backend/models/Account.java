@@ -14,7 +14,6 @@ public class Account {
   private String email;
   private String passwordHash;
   private Integer lastActiveDate;
-  private UUID inviteCode;
   private UUID user;
 
   /** Instantiates new empty Account. */
@@ -130,26 +129,6 @@ public class Account {
    */
   public Account setUser(UUID user) {
     this.user = user;
-    return this;
-  }
-
-  /**
-   * Returns invite code.
-   *
-   * @return invite code of user
-   */
-  public UUID getInviteCodes() {
-    return inviteCode;
-  }
-
-  /**
-   * Sets invite code.
-   *
-   * @param inviteCode new invite code of user
-   * @return object with new invite code
-   */
-  public Account setInviteCodes(UUID inviteCode) {
-    this.inviteCode = inviteCode;
     return this;
   }
 }
