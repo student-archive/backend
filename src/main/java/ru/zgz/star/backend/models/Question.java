@@ -15,15 +15,14 @@ public class Question {
 
   private UUID id;
   private String questionText;
-  private Quiz quiz;
-  private List<QuizVariant> variants;
-  private List<QuizHistory> quizHistories;
+  private UUID quiz;
+
 
   public Question() {}
 
-  public Question(String questionText, List<QuizVariant> variants) {
+  public Question(String questionText, UUID quiz) {
     this.questionText = questionText;
-    this.variants = variants;
+    this.quiz = quiz;
   }
 
   /**
@@ -64,40 +63,18 @@ public class Question {
     return questionText;
   }
 
-  /**
-   * Sets value for variants of question
-   *
-   * @param variants New set of variants
-   */
-  public Question setVariants(List<QuizVariant> variants) {
-    this.variants = variants;
-    return this;
-  }
 
-  /**
-   * Returns variants of question
-   *
-   * @return variants of question
-   */
-  public List<QuizVariant> getVariants() {
-    return variants;
-  }
 
-  public Quiz getQuiz() {
+
+  public UUID getQuiz() {
     return quiz;
   }
 
-  public Question setQuiz(Quiz quiz) {
+  public Question setQuiz(UUID quiz) {
     this.quiz = quiz;
     return this;
   }
 
-  public List<QuizHistory> getQuizHistories() {
-    return quizHistories;
-  }
 
-  public Question setQuizHistories(List<QuizHistory> quizHistories) {
-    this.quizHistories = quizHistories;
-    return this;
-  }
+
 }
