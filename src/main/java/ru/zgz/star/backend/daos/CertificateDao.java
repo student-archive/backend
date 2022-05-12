@@ -83,8 +83,7 @@ public class CertificateDao {
    */
   public Certificate getById(String id) {
     try {
-      PreparedStatement query =
-          connection.prepareStatement("select * from certificate where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from certificate where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       return buildCertificate(rs);
@@ -93,7 +92,6 @@ public class CertificateDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact certificate by id.
@@ -125,10 +123,10 @@ public class CertificateDao {
   private Certificate buildCertificate(ResultSet rs) throws SQLException {
     if (rs.next()) {
       return new Certificate()
-        .setId(UUID.fromString(rs.getString("id")))
-        .setCertificateName(rs.getString("certificateName"))
-        .setCertificateDescription(rs.getString("CertificateDescription"))
-        .setOffice(rs.getString("office"));
+          .setId(UUID.fromString(rs.getString("id")))
+          .setCertificateName(rs.getString("certificateName"))
+          .setCertificateDescription(rs.getString("CertificateDescription"))
+          .setOffice(rs.getString("office"));
     } else {
       return null;
     }
