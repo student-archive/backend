@@ -35,7 +35,7 @@ public class InviteCodeDao {
    * @param id id of account
    * @return true if account exists
    */
-  public Boolean findById(java.util.UUID id) {
+  public Boolean findById(UUID id) {
     try {
       PreparedStatement query =
           connection.prepareStatement("select count(*) from invite_code where id=?");
@@ -86,7 +86,7 @@ public class InviteCodeDao {
               "insert into invite_code(account_id, invite_code, activated_date, is_valid) values (?, ?, ?, ?);");
       query.setObject(1, inviteCode.getAccount());
       query.setString(2, inviteCode.getInviteCode());
-      query.setInt(3, inviteCode.getActivationDate());
+      query.setObject(3, inviteCode.getActivationDate());
       query.setBoolean(4, inviteCode.getIsValid());
       query.executeUpdate();
       query.close();
@@ -166,6 +166,8 @@ public class InviteCodeDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from invite_code where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -186,12 +188,16 @@ public class InviteCodeDao {
 
   private InviteCode buildInviteCode(ResultSet rs) throws SQLException {
     if (rs.next()) {
-      return new InviteCode()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setInviteCode(rs.getString("invite_code"))
-          .setIsValid(rs.getBoolean("is_valid"))
-          .setAccount(UUID.fromString(rs.getString("account_id")))
-          .setActivationDate(rs.getInt("activated_date"));
+      InviteCode inviteCode =
+          new InviteCode()
+              .setId(UUID.fromString(rs.getString("id")))
+              .setInviteCode(rs.getString("invite_code"))
+              .setIsValid(rs.getBoolean("is_valid"))
+              .setActivationDate(rs.getInt("activated_date"));
+      if (rs.getString("account_id") != null) {
+        inviteCode.setAccount(UUID.fromString(rs.getString("account_id")));
+      }
+      return inviteCode;
     } else {
       return null;
     }
