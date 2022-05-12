@@ -83,8 +83,7 @@ public class QuizDao {
    */
   public Quiz getById(String id) {
     try {
-      PreparedStatement query =
-          connection.prepareStatement("select * from quiz where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from quiz where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       return buildQuiz(rs);
@@ -93,7 +92,6 @@ public class QuizDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact quiz by id.
@@ -125,10 +123,10 @@ public class QuizDao {
   private Quiz buildQuiz(ResultSet rs) throws SQLException {
     if (rs.next()) {
       return new Quiz()
-        .setId(UUID.fromString(rs.getString("id")))
-        .setQuizName(rs.getString("quiz_name"))
-        .setQuizDescription(rs.getString("quiz_description"))
-        .setQuestionsAmount(rs.getInt("quiz_amount"));
+          .setId(UUID.fromString(rs.getString("id")))
+          .setQuizName(rs.getString("quiz_name"))
+          .setQuizDescription(rs.getString("quiz_description"))
+          .setQuestionsAmount(rs.getInt("quiz_amount"));
     } else {
       return null;
     }
