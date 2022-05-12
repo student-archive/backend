@@ -19,7 +19,6 @@ public class Employee {
   private String phone;
   private String link;
 
-
   /** Instantiates a new empty employee. */
   public Employee() {}
 
@@ -32,7 +31,6 @@ public class Employee {
    * @param email email of employee
    * @param phone phone of employee
    * @param link link to employee's profile
-
    */
   public Employee(
       String firstName,
@@ -40,15 +38,13 @@ public class Employee {
       String patronymic,
       String email,
       String phone,
-      String link)
- {
+      String link) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.patronymic = patronymic;
     this.email = email;
     this.phone = phone;
     this.link = link;
-
   }
 
   /**
