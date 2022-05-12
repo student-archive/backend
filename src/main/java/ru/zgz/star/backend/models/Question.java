@@ -3,7 +3,6 @@ package ru.zgz.star.backend.models;
 import java.util.List;
 import java.util.UUID;
 
-
 /**
  * Model for table <code>question</code>.
  *
@@ -11,7 +10,6 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-
 public class Question {
 
   private UUID id;
@@ -67,9 +65,6 @@ public class Question {
     return questionText;
   }
 
-
-
-
   public UUID getQuiz() {
     return quiz;
   }
@@ -84,7 +79,7 @@ public class Question {
    * @param correctAnswersAmount New correct answer amount
    * @return object with new correct answer amount
    */
-  public Question setCorrectAnswersAmount(Integer correctAnswersAmount){
+  public Question setCorrectAnswersAmount(Integer correctAnswersAmount) {
     this.correctAnswersAmount = correctAnswersAmount;
     return this;
   }
@@ -103,8 +98,7 @@ public class Question {
    * @param totalAnswersAmount New total answer amount
    * @return object with new total answer amount
    */
-
-  public Question setTotalAnswersAmount(Integer totalAnswersAmount){
+  public Question setTotalAnswersAmount(Integer totalAnswersAmount) {
     this.totalAnswersAmount = totalAnswersAmount;
     return this;
   }
@@ -116,5 +110,4 @@ public class Question {
   public Integer getTotalAnswersAmount() {
     return totalAnswersAmount;
   }
-
 }
