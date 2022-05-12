@@ -78,21 +78,41 @@ public class Question {
     this.quiz = quiz;
     return this;
   }
-
+  /**
+   * Updates last correct answer amount.
+   *
+   * @param correctAnswersAmount New correct answer amount
+   * @return object with new correct answer amount
+   */
   public Question setCorrectAnswersAmount(Integer correctAnswersAmount){
     this.correctAnswersAmount = correctAnswersAmount;
     return this;
   }
-
+  /**
+   * Returns correct answers amount.
+   *
+   * @return associated correct answers amount
+   */
   public Integer getCorrectAnswersAmount() {
     return correctAnswersAmount;
   }
+
+  /**
+   * Updates last total answer amount.
+   *
+   * @param totalAnswersAmount New total answer amount
+   * @return object with new total answer amount
+   */
 
   public Question setTotalAnswersAmount(Integer totalAnswersAmount){
     this.totalAnswersAmount = totalAnswersAmount;
     return this;
   }
-
+  /**
+   * Returns total answers amount.
+   *
+   * @return associated total answers amount
+   */
   public Integer getTotalAnswersAmount() {
     return totalAnswersAmount;
   }
