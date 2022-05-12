@@ -81,8 +81,7 @@ public class QuestionDao {
    */
   public Question getById(String id) {
     try {
-      PreparedStatement query =
-          connection.prepareStatement("select * from question where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from question where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       return buildQuestion(rs);
@@ -91,7 +90,6 @@ public class QuestionDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact attachment type by id.
