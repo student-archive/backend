@@ -38,8 +38,7 @@ public class EmployeePositionDao {
   public void add(EmployeePosition employeePosition) {
     try {
       PreparedStatement query =
-          connection.prepareStatement(
-              "insert into employee_position(position) values (?);");
+          connection.prepareStatement("insert into employee_position(position) values (?);");
       query.setString(1, employeePosition.getPositionName());
       query.executeUpdate();
       query.close();
@@ -90,7 +89,6 @@ public class EmployeePositionDao {
     }
   }
 
-
   /**
    * Delete exact employee position by id.
    *
@@ -98,7 +96,8 @@ public class EmployeePositionDao {
    */
   public void deleteById(UUID id) {
     try {
-      PreparedStatement st = connection.prepareStatement("delete from employee_position where id=?");
+      PreparedStatement st =
+          connection.prepareStatement("delete from employee_position where id=?");
       st.setObject(1, id);
       connection.commit();
     } catch (SQLException e) {
