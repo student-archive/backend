@@ -1,6 +1,7 @@
 package ru.zgz.star.backend.models;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Model for table <code>certificate</code>.
@@ -10,7 +11,7 @@ import java.util.List;
  * @author dadyarri
  */
 public class Certificate {
-  private String id;
+  private UUID id;
   private String certificateName;
   private String certificateDescription;
   private String office;
@@ -37,7 +38,7 @@ public class Certificate {
    *
    * @return the id of the certificate
    */
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
@@ -47,7 +48,7 @@ public class Certificate {
    * @param id new id of the certificate
    * @return object with the new id
    */
-  public Certificate setId(String id) {
+  public Certificate setId(UUID id) {
     this.id = id;
     return this;
   }
