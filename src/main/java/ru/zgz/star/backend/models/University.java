@@ -14,7 +14,6 @@ public class University {
 
   private UUID id;
   private String universityName;
-  private List<Group> groups;
 
   public University() {}
 
@@ -37,15 +36,6 @@ public class University {
 
   public University setUniversityName(String universityName) {
     this.universityName = universityName;
-    return this;
-  }
-
-  public List<Group> getGroups() {
-    return groups;
-  }
-
-  public University setGroups(List<Group> groups) {
-    this.groups = groups;
     return this;
   }
 }
