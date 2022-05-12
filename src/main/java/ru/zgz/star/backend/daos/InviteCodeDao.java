@@ -88,6 +88,15 @@ public class InviteCodeDao {
       if (!inviteCode.getIsValid() && inviteCode.getActivationDate() == null) {
         throw new IllegalArgumentException("Invalid invite code must have activation date");
       }
+
+      if (inviteCode.getIsValid() && inviteCode.getAccount() != null) {
+        throw new IllegalArgumentException("Valid invite code must not have account");
+      }
+
+      if(inviteCode.getIsValid() && inviteCode.getActivationDate() != null) {
+        throw new IllegalArgumentException("Valid invite code must not have activation date");
+      }
+
       PreparedStatement query =
           connection.prepareStatement(
               "insert into invite_code(account_id, invite_code, activated_date, is_valid) values (?, ?, ?, ?);");
