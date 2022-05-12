@@ -13,10 +13,6 @@ import java.util.UUID;
 public class Subject {
   private UUID id;
   private Group group;
-  private List<Page> pages;
-  private List<Quiz> quizzes;
-  private List<Software> software;
-  private List<Tutor> tutors;
   private String subjectName;
   private Integer semester;
 
@@ -61,42 +57,6 @@ public class Subject {
 
   public Subject setSemester(Integer semester) {
     this.semester = semester;
-    return this;
-  }
-
-  public List<Page> getPages() {
-    return pages;
-  }
-
-  public Subject setPages(List<Page> pages) {
-    this.pages = pages;
-    return this;
-  }
-
-  public List<Quiz> getQuizzes() {
-    return quizzes;
-  }
-
-  public Subject setQuizzes(List<Quiz> quizzes) {
-    this.quizzes = quizzes;
-    return this;
-  }
-
-  public List<Software> getSoftware() {
-    return software;
-  }
-
-  public Subject setSoftware(List<Software> software) {
-    this.software = software;
-    return this;
-  }
-
-  public List<Tutor> getTutors() {
-    return tutors;
-  }
-
-  public Subject setTutors(List<Tutor> tutors) {
-    this.tutors = tutors;
     return this;
   }
 }
