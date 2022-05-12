@@ -74,9 +74,9 @@ public class UserDao {
                 .setFirstName(rs.getString("first_name"))
                 .setLastName(rs.getString("last_name"))
                 .setAvatarLink(rs.getString("avatar_link"))
-                .setRole((Role) rs.getObject("role_id"))
-                .setAccount((Account) rs.getObject("account_id"))
-                .setSex((Sex) rs.getObject("sex_id")));
+                .setRole((UUID) rs.getObject("role_id"))
+                .setAccount((UUID) rs.getObject("account_id"))
+                .setSex((UUID) rs.getObject("sex_id")));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -137,9 +137,9 @@ public class UserDao {
           .setFirstName(rs.getString("priority_name"))
           .setLastName(rs.getString("last_name"))
           .setAvatarLink(rs.getString("avatar_link"))
-          .setRole((Role) rs.getObject("role_id"))
-          .setAccount((Account) rs.getObject("account_id"))
-          .setSex((Sex) rs.getObject("sex_id"));
+          .setRole((UUID) rs.getObject("role_id"))
+          .setAccount((UUID) rs.getObject("account_id"))
+          .setSex((UUID) rs.getObject("sex_id"));
     } else {
       return null;
     }
