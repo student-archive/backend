@@ -79,7 +79,7 @@ public class QuestionDao {
    * @param id id of attachment type
    * @return exact attachment type
    */
-  public AttachmentType getById(String id) {
+  public Question getById(String id) {
     try {
       PreparedStatement query =
           connection.prepareStatement("select * from question where id=?");
