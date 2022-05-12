@@ -61,9 +61,9 @@ public class AccountDao {
       PreparedStatement query =
           connection.prepareStatement(
               "update account set email=?, password_hash=?, last_active_date=? where id=?");
-      query.setString(1, account.getEmail());
-      query.setString(2, account.getPasswordHash());
-      query.setInt(3, account.getLastActiveDate());
+      query.setObject(1, account.getEmail());
+      query.setObject(2, account.getPasswordHash());
+      query.setObject(3, account.getLastActiveDate());
       query.setObject(4, account.getId());
       query.executeUpdate();
       query.close();
