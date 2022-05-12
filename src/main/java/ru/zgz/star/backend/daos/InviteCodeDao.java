@@ -58,6 +58,7 @@ public class InviteCodeDao {
    */
   public void update(InviteCode inviteCode) {
     try {
+      checkValidity(inviteCode);
       PreparedStatement query =
           connection.prepareStatement(
               "update invite_code set invite_code=?, activated_date=?, account_id=?, is_valid=? where id=?");
@@ -81,21 +82,7 @@ public class InviteCodeDao {
    */
   public void add(InviteCode inviteCode) {
     try {
-      if (!inviteCode.getIsValid() && inviteCode.getAccount() == null) {
-        throw new IllegalArgumentException("Invalid invite code must have account");
-      }
-
-      if (!inviteCode.getIsValid() && inviteCode.getActivationDate() == null) {
-        throw new IllegalArgumentException("Invalid invite code must have activation date");
-      }
-
-      if (inviteCode.getIsValid() && inviteCode.getAccount() != null) {
-        throw new IllegalArgumentException("Valid invite code must not have account");
-      }
-
-      if(inviteCode.getIsValid() && inviteCode.getActivationDate() != null) {
-        throw new IllegalArgumentException("Valid invite code must not have activation date");
-      }
+      checkValidity(inviteCode);
 
       PreparedStatement query =
           connection.prepareStatement(
@@ -199,6 +186,24 @@ public class InviteCodeDao {
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
+    }
+  }
+
+  private void checkValidity(InviteCode inviteCode) {
+    if (!inviteCode.getIsValid() && inviteCode.getAccount() == null) {
+      throw new IllegalArgumentException("Invalid invite code must have account");
+    }
+
+    if (!inviteCode.getIsValid() && inviteCode.getActivationDate() == null) {
+      throw new IllegalArgumentException("Invalid invite code must have activation date");
+    }
+
+    if (inviteCode.getIsValid() && inviteCode.getAccount() != null) {
+      throw new IllegalArgumentException("Valid invite code must not have account");
+    }
+
+    if (inviteCode.getIsValid() && inviteCode.getActivationDate() != null) {
+      throw new IllegalArgumentException("Valid invite code must not have activation date");
     }
   }
 
