@@ -39,7 +39,7 @@ public class EmployeeDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into employee(first_name, last_name, patronymic, email, phone, link) values (?,?,?,?,?,?);");
+              "insert into employee(first_name, last_name, patronymic, email, phone, link) values (?, ?, ?, ?, ?, ?);");
       query.setObject(1, employee.getFirstName());
       query.setObject(2, employee.getLastName());
       query.setObject(3, employee.getPatronymic());
