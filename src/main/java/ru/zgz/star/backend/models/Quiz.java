@@ -17,14 +17,9 @@ public class Quiz {
   private Integer questionsAmount;
   private UUID subject;
 
-
   public Quiz() {}
 
-  public Quiz(
-      String quizName,
-      String quizDescription,
-      Integer questionsAmount,
-      UUID subject) {
+  public Quiz(String quizName, String quizDescription, Integer questionsAmount, UUID subject) {
     this.quizName = quizName;
     this.quizDescription = quizDescription;
     this.questionsAmount = questionsAmount;
@@ -75,6 +70,4 @@ public class Quiz {
   public UUID getSubject() {
     return subject;
   }
-
-
 }
