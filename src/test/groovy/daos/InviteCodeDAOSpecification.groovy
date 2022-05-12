@@ -170,6 +170,67 @@ class InviteCodeDAOSpecification extends Specification {
 
   }
 
+  def "Update invalid invite code (used, but no account passed)"() {
+    given: "Create data access object"
+      def invite_dao = new InviteCodeDao()
+
+    when: "Update invalid invite code"
+      def invite_code = invite_dao.getByCode("qwerty2")
+      invite_code.setIsValid(false)
+      invite_dao.update(invite_code)
+
+    then: "Should IllegalArgumentException be thrown"
+      def e = thrown(IllegalArgumentException)
+      e.message == "Invalid invite code must have account"
+  }
+
+  def "Update invalid invite code (used, but no activation date passed)"() {
+    given: "Create data access object"
+      def invite_dao = new InviteCodeDao()
+      def account_dao = new AccountDao()
+
+    when: "Update invalid invite code"
+      def invite_code = invite_dao.getByCode("qwerty2")
+      def account = account_dao.getByEmail(emailAddress)
+      invite_code.setIsValid(false).setAccount(account.id)
+      invite_dao.update(invite_code)
+
+    then: "Should IllegalArgumentException be thrown"
+      def e = thrown(IllegalArgumentException)
+      e.message == "Invalid invite code must have activation date"
+  }
+
+  def "Update invalid invite code (unused, but account passed)"() {
+    given: "Create data access object"
+      def invite_dao = new InviteCodeDao()
+      def account_dao = new AccountDao()
+
+    when: "Update invalid invite code"
+      def invite_code = invite_dao.getByCode("qwerty2")
+      def account = account_dao.getByEmail(emailAddress)
+      invite_code.setIsValid(true).setAccount(account.id)
+      invite_dao.update(invite_code)
+
+    then: "Should IllegalArgumentException be thrown"
+      def e = thrown(IllegalArgumentException)
+      e.message == "Valid invite code must not have account"
+  }
+
+  def "Update invalid invite code (unused, but activation date passed)"() {
+    given: "Create data access object"
+      def invite_dao = new InviteCodeDao()
+
+    when: "Update invalid invite code"
+      def invite_code = invite_dao.getByCode("qwerty2")
+      invite_code.setIsValid(true).setActivationDate(Instant.now().getEpochSecond() as Integer)
+      invite_dao.update(invite_code)
+
+    then: "Should IllegalArgumentException be thrown"
+      def e = thrown(IllegalArgumentException)
+      e.message == "Valid invite code must not have activation date"
+  }
+
+
   def "Delete invite code"() {
     given: "Create data access object"
       def invite_dao = new InviteCodeDao()
