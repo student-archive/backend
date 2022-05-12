@@ -7,17 +7,14 @@ import ru.zgz.star.backend.models.Account;
 import spark.Request;
 import spark.Response;
 
-/**
- * Router, which handles requests to /accounts
- */
+/** Router, which handles requests to /accounts. */
 public class AccountsRouter {
-  /**
-   * Base path for all requests, which this router handles
-   */
+  /** Base path for all requests, which this router handles. */
   public static final String BASE_URL = "/accounts";
 
   /**
-   * Handles GET requests to /accounts
+   * Handles GET requests to /accounts.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of all accounts
@@ -29,7 +26,8 @@ public class AccountsRouter {
   }
 
   /**
-   * Handles POST requests to /accounts
+   * Handles POST requests to /accounts.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of the created account
@@ -44,7 +42,8 @@ public class AccountsRouter {
   }
 
   /**
-   * Handles PATCH requests to /accounts
+   * Handles PATCH requests to /accounts.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of the 405 error
@@ -56,7 +55,8 @@ public class AccountsRouter {
   }
 
   /**
-   * Handles DELETE requests to /accounts
+   * Handles DELETE requests to /accounts.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of the 405 error
@@ -68,7 +68,8 @@ public class AccountsRouter {
   }
 
   /**
-   * Handles PUT requests to /accounts
+   * Handles PUT requests to /accounts.
+   *
    * @param request request object
    * @param response response object
    * @return JSON representation of the 405 error
