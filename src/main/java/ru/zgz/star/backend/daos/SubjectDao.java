@@ -1,0 +1,135 @@
+package ru.zgz.star.backend.daos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import ru.zgz.star.backend.models.Subject;
+import ru.zgz.star.backend.models.User;
+import ru.zgz.star.backend.util.DbUtil;
+
+/** DAO for subject table. */
+public class SubjectDao {
+  private final Connection connection;
+
+  /** Instantiates a new Subject dao. */
+  public SubjectDao() {
+    this.connection = DbUtil.getConnection();
+  }
+
+  /**
+   * Instantiates a new Subject dao.
+   *
+   * @param connection the connection
+   */
+  public SubjectDao(Connection connection) {
+    this.connection = connection;
+  }
+
+  /**
+   * Create new Subject.
+   *
+   * @param subject the subject
+   */
+  public void add(Subject subject) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into subject (group_id, subject_name, semester) values (?, ?, ?);");
+      query.setObject(1, subject.getGroup());
+      query.setString(2, subject.getSubjectName());
+      query.setInt(3, subject.getSemester());
+      query.executeUpdate();
+      query.close();
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Gets all subjects.
+   *
+   * @return list of subjects
+   */
+  public List<Subject> getAll() {
+    List<Subject> subjects= new ArrayList<>();
+    try {
+      Statement st = connection.createStatement();
+      ResultSet rs = st.executeQuery("select * from subject");
+      while (rs.next()) {
+        subjects.add(
+            new Subject()
+                .setId(UUID.fromString(rs.getString("id")))
+                .setGroup((UUID) rs.getObject("group_id"))
+                .setSubjectName(rs.getString("subject_name"))
+                .setSemester( rs.getInt("semester")));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return subjects;
+  }
+
+  /**
+   * Gets exact subject by id.
+   *
+   * @param id id of subject
+   * @return exact subject
+   */
+  public Subject getById(String id) {
+    try {
+      PreparedStatement query = connection.prepareStatement("select * from subject where id=?");
+      query.setObject(1, UUID.fromString(id));
+      ResultSet rs = query.executeQuery();
+      return buildSubject(rs);
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+
+  /**
+   * Delete exact subject by id.
+   *
+   * @param id id of subject
+   */
+  public void deleteById(UUID id) {
+    try {
+      PreparedStatement st = connection.prepareStatement("delete from subject where id=?");
+      st.setObject(1, id);
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /** Delete all subjects. */
+  @SuppressWarnings("SqlWithoutWhere")
+  public void deleteAll() {
+    try {
+      Statement st = connection.createStatement();
+      st.executeUpdate("delete from subject");
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private Subject buildSubject(ResultSet rs) throws SQLException {
+    if (rs.next()) {
+      return new Subject()
+          .setId(UUID.fromString(rs.getString("id")))
+          .setGroup((UUID)rs.getObject("group_id"))
+          .setSubjectName(rs.getString("subject_name"))
+          .setSemester( rs.getInt("semester"));
+    } else {
+      return null;
+    }
+  }
+}
