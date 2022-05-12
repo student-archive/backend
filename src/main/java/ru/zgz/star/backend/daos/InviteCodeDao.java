@@ -73,6 +73,7 @@ public class InviteCodeDao {
       e.printStackTrace();
     }
   }
+
   /**
    * Create new invite code.
    *
