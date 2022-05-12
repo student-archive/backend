@@ -190,11 +190,19 @@ public class InviteCodeDao {
   }
 
   private void checkValidity(InviteCode inviteCode) {
+
+    boolean isActivationDateEqualsZero;
+    try {
+      isActivationDateEqualsZero = inviteCode.getActivationDate() == 0;
+    } catch (NullPointerException e) {
+      isActivationDateEqualsZero = true;
+    }
+
     if (!inviteCode.getIsValid() && inviteCode.getAccount() == null) {
       throw new IllegalArgumentException("Invalid invite code must have account");
     }
 
-    if (!inviteCode.getIsValid() && inviteCode.getActivationDate() == null) {
+    if (!inviteCode.getIsValid() && (inviteCode.getActivationDate() == null || isActivationDateEqualsZero)) {
       throw new IllegalArgumentException("Invalid invite code must have activation date");
     }
 
@@ -202,7 +210,7 @@ public class InviteCodeDao {
       throw new IllegalArgumentException("Valid invite code must not have account");
     }
 
-    if (inviteCode.getIsValid() && inviteCode.getActivationDate() != null) {
+    if (inviteCode.getIsValid() && (inviteCode.getActivationDate() != null || !isActivationDateEqualsZero)) {
       throw new IllegalArgumentException("Valid invite code must not have activation date");
     }
   }
