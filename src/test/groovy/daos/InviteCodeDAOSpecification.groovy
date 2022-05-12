@@ -150,6 +150,26 @@ class InviteCodeDAOSpecification extends Specification {
       invite_code.size() == 2
   }
 
+
+  def "Update invite code"() {
+    given: "Create data access object"
+      def invite_dao = new InviteCodeDao()
+
+    when: "Update invite code"
+      def invite_code = invite_dao.getByCode("qwerty")
+      invite_code.setInviteCode("qwerty2")
+      invite_dao.update(invite_code)
+
+    then: "Should return updated invite code"
+      def updated_invite_code = invite_dao.getByCode("qwerty2")
+      updated_invite_code.id == invite_code.id
+      updated_invite_code.inviteCode == "qwerty2"
+      updated_invite_code.isValid == invite_code.isValid
+      updated_invite_code.activationDate == invite_code.activationDate
+      updated_invite_code.account == invite_code.account
+
+  }
+
   def "Delete invite code"() {
     given: "Create data access object"
       def invite_dao = new InviteCodeDao()
