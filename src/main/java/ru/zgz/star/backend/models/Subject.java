@@ -12,13 +12,13 @@ import java.util.UUID;
  */
 public class Subject {
   private UUID id;
-  private Group group;
+  private UUID group;
   private String subjectName;
   private Integer semester;
 
   public Subject() {}
 
-  public Subject(Group group, String subjectName, Integer semester) {
+  public Subject(UUID group, String subjectName, Integer semester) {
     this.group = group;
     this.subjectName = subjectName;
     this.semester = semester;
@@ -33,11 +33,11 @@ public class Subject {
     return this;
   }
 
-  public Group getGroup() {
+  public UUID getGroup() {
     return group;
   }
 
-  public Subject setGroup(Group group) {
+  public Subject setGroup(UUID group) {
     this.group = group;
     return this;
   }
