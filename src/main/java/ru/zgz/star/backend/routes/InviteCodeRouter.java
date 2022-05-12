@@ -78,6 +78,6 @@ public class InviteCodeRouter {
   public static String delete(Request request, Response response) {
     response.type("application/json");
     response.status(405);
-    throw new MethodNotAllowedException("Method PATCH is not allowed for this resource");
+    throw new MethodNotAllowedException("Method DELETE is not allowed for this resource");
   }
 }
