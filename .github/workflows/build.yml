@@ -4,19 +4,21 @@ on:
   push:
     paths:
       - '**.java'
+      - '**.groovy'
   pull_request:
     paths:
       - '**.java'
+      - '**.groovy'
     branches:
       - master
+    types:
+      - 'opened'
+      - 'reopened'
 
 jobs:
   compile:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
     name: Compile
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -37,11 +39,9 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
 
   test:
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+    needs: compile
     name: Tests
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install Java

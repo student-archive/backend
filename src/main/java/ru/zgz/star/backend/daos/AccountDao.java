@@ -30,6 +30,49 @@ public class AccountDao {
   }
 
   /**
+   * Checks if account exists.
+   *
+   * @param id id of account
+   * @return true if account exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from account where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+
+  /**
+   * Updates account.
+   *
+   * @param account updated account
+   */
+  public void update(Account account) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update account set email=?, password_hash=?, last_active_date=? where id=?");
+      query.setObject(1, account.getEmail());
+      query.setObject(2, account.getPasswordHash());
+      query.setObject(3, account.getLastActiveDate());
+      query.setObject(4, account.getId());
+      query.executeUpdate();
+      query.close();
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+  /**
    * Create new account.
    *
    * @param account the account
@@ -83,7 +126,7 @@ public class AccountDao {
   public Account getById(String id) {
     try {
       PreparedStatement query =
-          connection.prepareStatement("select * from \"account\" where \"id\"=?");
+          connection.prepareStatement("select * from account where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       return buildAccount(rs);
@@ -102,7 +145,7 @@ public class AccountDao {
   public Account getByEmail(String email) {
     try {
       PreparedStatement query =
-          connection.prepareStatement("select * from \"account\" where \"email\"=?");
+          connection.prepareStatement("select * from account where email=?");
       query.setString(1, email);
       ResultSet rs = query.executeQuery();
       return buildAccount(rs);

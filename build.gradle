@@ -21,6 +21,7 @@ dependencies {
   // Testing
   testImplementation 'org.spockframework:spock-core:2.2-M1-groovy-4.0'
   testImplementation 'com.mashape.unirest:unirest-java:1.4.9'
+  testImplementation 'com.github.javafaker:javafaker:1.0.2'
 
   // Pack of libraries
   implementation 'com.google.guava:guava:31.1-jre'

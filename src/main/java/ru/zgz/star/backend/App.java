@@ -1,7 +1,9 @@
 package ru.zgz.star.backend;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.zgz.star.backend.responses.ErrorResponse;
 import ru.zgz.star.backend.util.ClassUtil;
 
 import java.io.IOException;
@@ -9,8 +11,14 @@ import java.lang.reflect.Method;
 
 import static spark.Spark.*;
 
+/**
+ * Main class of the application.
+ */
 public class App {
 
+  /**
+   * Logger object of the class.
+   */
   public static Logger logger = LoggerFactory.getLogger(App.class);
 
   /**
@@ -19,6 +27,9 @@ public class App {
    * <p>Automatically collects created methods by correct HTTP verbs
    *
    * @param args Command-line arguments
+   * @throws IOException If an I/O error occurs
+   * @throws NoSuchFieldException If a class cannot be found
+   * @throws IllegalAccessException If a class is not accessible
    */
   public static void main(String[] args)
       throws IOException, NoSuchFieldException, IllegalAccessException {
@@ -60,10 +71,18 @@ public class App {
               "Method " + method.getName() + "in class " + cls + " is not supported");
         }
       }
-      internalServerError((req, res) -> {
-        res.type("application/json");
-        return "{\"message\":\"Internal server error\"}";
-      });
+      exception(
+          Exception.class,
+          (ex, req, res) -> {
+            res.type("application/json");
+            res.body(
+                new Gson()
+                    .toJson(
+                        new ErrorResponse(
+                            res.status(),
+                            ex.getCause().getMessage(),
+                            ex.getCause().getClass().getSimpleName())));
+          });
     }
   }
 }
