@@ -15,7 +15,7 @@ public class Page {
 
   private UUID id;
   private String link;
-  private Subject subject;
+  private UUID subject;
   private List<Attachment> attachment;
 
   public Page() {}
@@ -49,7 +49,7 @@ public class Page {
     return this;
   }
 
-  public Subject getSubject() {
+  public UUID getSubject() {
     return subject;
   }
 
