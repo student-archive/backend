@@ -126,7 +126,7 @@ public class AccountDao {
   public Account getById(String id) {
     try {
       PreparedStatement query =
-          connection.prepareStatement("select * from \"account\" where \"id\"=?");
+          connection.prepareStatement("select * from account where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       return buildAccount(rs);
@@ -145,7 +145,7 @@ public class AccountDao {
   public Account getByEmail(String email) {
     try {
       PreparedStatement query =
-          connection.prepareStatement("select * from \"account\" where \"email\"=?");
+          connection.prepareStatement("select * from account where email=?");
       query.setString(1, email);
       ResultSet rs = query.executeQuery();
       return buildAccount(rs);
