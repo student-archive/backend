@@ -43,7 +43,7 @@ class InviteCodeDAOSpecification extends Specification {
 
   }
 
-  def "Create invalid invite code"() {
+  def "Create used invite code"() {
     given: "Create data access object"
       def invite_dao = new InviteCodeDao()
       def account_dao = new AccountDao()
@@ -64,6 +64,35 @@ class InviteCodeDAOSpecification extends Specification {
       !fetched_invite.isValid
       fetched_invite.activationDate == activationDate
       fetched_invite.account == account.id
+  }
+
+  def "Create invalid invite code (used, but no account passed)"() {
+    given: "Create data access object"
+      def invite_dao = new InviteCodeDao()
+      def added_invite = new InviteCode().setInviteCode("dsfgh").setIsValid(false)
+
+    when: "Create invalid invite code"
+      invite_dao.add(added_invite)
+
+    then: "Should IllegalArgumentException be thrown"
+      def e = thrown(IllegalArgumentException)
+      e.message == "Invalid invite code must have account"
+  }
+
+  def "Create invalid invite code (used, but no activation date passed)"() {
+    given: "Create data access object"
+      def invite_dao = new InviteCodeDao()
+      def added_invite = new InviteCode().setInviteCode("dsfgh").setIsValid(false)
+      def account_dao = new AccountDao()
+      def account = account_dao.getByEmail(emailAddress)
+      added_invite.setAccount(account.id)
+
+    when: "Create invalid invite code"
+      invite_dao.add(added_invite)
+
+    then: "Should IllegalArgumentException be thrown"
+      def e = thrown(IllegalArgumentException)
+      e.message == "Invalid invite code must have activation date"
   }
 
   def "Get by id should return same invite code as get by code"() {
