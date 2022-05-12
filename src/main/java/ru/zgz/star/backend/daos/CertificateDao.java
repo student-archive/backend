@@ -39,7 +39,7 @@ public class CertificateDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into certificate( certificate_name, certificate_description, office) values (?,?,?);");
+              "insert into certificate( certificate_name, certificate_description, office) values (?, ?, ?);");
       query.setString(1, certificate.getCertificateName());
       query.setString(2, certificate.getCertificateDescription());
       query.setString(3, certificate.getOffice());
