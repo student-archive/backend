@@ -15,9 +15,8 @@ public class Quiz {
   private String quizName;
   private String quizDescription;
   private Integer questionsAmount;
-  private Subject subject;
-  private List<Question> questions;
-  private List<QuizResult> quizResults;
+  private UUID subject;
+
 
   public Quiz() {}
 
@@ -25,13 +24,11 @@ public class Quiz {
       String quizName,
       String quizDescription,
       Integer questionsAmount,
-      Subject subject,
-      List<Question> questions) {
+      UUID subject) {
     this.quizName = quizName;
     this.quizDescription = quizDescription;
     this.questionsAmount = questionsAmount;
     this.subject = subject;
-    this.questions = questions;
   }
 
   public Quiz setId(UUID id) {
@@ -70,30 +67,14 @@ public class Quiz {
     return questionsAmount;
   }
 
-  public Quiz setSubject(Subject subject) {
+  public Quiz setSubject(UUID subject) {
     this.subject = subject;
     return this;
   }
 
-  public Subject getSubject() {
+  public UUID getSubject() {
     return subject;
   }
 
-  public Quiz setQuestions(List<Question> questions) {
-    this.questions = questions;
-    return this;
-  }
 
-  public List<Question> getQuestions() {
-    return questions;
-  }
-
-  public List<QuizResult> getQuizResults() {
-    return quizResults;
-  }
-
-  public Quiz setQuizResults(List<QuizResult> quizResults) {
-    this.quizResults = quizResults;
-    return this;
-  }
 }
