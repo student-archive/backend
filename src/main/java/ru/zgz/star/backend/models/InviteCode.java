@@ -15,7 +15,7 @@ public class InviteCode {
   private String inviteCode;
   private Boolean isValid;
   private Integer activationDate;
-  private Account account;
+  private UUID account;
 
   /** Instantiates a new Invite code. */
   public InviteCode() {}
@@ -28,7 +28,7 @@ public class InviteCode {
    * @param activationDate the activation date
    * @param account the account
    */
-  public InviteCode(String inviteCode, Boolean isValid, Integer activationDate, Account account) {
+  public InviteCode(String inviteCode, Boolean isValid, Integer activationDate, UUID account) {
     this.inviteCode = inviteCode;
     this.isValid = isValid;
     this.activationDate = activationDate;
@@ -60,7 +60,7 @@ public class InviteCode {
    *
    * @return the account
    */
-  public Account getAccount() {
+  public UUID getAccount() {
     return account;
   }
 
@@ -70,7 +70,7 @@ public class InviteCode {
    * @param account the account
    * @return the account
    */
-  public InviteCode setAccount(Account account) {
+  public InviteCode setAccount(UUID account) {
     this.account = account;
     return this;
   }
