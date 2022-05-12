@@ -3,6 +3,7 @@ package ru.zgz.star.backend.models;
 import java.util.List;
 import java.util.UUID;
 
+
 /**
  * Model for table <code>question</code>.
  *
@@ -16,13 +17,16 @@ public class Question {
   private UUID id;
   private String questionText;
   private UUID quiz;
-
+  private Integer correctAnswersAmount;
+  private Integer totalAnswersAmount;
 
   public Question() {}
 
   public Question(String questionText, UUID quiz) {
     this.questionText = questionText;
     this.quiz = quiz;
+    this.correctAnswersAmount = correctAnswersAmount;
+    this.totalAnswersAmount = totalAnswersAmount;
   }
 
   /**
@@ -75,6 +79,22 @@ public class Question {
     return this;
   }
 
+  public Question setCorrectAnswersAmount(Integer correctAnswersAmount){
+    this.correctAnswersAmount = correctAnswersAmount;
+    return this;
+  }
 
+  public Integer getCorrectAnswersAmount() {
+    return correctAnswersAmount;
+  }
+
+  public Question setTotalAnswersAmount(Integer totalAnswersAmount){
+    this.totalAnswersAmount = totalAnswersAmount;
+    return this;
+  }
+
+  public Integer getTotalAnswersAmount() {
+    return totalAnswersAmount;
+  }
 
 }
