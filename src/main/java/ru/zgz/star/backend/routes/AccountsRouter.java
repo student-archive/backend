@@ -9,7 +9,7 @@ import spark.Response;
 
 /** Router, which handles requests to /accounts. */
 public class AccountsRouter {
-  /** Base path for all requests, which this router handles */
+  /** Base path for all requests, which this router handles. */
   public static final String BASE_URL = "/accounts";
 
   /**
