@@ -15,8 +15,7 @@ public class QuizVariant {
   private UUID id;
   private String quizVariantText;
   private Boolean isCorrect;
-  private Question question;
-  private List<QuizHistory> quizHistories;
+  private UUID question;
 
   public QuizVariant() {}
 
@@ -52,21 +51,12 @@ public class QuizVariant {
     return isCorrect;
   }
 
-  public Question getQuestion() {
+  public UUID getQuestion() {
     return question;
   }
 
-  public QuizVariant setQuestion(Question question) {
+  public QuizVariant setQuestion(UUID question) {
     this.question = question;
-    return this;
-  }
-
-  public List<QuizHistory> getQuizHistories() {
-    return quizHistories;
-  }
-
-  public QuizVariant setQuizHistories(List<QuizHistory> quizHistories) {
-    this.quizHistories = quizHistories;
     return this;
   }
 }
