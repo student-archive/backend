@@ -66,9 +66,4 @@ public class EmployeePosition {
     this.positionName = positionName;
     return this;
   }
-
-  /**
-   * Gets employees on this position.
-   *
-   * @return the employees
-   */
+}
