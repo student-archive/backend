@@ -14,7 +14,7 @@ public class Software {
   private UUID id;
   private String description;
   private String link;
-  private Subject subject;
+  private UUID subject;
 
   public Software() {}
 
@@ -50,12 +50,12 @@ public class Software {
     return link;
   }
 
-  public Software setSubject(Subject subject) {
+  public Software setSubject(UUID subject) {
     this.subject = subject;
     return this;
   }
 
-  public Subject getSubject() {
+  public UUID getSubject() {
     return subject;
   }
 }
