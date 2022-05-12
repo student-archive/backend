@@ -14,7 +14,7 @@ public class Account {
   private String email;
   private String passwordHash;
   private Integer lastActiveDate;
-  private InviteCode inviteCode;
+  private UUID inviteCode;
   private User user;
 
   /** Instantiates new empty Account. */
@@ -138,7 +138,7 @@ public class Account {
    *
    * @return invite code of user
    */
-  public InviteCode getInviteCodes() {
+  public UUID getInviteCodes() {
     return inviteCode;
   }
 
