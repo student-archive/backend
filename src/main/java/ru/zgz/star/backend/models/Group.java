@@ -18,9 +18,7 @@ public class Group {
   private String groupName;
   private University university;
   private Speciality speciality;
-  private List<User> users;
-  private List<Event> events;
-  private Collection<Trash> trash;
+
 
   public Group() {}
 
@@ -28,7 +26,6 @@ public class Group {
     this.groupName = groupName;
     this.university = university;
     this.speciality = speciality;
-    this.users = users;
   }
 
   public Group setId(UUID id) {
@@ -58,14 +55,6 @@ public class Group {
     return groupName;
   }
 
-  public List<User> getUsers() {
-    return users;
-  }
-
-  public Group setUsers(List<User> users) {
-    this.users = users;
-    return this;
-  }
 
   public University getUniversity() {
     return university;
@@ -74,22 +63,5 @@ public class Group {
   public Group setUniversity(University university) {
     this.university = university;
     return this;
-  }
-
-  public List<Event> getEvents() {
-    return events;
-  }
-
-  public Group setEvents(List<Event> events) {
-    this.events = events;
-    return this;
-  }
-
-  public Collection<Trash> getTrash() {
-    return trash;
-  }
-
-  public void setTrash(Collection<Trash> trash) {
-    this.trash = trash;
   }
 }

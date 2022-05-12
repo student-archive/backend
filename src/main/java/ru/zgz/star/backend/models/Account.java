@@ -15,7 +15,7 @@ public class Account {
   private String passwordHash;
   private Integer lastActiveDate;
   private UUID inviteCode;
-  private User user;
+  private UUID user;
 
   /** Instantiates new empty Account. */
   public Account() {}
@@ -118,7 +118,7 @@ public class Account {
    *
    * @return associated user
    */
-  public User getUser() {
+  public UUID getUser() {
     return user;
   }
 
@@ -128,7 +128,7 @@ public class Account {
    * @param user associated user
    * @return object with new user
    */
-  public Account setUser(User user) {
+  public Account setUser(UUID user) {
     this.user = user;
     return this;
   }
@@ -148,7 +148,7 @@ public class Account {
    * @param inviteCode new invite code of user
    * @return object with new invite code
    */
-  public Account setInviteCodes(InviteCode inviteCode) {
+  public Account setInviteCodes(UUID inviteCode) {
     this.inviteCode = inviteCode;
     return this;
   }

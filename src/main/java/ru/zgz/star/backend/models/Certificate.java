@@ -15,7 +15,7 @@ public class Certificate {
   private String certificateName;
   private String certificateDescription;
   private String office;
-  private List<Employee> employees;
+
 
   /** Instantiate a new empty Certificate object. */
   public Certificate() {}
@@ -110,26 +110,6 @@ public class Certificate {
    */
   public Certificate setOffice(String office) {
     this.office = office;
-    return this;
-  }
-
-  /**
-   * Gets the employees who issuing this certificate.
-   *
-   * @return the employees who issuing this certificate
-   */
-  public List<Employee> getEmployees() {
-    return employees;
-  }
-
-  /**
-   * Sets the employees who issuing this certificate.
-   *
-   * @param employees new employees who issuing this certificate
-   * @return object with the new employees
-   */
-  public Certificate setEmployees(List<Employee> employees) {
-    this.employees = employees;
     return this;
   }
 }
