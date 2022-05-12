@@ -73,6 +73,7 @@ public class Question {
     this.quiz = quiz;
     return this;
   }
+
   /**
    * Updates last correct answer amount.
    *
@@ -83,6 +84,7 @@ public class Question {
     this.correctAnswersAmount = correctAnswersAmount;
     return this;
   }
+
   /**
    * Returns correct answers amount.
    *
@@ -102,6 +104,7 @@ public class Question {
     this.totalAnswersAmount = totalAnswersAmount;
     return this;
   }
+
   /**
    * Returns total answers amount.
    *
