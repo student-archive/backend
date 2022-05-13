@@ -8,7 +8,7 @@ import spark.Request;
 import spark.Response;
 
 /** Router, which handles requests to /inviteCodes. */
-public class InviteCodeRouter {
+public class InviteCodesRouter {
 
   /** Base path for all requests, which this router handles. */
   public static final String BASE_URL = "/inviteCodes";
