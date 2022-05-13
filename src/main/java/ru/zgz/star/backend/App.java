@@ -1,6 +1,12 @@
 package ru.zgz.star.backend;
 
-import static spark.Spark.*;
+import static spark.Spark.delete;
+import static spark.Spark.exception;
+import static spark.Spark.get;
+import static spark.Spark.patch;
+import static spark.Spark.post;
+import static spark.Spark.put;
+import static spark.Spark.stop;
 
 import com.google.gson.Gson;
 import java.io.IOException;
