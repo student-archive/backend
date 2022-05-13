@@ -14,7 +14,7 @@ public class EventPriority {
   private UUID id;
   private String priorityName;
   private String priorityDescription;
-  private List<Event> events;
+
 
   /** Instantiates a new empty object. */
   public EventPriority() {}
@@ -90,23 +90,6 @@ public class EventPriority {
     return priorityDescription;
   }
 
-  /**
-   * Gets events list.
-   *
-   * @return events list
-   */
-  public List<Event> getEvents() {
-    return events;
+
   }
 
-  /**
-   * Sets events list.
-   *
-   * @param events new events list
-   * @return object with new events list
-   */
-  public EventPriority setEvents(List<Event> events) {
-    this.events = events;
-    return this;
-  }
-}

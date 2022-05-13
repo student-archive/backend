@@ -12,13 +12,13 @@ import java.util.UUID;
 public class QuizHistory {
 
   private UUID id;
-  private Question question;
-  private QuizVariant selectedVariant;
-  private User user;
+  private UUID question;
+  private UUID selectedVariant;
+  private UUID user;
 
   public QuizHistory() {}
 
-  public QuizHistory(Question question, QuizVariant selectedVariant, User user) {
+  public QuizHistory(UUID question, UUID selectedVariant, UUID user) {
     this.question = question;
     this.selectedVariant = selectedVariant;
     this.user = user;
@@ -33,30 +33,30 @@ public class QuizHistory {
     return id;
   }
 
-  public QuizHistory setQuestion(Question question) {
+  public QuizHistory setQuestion(UUID question) {
     this.question = question;
     return this;
   }
 
-  public Question getQuestion() {
+  public UUID getQuestion() {
     return question;
   }
 
-  public QuizHistory setSelectedVariant(QuizVariant selectedVariant) {
+  public QuizHistory setSelectedVariant(UUID selectedVariant) {
     this.selectedVariant = selectedVariant;
     return this;
   }
 
-  public QuizVariant getSelectedVariant() {
+  public UUID getSelectedVariant() {
     return selectedVariant;
   }
 
-  public QuizHistory setUser(User user) {
+  public QuizHistory setUser(UUID user) {
     this.user = user;
     return this;
   }
 
-  public User getUser() {
+  public UUID getUser() {
     return user;
   }
 }

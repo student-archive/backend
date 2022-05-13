@@ -10,20 +10,21 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-
 public class Question {
 
   private UUID id;
   private String questionText;
-  private Quiz quiz;
-  private List<QuizVariant> variants;
-  private List<QuizHistory> quizHistories;
+  private UUID quiz;
+  private Integer correctAnswersAmount;
+  private Integer totalAnswersAmount;
 
   public Question() {}
 
-  public Question(String questionText, List<QuizVariant> variants) {
+  public Question(String questionText, UUID quiz) {
     this.questionText = questionText;
-    this.variants = variants;
+    this.quiz = quiz;
+    this.correctAnswersAmount = correctAnswersAmount;
+    this.totalAnswersAmount = totalAnswersAmount;
   }
 
   /**
@@ -64,40 +65,52 @@ public class Question {
     return questionText;
   }
 
-  /**
-   * Sets value for variants of question
-   *
-   * @param variants New set of variants
-   */
-  public Question setVariants(List<QuizVariant> variants) {
-    this.variants = variants;
-    return this;
-  }
-
-  /**
-   * Returns variants of question
-   *
-   * @return variants of question
-   */
-  public List<QuizVariant> getVariants() {
-    return variants;
-  }
-
-  public Quiz getQuiz() {
+  public UUID getQuiz() {
     return quiz;
   }
 
-  public Question setQuiz(Quiz quiz) {
+  public Question setQuiz(UUID quiz) {
     this.quiz = quiz;
     return this;
   }
 
-  public List<QuizHistory> getQuizHistories() {
-    return quizHistories;
+  /**
+   * Updates last correct answer amount.
+   *
+   * @param correctAnswersAmount New correct answer amount
+   * @return object with new correct answer amount
+   */
+  public Question setCorrectAnswersAmount(Integer correctAnswersAmount) {
+    this.correctAnswersAmount = correctAnswersAmount;
+    return this;
   }
 
-  public Question setQuizHistories(List<QuizHistory> quizHistories) {
-    this.quizHistories = quizHistories;
+  /**
+   * Returns correct answers amount.
+   *
+   * @return associated correct answers amount
+   */
+  public Integer getCorrectAnswersAmount() {
+    return correctAnswersAmount;
+  }
+
+  /**
+   * Updates last total answer amount.
+   *
+   * @param totalAnswersAmount New total answer amount
+   * @return object with new total answer amount
+   */
+  public Question setTotalAnswersAmount(Integer totalAnswersAmount) {
+    this.totalAnswersAmount = totalAnswersAmount;
     return this;
+  }
+
+  /**
+   * Returns total answers amount.
+   *
+   * @return associated total answers amount
+   */
+  public Integer getTotalAnswersAmount() {
+    return totalAnswersAmount;
   }
 }

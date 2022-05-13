@@ -13,7 +13,7 @@ import java.util.UUID;
 public class AttachmentType {
   private UUID id;
   private String typeName;
-  private List<Attachment> attachment;
+
 
   /** Instantiates new empty attachment type. */
   public AttachmentType() {}
@@ -65,25 +65,5 @@ public class AttachmentType {
    */
   public String getTypeName() {
     return typeName;
-  }
-
-  /**
-   * Sets list of attachments.
-   *
-   * @return list of attachments
-   */
-  public List<Attachment> getAttachment() {
-    return attachment;
-  }
-
-  /**
-   * Sets list of attachments.
-   *
-   * @param attachment list of attachments
-   * @return object with new list of attachments
-   */
-  public AttachmentType setAttachment(List<Attachment> attachment) {
-    this.attachment = attachment;
-    return this;
   }
 }

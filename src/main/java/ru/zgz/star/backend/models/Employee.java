@@ -18,9 +18,6 @@ public class Employee {
   private String email;
   private String phone;
   private String link;
-  private List<Speciality> specialities;
-  private List<EmployeePosition> positions;
-  private List<Certificate> certificates;
 
   /** Instantiates a new empty employee. */
   public Employee() {}
@@ -34,9 +31,6 @@ public class Employee {
    * @param email email of employee
    * @param phone phone of employee
    * @param link link to employee's profile
-   * @param specialities specialities of employee
-   * @param positions positions of employee
-   * @param certificates certificates of employee
    */
   public Employee(
       String firstName,
@@ -44,19 +38,13 @@ public class Employee {
       String patronymic,
       String email,
       String phone,
-      String link,
-      List<Speciality> specialities,
-      List<EmployeePosition> positions,
-      List<Certificate> certificates) {
+      String link) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.patronymic = patronymic;
     this.email = email;
     this.phone = phone;
     this.link = link;
-    this.specialities = specialities;
-    this.positions = positions;
-    this.certificates = certificates;
   }
 
   /**
@@ -196,66 +184,6 @@ public class Employee {
    */
   public Employee setLink(String link) {
     this.link = link;
-    return this;
-  }
-
-  /**
-   * Gets positions of employee.
-   *
-   * @return positions of employee
-   */
-  public List<EmployeePosition> getPositions() {
-    return positions;
-  }
-
-  /**
-   * Sets positions of employee.
-   *
-   * @param positions positions of employee
-   * @return object with new positions
-   */
-  public Employee setPositions(List<EmployeePosition> positions) {
-    this.positions = positions;
-    return this;
-  }
-
-  /**
-   * Gets specialities of employee.
-   *
-   * @return specialities of employee
-   */
-  public List<Speciality> getSpecialities() {
-    return specialities;
-  }
-
-  /**
-   * Sets specialities of employee.
-   *
-   * @param specialities specialities of employee
-   * @return object with new specialities
-   */
-  public Employee setSpeciality(List<Speciality> specialities) {
-    this.specialities = specialities;
-    return this;
-  }
-
-  /**
-   * Gets certificates of employee.
-   *
-   * @return certificates of employee
-   */
-  public List<Certificate> getCertificates() {
-    return certificates;
-  }
-
-  /**
-   * Sets certificates of employee.
-   *
-   * @param certificates certificates of employee
-   * @return object with new certificates
-   */
-  public Employee setCertificates(List<Certificate> certificates) {
-    this.certificates = certificates;
     return this;
   }
 }

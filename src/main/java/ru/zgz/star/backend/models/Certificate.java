@@ -1,6 +1,7 @@
 package ru.zgz.star.backend.models;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Model for table <code>certificate</code>.
@@ -10,11 +11,11 @@ import java.util.List;
  * @author dadyarri
  */
 public class Certificate {
-  private String id;
+  private UUID id;
   private String certificateName;
   private String certificateDescription;
   private String office;
-  private List<Employee> employees;
+  private UUID employee;
 
   /** Instantiate a new empty Certificate object. */
   public Certificate() {}
@@ -30,6 +31,7 @@ public class Certificate {
     this.certificateName = certificateName;
     this.certificateDescription = certificateDescription;
     this.office = office;
+    this.employee = employee;
   }
 
   /**
@@ -37,7 +39,7 @@ public class Certificate {
    *
    * @return the id of the certificate
    */
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
@@ -47,7 +49,7 @@ public class Certificate {
    * @param id new id of the certificate
    * @return object with the new id
    */
-  public Certificate setId(String id) {
+  public Certificate setId(UUID id) {
     this.id = id;
     return this;
   }
@@ -113,22 +115,22 @@ public class Certificate {
   }
 
   /**
-   * Gets the employees who issuing this certificate.
+   * Gets the euuid where the Employee is issuing.
    *
-   * @return the employees who issuing this certificate
+   * @return the Employee where the euuid is issuing
    */
-  public List<Employee> getEmployees() {
-    return employees;
+  public UUID getEmployee() {
+    return employee;
   }
 
   /**
-   * Sets the employees who issuing this certificate.
+   * Gets the Employee where the certificate is issuing.
    *
-   * @param employees new employees who issuing this certificate
-   * @return object with the new employees
+   * @return the Employee where the certificate is issuing
    */
-  public Certificate setEmployees(List<Employee> employees) {
-    this.employees = employees;
+  public Certificate setEmployee(UUID employee) {
+    this.employee = employee;
     return this;
   }
+
 }

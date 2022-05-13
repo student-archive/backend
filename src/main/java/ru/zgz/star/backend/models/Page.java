@@ -15,15 +15,14 @@ public class Page {
 
   private UUID id;
   private String link;
-  private Subject subject;
-  private List<Attachment> attachment;
+  private UUID subject;
+
 
   public Page() {}
 
-  public Page(String link, Subject subject, List<Attachment> attachment) {
+  public Page(String link, UUID subject, List<Attachment> attachment) {
     this.link = link;
     this.subject = subject;
-    this.attachment = attachment;
   }
 
   public Page setId(UUID id) {
@@ -44,21 +43,12 @@ public class Page {
     return link;
   }
 
-  public Page setSubject(Subject subject) {
+  public Page setSubject(UUID subject) {
     this.subject = subject;
     return this;
   }
 
-  public Subject getSubject() {
+  public UUID getSubject() {
     return subject;
-  }
-
-  public Page setAttachment(List<Attachment> attachment) {
-    this.attachment = attachment;
-    return this;
-  }
-
-  public List<Attachment> getAttachment() {
-    return attachment;
   }
 }

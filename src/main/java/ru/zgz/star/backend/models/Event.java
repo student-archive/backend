@@ -16,9 +16,9 @@ public class Event {
   private String eventText;
   private String eventDescription;
   private Integer eventDate;
-  private EventPriority eventPriority;
-  private User user;
-  private Group group;
+  private UUID eventPriority;
+  private UUID user;
+  private UUID group;
 
   /** Instantiates a new Event. */
   public Event() {}
@@ -122,7 +122,7 @@ public class Event {
    * @param eventPriority the event priority
    * @return the event priority
    */
-  public Event setEventPriority(EventPriority eventPriority) {
+  public Event setEventPriority(UUID eventPriority) {
     this.eventPriority = eventPriority;
     return this;
   }
@@ -132,7 +132,7 @@ public class Event {
    *
    * @return the event priority
    */
-  public EventPriority getEventPriority() {
+  public UUID getEventPriority() {
     return eventPriority;
   }
 
@@ -142,7 +142,7 @@ public class Event {
    * @param user the user
    * @return the user
    */
-  public Event setUser(User user) {
+  public Event setUser(UUID user) {
     this.user = user;
     return this;
   }
@@ -152,7 +152,7 @@ public class Event {
    *
    * @return the user
    */
-  public User getUser() {
+  public UUID getUser() {
     return user;
   }
 
@@ -162,7 +162,7 @@ public class Event {
    * @param group the group
    * @return the group
    */
-  public Event setGroup(Group group) {
+  public Event setGroup(UUID group) {
     this.group = group;
     return this;
   }
@@ -172,7 +172,7 @@ public class Event {
    *
    * @return the group
    */
-  public Group getGroup() {
+  public UUID getGroup() {
     return group;
   }
 }
