@@ -39,10 +39,11 @@ public class QuestionDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into question(question_text, correct_answers_amount, total_answers_amount) values (?, ?, ?);");
+              "insert into question(question_text, correct_answers_amount, total_answers_amount, quiz_id) values (?, ?, ?, ?);");
       query.setString(1, question.getQuestionText());
       query.setInt(2, question.getCorrectAnswersAmount());
       query.setInt(3, question.getTotalAnswersAmount());
+      query.setObject(4, question.getQuiz());
       query.executeUpdate();
       query.close();
       connection.commit();
@@ -65,6 +66,7 @@ public class QuestionDao {
         questions.add(
             new Question()
                 .setId(UUID.fromString(rs.getString("id")))
+                .setQuiz(UUID.fromString(rs.getString("quiz")))
                 .setQuestionText(rs.getString("questionText")));
       }
     } catch (SQLException e) {
@@ -122,6 +124,7 @@ public class QuestionDao {
     if (rs.next()) {
       return new Question()
           .setId(UUID.fromString(rs.getString("id")))
+          .setQuiz(UUID.fromString(rs.getString("quiz")))
           .setQuestionText(rs.getString("questionText"));
     } else {
       return null;
