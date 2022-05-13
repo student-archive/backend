@@ -29,7 +29,7 @@ public class AccountRouter {
    * @param response response object
    * @return JSON representation of exact account
    */
-  public static String getExactAccount(Request request, Response response) {
+  public static String get(Request request, Response response) {
     response.type("application/json");
     AccountDao dao = new AccountDao();
     try {
@@ -55,7 +55,7 @@ public class AccountRouter {
    * @param response response object
    * @return JSON representation of id of deleted account
    */
-  public static String deleteExactAccount(Request request, Response response) {
+  public static String delete(Request request, Response response) {
     response.type("application/json");
     AccountDao dao = new AccountDao();
     try {
@@ -81,7 +81,7 @@ public class AccountRouter {
    * @param response response object
    * @return JSON representation of updated account
    */
-  public static String patchExactAccount(Request request, Response response) {
+  public static String patch(Request request, Response response) {
     response.type("application/json");
     AccountDao dao = new AccountDao();
 
