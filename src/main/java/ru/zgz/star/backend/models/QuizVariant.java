@@ -42,12 +42,12 @@ public class QuizVariant {
     return quizVariantText;
   }
 
-  public QuizVariant setCorrect(Boolean correct) {
+  public QuizVariant setIsCorrect(Boolean correct) {
     isCorrect = correct;
     return this;
   }
 
-  public Boolean getCorrect() {
+  public Boolean getIsCorrect() {
     return isCorrect;
   }
 
