@@ -68,7 +68,7 @@ class InviteCodeSpecification extends BaseRouterSpecification {
 
   def "DELETE request with nonexistent code should return 404"() {
     given:
-      def response = Unirest.get("${BASE_URL}/89877b52-67d3-4769-bf92-ec5ff8b79b14").asString()
+      def response = Unirest.delete("${BASE_URL}/89877b52-67d3-4769-bf92-ec5ff8b79b14").asString()
 
     when:
       def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
@@ -80,7 +80,7 @@ class InviteCodeSpecification extends BaseRouterSpecification {
 
   def "DELETE request with invalid code should return 400"() {
     given:
-      def response = Unirest.get("${BASE_URL}/12345").asString()
+      def response = Unirest.delete("${BASE_URL}/12345").asString()
 
     when:
       def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
