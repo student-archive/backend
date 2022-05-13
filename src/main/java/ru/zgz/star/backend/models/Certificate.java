@@ -15,7 +15,7 @@ public class Certificate {
   private String certificateName;
   private String certificateDescription;
   private String office;
-
+  private UUID employee;
 
   /** Instantiate a new empty Certificate object. */
   public Certificate() {}
@@ -31,6 +31,7 @@ public class Certificate {
     this.certificateName = certificateName;
     this.certificateDescription = certificateDescription;
     this.office = office;
+    this.employee = employee;
   }
 
   /**
@@ -112,4 +113,24 @@ public class Certificate {
     this.office = office;
     return this;
   }
+
+  /**
+   * Gets the euuid where the Employee is issuing.
+   *
+   * @return the Employee where the euuid is issuing
+   */
+  public UUID getEmployee() {
+    return employee;
+  }
+
+  /**
+   * Gets the Employee where the certificate is issuing.
+   *
+   * @return the Employee where the certificate is issuing
+   */
+  public Certificate setEmployee(UUID employee) {
+    this.employee = employee;
+    return this;
+  }
+
 }

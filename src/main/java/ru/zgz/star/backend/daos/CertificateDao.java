@@ -39,10 +39,11 @@ public class CertificateDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into certificate( certificate_name, certificate_description, office) values (?, ?, ?);");
+              "insert into certificate( certificate_name, certificate_description, office) values (?, ?, ?, ?);");
       query.setString(1, certificate.getCertificateName());
       query.setString(2, certificate.getCertificateDescription());
       query.setString(3, certificate.getOffice());
+      query.setObject(4, certificate.getEmployee());
       query.executeUpdate();
       query.close();
       connection.commit();
@@ -126,6 +127,7 @@ public class CertificateDao {
           .setId(UUID.fromString(rs.getString("id")))
           .setCertificateName(rs.getString("certificateName"))
           .setCertificateDescription(rs.getString("CertificateDescription"))
+          .setEmployee(UUID.fromString(rs.getString("employee")))
           .setOffice(rs.getString("office"));
     } else {
       return null;
