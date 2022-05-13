@@ -14,8 +14,8 @@ public class QuizResult {
   private UUID id;
   private Integer result;
   private Integer quizSubmitDate;
-  private Quiz quiz;
-  private User user;
+  private UUID quiz;
+  private UUID user;
 
   public QuizResult() {}
 
@@ -51,21 +51,21 @@ public class QuizResult {
     return quizSubmitDate;
   }
 
-  public QuizResult setQuiz(Quiz quiz) {
+  public QuizResult setQuiz(UUID quiz) {
     this.quiz = quiz;
     return this;
   }
 
-  public Quiz getQuiz() {
+  public UUID getQuiz() {
     return quiz;
   }
 
-  public QuizResult setUser(User user) {
+  public QuizResult setUser(UUID user) {
     this.user = user;
     return this;
   }
 
-  public User getUser() {
+  public UUID getUser() {
     return user;
   }
 }
