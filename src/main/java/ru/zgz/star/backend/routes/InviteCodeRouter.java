@@ -11,10 +11,19 @@ import ru.zgz.star.backend.responses.DeletedResponse;
 import spark.Request;
 import spark.Response;
 
+/** Router, which handles requests to /inviteCode/:id. */
 public class InviteCodeRouter {
 
+  /** Base path for all requests, which this router handles. */
   public static final String BASE_URL = "/inviteCode/:id";
 
+  /**
+   * Handles GET request to /inviteCode/:id.
+   *
+   * @param request request object
+   * @param response response object
+   * @return JSON representation of exact account
+   */
   public static String get(Request request, Response response) {
     response.type("application/json");
     InviteCodeDao dao = new InviteCodeDao();
@@ -34,6 +43,13 @@ public class InviteCodeRouter {
     }
   }
 
+  /**
+   * Handles DELETE request to /inviteCode/:id.
+   *
+   * @param request request object
+   * @param response response object
+   * @return JSON representation of id of deleted account
+   */
   public static String delete(Request request, Response response) {
     response.type("application/json");
     InviteCodeDao dao = new InviteCodeDao();
