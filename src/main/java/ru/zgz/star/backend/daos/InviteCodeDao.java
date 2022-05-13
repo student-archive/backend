@@ -35,7 +35,7 @@ public class InviteCodeDao {
    * @param id id of account
    * @return true if account exists
    */
-  public Boolean findById(java.util.UUID id) {
+  public Boolean findById(UUID id) {
     try {
       PreparedStatement query =
           connection.prepareStatement("select count(*) from invite_code where id=?");
@@ -58,6 +58,7 @@ public class InviteCodeDao {
    */
   public void update(InviteCode inviteCode) {
     try {
+      checkValidity(inviteCode);
       PreparedStatement query =
           connection.prepareStatement(
               "update invite_code set invite_code=?, activated_date=?, account_id=?, is_valid=? where id=?");
@@ -81,12 +82,14 @@ public class InviteCodeDao {
    */
   public void add(InviteCode inviteCode) {
     try {
+      checkValidity(inviteCode);
+
       PreparedStatement query =
           connection.prepareStatement(
               "insert into invite_code(account_id, invite_code, activated_date, is_valid) values (?, ?, ?, ?);");
       query.setObject(1, inviteCode.getAccount());
       query.setString(2, inviteCode.getInviteCode());
-      query.setInt(3, inviteCode.getActivationDate());
+      query.setObject(3, inviteCode.getActivationDate());
       query.setBoolean(4, inviteCode.getIsValid());
       query.executeUpdate();
       query.close();
@@ -166,6 +169,8 @@ public class InviteCodeDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from invite_code where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -184,14 +189,45 @@ public class InviteCodeDao {
     }
   }
 
+  private void checkValidity(InviteCode inviteCode) {
+
+    boolean isActivationDateEqualsZero;
+    try {
+      isActivationDateEqualsZero = inviteCode.getActivationDate() == 0;
+    } catch (NullPointerException e) {
+      isActivationDateEqualsZero = true;
+    }
+
+    if (!inviteCode.getIsValid() && inviteCode.getAccount() == null) {
+      throw new IllegalArgumentException("Invalid invite code must have account");
+    }
+
+    if (!inviteCode.getIsValid()
+        && (inviteCode.getActivationDate() == null || isActivationDateEqualsZero)) {
+      throw new IllegalArgumentException("Invalid invite code must have activation date");
+    }
+
+    if (inviteCode.getIsValid() && inviteCode.getAccount() != null) {
+      throw new IllegalArgumentException("Valid invite code must not have account");
+    }
+
+    if (inviteCode.getIsValid() && (!isActivationDateEqualsZero)) {
+      throw new IllegalArgumentException("Valid invite code must not have activation date");
+    }
+  }
+
   private InviteCode buildInviteCode(ResultSet rs) throws SQLException {
     if (rs.next()) {
-      return new InviteCode()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setInviteCode(rs.getString("invite_code"))
-          .setIsValid(rs.getBoolean("is_valid"))
-          .setAccount(UUID.fromString(rs.getString("account_id")))
-          .setActivationDate(rs.getInt("activated_date"));
+      InviteCode inviteCode =
+          new InviteCode()
+              .setId(UUID.fromString(rs.getString("id")))
+              .setInviteCode(rs.getString("invite_code"))
+              .setIsValid(rs.getBoolean("is_valid"))
+              .setActivationDate(rs.getInt("activated_date"));
+      if (rs.getString("account_id") != null) {
+        inviteCode.setAccount(UUID.fromString(rs.getString("account_id")));
+      }
+      return inviteCode;
     } else {
       return null;
     }

@@ -19,7 +19,7 @@ public class AccountsRouter {
    * @param response response object
    * @return JSON representation of all accounts
    */
-  public static String getAccounts(Request request, Response response) {
+  public static String get(Request request, Response response) {
     response.type("application/json");
     AccountDao dao = new AccountDao();
     return new Gson().toJson(dao.getAll());
@@ -32,7 +32,7 @@ public class AccountsRouter {
    * @param response response object
    * @return JSON representation of the created account
    */
-  public static String postAccounts(Request request, Response response) {
+  public static String post(Request request, Response response) {
     response.type("application/json");
     response.status(201);
     AccountDao dao = new AccountDao();

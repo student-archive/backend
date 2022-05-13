@@ -2,28 +2,23 @@ package ru.zgz.star.backend.routes;
 
 import com.google.gson.Gson;
 import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.zgz.star.backend.daos.AccountDao;
+import ru.zgz.star.backend.daos.InviteCodeDao;
 import ru.zgz.star.backend.exceptions.http.BadRequestException;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.exceptions.http.ResourceNotFoundException;
-import ru.zgz.star.backend.models.Account;
+import ru.zgz.star.backend.models.InviteCode;
 import ru.zgz.star.backend.responses.DeletedResponse;
-import ru.zgz.star.backend.util.ClassUtil;
 import spark.Request;
 import spark.Response;
 
-/** Router, which handles requests to /account/:id. */
-public class AccountRouter {
+/** Router, which handles requests to /inviteCode/:id. */
+public class InviteCodeRouter {
 
   /** Base path for all requests, which this router handles. */
-  public static String BASE_URL = "/account/:id";
-  /** Logger for this class. */
-  public static Logger logger = LoggerFactory.getLogger(AccountRouter.class);
+  public static final String BASE_URL = "/inviteCode/:id";
 
   /**
-   * Handles GET request to /account/:id.
+   * Handles GET request to /inviteCode/:id.
    *
    * @param request request object
    * @param response response object
@@ -31,15 +26,15 @@ public class AccountRouter {
    */
   public static String get(Request request, Response response) {
     response.type("application/json");
-    AccountDao dao = new AccountDao();
+    InviteCodeDao dao = new InviteCodeDao();
     try {
       if (dao.findById(UUID.fromString(request.params("id")))) {
-        Account account = dao.getById(request.params("id"));
-        return new Gson().toJson(account);
+        InviteCode inviteCode = dao.getById(request.params("id"));
+        return new Gson().toJson(inviteCode);
       } else {
         response.status(404);
         throw new ResourceNotFoundException(
-            String.format("Account id=%s not found", request.params("id")));
+            String.format("InviteCode id=%s not found", request.params("id")));
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
@@ -49,7 +44,7 @@ public class AccountRouter {
   }
 
   /**
-   * Handles DELETE request to /account/:id.
+   * Handles DELETE request to /inviteCode/:id.
    *
    * @param request request object
    * @param response response object
@@ -57,52 +52,34 @@ public class AccountRouter {
    */
   public static String delete(Request request, Response response) {
     response.type("application/json");
-    AccountDao dao = new AccountDao();
+    InviteCodeDao dao = new InviteCodeDao();
     try {
       if (dao.findById(UUID.fromString(request.params("id")))) {
         dao.deleteById(UUID.fromString(request.params("id")));
-        logger.info("Account {} deleted", request.params("id"));
         return new Gson().toJson(new DeletedResponse(UUID.fromString(request.params("id"))));
       } else {
         response.status(404);
         throw new ResourceNotFoundException(
-            String.format("Account id=%s not found", request.params("id")));
+            String.format("InviteCode id=%s not found", request.params("id")));
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
-      throw new BadRequestException("Passed UUID is not valid");
+      throw new BadRequestException(
+          String.format("Given UUID (%s) is not valid", request.params("id")));
     }
   }
 
   /**
-   * Handles PATCH request to /account/:id.
+   * Handles POST request to /account/:id.
    *
    * @param request request object
    * @param response response object
-   * @return JSON representation of updated account
+   * @return JSON representation of 405 error
    */
-  public static String patch(Request request, Response response) {
+  public static String post(Request request, Response response) {
     response.type("application/json");
-    AccountDao dao = new AccountDao();
-
-    try {
-      if (dao.findById(UUID.fromString(request.params("id")))) {
-        logger.info("Account {} found", request.params("id"));
-        Account account = dao.getById(request.params("id"));
-        Account body = new Gson().fromJson(request.body(), Account.class);
-        body.setId(account.getId());
-        Account updated = (Account) ClassUtil.mergeObjects(body, account);
-        dao.update(updated);
-        return new Gson().toJson(updated);
-      } else {
-        response.status(404);
-        throw new ResourceNotFoundException(
-            String.format("Account id=%s not found", request.params("id")));
-      }
-    } catch (IllegalArgumentException e) {
-      response.status(400);
-      throw new BadRequestException("Passed UUID is not valid");
-    }
+    response.status(405);
+    throw new MethodNotAllowedException("Method POST is not allowed for this resource");
   }
 
   /**
@@ -119,15 +96,15 @@ public class AccountRouter {
   }
 
   /**
-   * Handles POST request to /account/:id.
+   * Handles PATCH request to /account/:id.
    *
    * @param request request object
    * @param response response object
    * @return JSON representation of 405 error
    */
-  public static String post(Request request, Response response) {
+  public static String patch(Request request, Response response) {
     response.type("application/json");
     response.status(405);
-    throw new MethodNotAllowedException("Method POST is not allowed for this resource");
+    throw new MethodNotAllowedException("Method PATCH is not allowed for this resource");
   }
 }

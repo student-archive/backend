@@ -152,6 +152,18 @@ class AccountRouterSpecification extends BaseRouterSpecification {
       error.message == "Method PUT is not allowed for this resource"
   }
 
+  def "POST request should return MethodNotAllowed"() {
+    given:
+      def response = Unirest.post("${BASE_URL}/${this.sampleAccount.id.toString()}").asString()
+
+    when:
+      ErrorResponse error = new Gson().fromJson(response.body, ErrorResponse)
+
+    then:
+      response.getStatus() == 405
+      error.message == "Method POST is not allowed for this resource"
+  }
+
   def cleanupSpec() {
     def dao = new AccountDao()
     dao.deleteAll()
