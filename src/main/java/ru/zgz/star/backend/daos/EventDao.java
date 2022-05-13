@@ -39,10 +39,11 @@ public class EventDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into event( event_text, event_description, event_date) values (?,?,?);");
+              "insert into event( event_text, event_description, event_date, event_priority_id) values (?, ?, ?, ?);");
       query.setObject(1, event.getEventText());
       query.setObject(2, event.getEventDescription());
       query.setObject(3, event.getEventDate());
+      query.setObject(4, event.getEventPriority());
       query.executeUpdate();
       query.close();
       connection.commit();
@@ -67,7 +68,8 @@ public class EventDao {
                 .setId(UUID.fromString(rs.getString("id")))
                 .setEventText(rs.getString("event_text"))
                 .setEventDescription(rs.getString("event_description"))
-                .setEventDate(rs.getInt("event_date")));
+                .setEventDate(rs.getInt("event_date"))
+                .setEventPriority(UUID.fromString(rs.getString("event_priority_id"))));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -128,7 +130,9 @@ public class EventDao {
         .setId(UUID.fromString(rs.getString("id")))
         .setEventText(rs.getString("event_text"))
         .setEventDescription(rs.getString("event_description"))
-        .setEventDate(rs.getInt("event_date"));
+        .setEventDate(rs.getInt("event_date"))
+        .setEventPriority(UUID.fromString(rs.getString("event_priority_id")));
+
     } else {
       return null;
     }
