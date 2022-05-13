@@ -6,6 +6,7 @@ import com.mashape.unirest.http.Unirest
 import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.daos.InviteCodeDao
 import ru.zgz.star.backend.models.InviteCode
+import ru.zgz.star.backend.responses.DeletedResponse
 import ru.zgz.star.backend.responses.ErrorResponse
 import spock.lang.Shared
 import util.BaseRouterSpecification
@@ -63,7 +64,15 @@ class InviteCodeSpecification extends BaseRouterSpecification {
   }
 
   def "DELETE request should delete one record"() {
+    given:
+      def response = Unirest.delete("${BASE_URL}/${this.sampleInviteCode.id.toString()}").asString()
+      def dao = new InviteCodeDao()
 
+    when:
+      DeletedResponse inviteCode = new Gson().fromJson(response.body, DeletedResponse)
+
+    then:
+      !dao.findById(inviteCode.deletedId)
   }
 
   def "DELETE request with nonexistent code should return 404"() {
