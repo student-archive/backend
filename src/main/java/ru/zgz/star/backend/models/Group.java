@@ -21,10 +21,8 @@ public class Group {
   private List<Event> events;
   private Collection<Trash> trash;
 
-  /**
-   * Instantiates a new Group.
-   */
-public Group() {}
+  /** Instantiates a new Group. */
+  public Group() {}
 
   /**
    * Instantiates a new Group.
@@ -34,7 +32,7 @@ public Group() {}
    * @param speciality the speciality
    * @param users the users
    */
-public Group(String groupName, University university, Speciality speciality, List<User> users) {
+  public Group(String groupName, University university, Speciality speciality, List<User> users) {
     this.groupName = groupName;
     this.university = university;
     this.speciality = speciality;
@@ -47,7 +45,7 @@ public Group(String groupName, University university, Speciality speciality, Lis
    * @param id the id
    * @return the id
    */
-public Group setId(UUID id) {
+  public Group setId(UUID id) {
     this.id = id;
     return this;
   }
@@ -57,7 +55,7 @@ public Group setId(UUID id) {
    *
    * @return the id
    */
-public UUID getId() {
+  public UUID getId() {
     return id;
   }
 
@@ -67,7 +65,7 @@ public UUID getId() {
    * @param speciality the speciality
    * @return the speciality
    */
-public Group setSpeciality(Speciality speciality) {
+  public Group setSpeciality(Speciality speciality) {
     this.speciality = speciality;
     return this;
   }
@@ -77,7 +75,7 @@ public Group setSpeciality(Speciality speciality) {
    *
    * @return the speciality
    */
-public Speciality getSpeciality() {
+  public Speciality getSpeciality() {
     return speciality;
   }
 
@@ -87,7 +85,7 @@ public Speciality getSpeciality() {
    * @param groupName the group name
    * @return the group name
    */
-public Group setGroupName(String groupName) {
+  public Group setGroupName(String groupName) {
     this.groupName = groupName;
     return this;
   }
@@ -97,7 +95,7 @@ public Group setGroupName(String groupName) {
    *
    * @return the group name
    */
-public String getGroupName() {
+  public String getGroupName() {
     return groupName;
   }
 
@@ -106,7 +104,7 @@ public String getGroupName() {
    *
    * @return the users
    */
-public List<User> getUsers() {
+  public List<User> getUsers() {
     return users;
   }
 
@@ -116,7 +114,7 @@ public List<User> getUsers() {
    * @param users the users
    * @return the users
    */
-public Group setUsers(List<User> users) {
+  public Group setUsers(List<User> users) {
     this.users = users;
     return this;
   }
@@ -126,7 +124,7 @@ public Group setUsers(List<User> users) {
    *
    * @return the university
    */
-public University getUniversity() {
+  public University getUniversity() {
     return university;
   }
 
@@ -136,7 +134,7 @@ public University getUniversity() {
    * @param university the university
    * @return the university
    */
-public Group setUniversity(University university) {
+  public Group setUniversity(University university) {
     this.university = university;
     return this;
   }
@@ -146,7 +144,7 @@ public Group setUniversity(University university) {
    *
    * @return the events
    */
-public List<Event> getEvents() {
+  public List<Event> getEvents() {
     return events;
   }
 
@@ -156,7 +154,7 @@ public List<Event> getEvents() {
    * @param events the events
    * @return the events
    */
-public Group setEvents(List<Event> events) {
+  public Group setEvents(List<Event> events) {
     this.events = events;
     return this;
   }
@@ -166,7 +164,7 @@ public Group setEvents(List<Event> events) {
    *
    * @return the trash
    */
-public Collection<Trash> getTrash() {
+  public Collection<Trash> getTrash() {
     return trash;
   }
 
@@ -175,7 +173,7 @@ public Collection<Trash> getTrash() {
    *
    * @param trash the trash
    */
-public void setTrash(Collection<Trash> trash) {
+  public void setTrash(Collection<Trash> trash) {
     this.trash = trash;
   }
 }
