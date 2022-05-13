@@ -176,6 +176,7 @@ public class AccountDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from account");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -184,11 +185,12 @@ public class AccountDao {
 
   private Account buildAccount(ResultSet rs) throws SQLException {
     if (rs.next()) {
-      return new Account()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setEmail(rs.getString("email"))
-          .setPasswordHash(rs.getString("password_hash"))
-          .setLastActiveDate(rs.getInt("last_active_date"));
+      Account account =
+        new Account().setId(UUID.fromString(rs.getString("id"))).setEmail(rs.getString("email")).setPasswordHash(rs.getString("password_hash"));
+      if (rs.getObject("last_active_date") != null) {
+        account.setLastActiveDate(rs.getInt("last_active_date"));
+      }
+      return account;
     } else {
       return null;
     }
