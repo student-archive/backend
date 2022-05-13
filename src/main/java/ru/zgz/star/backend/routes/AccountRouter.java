@@ -117,4 +117,17 @@ public class AccountRouter {
     response.status(405);
     throw new MethodNotAllowedException("Method PUT is not allowed for this resource");
   }
+
+  /**
+   * Handles POST request to /account/:id.
+   *
+   * @param request request object
+   * @param response response object
+   * @return JSON representation of 405 error
+   */
+  public static String post(Request request, Response response) {
+    response.type("application/json");
+    response.status(405);
+    throw new MethodNotAllowedException("Method POST is not allowed for this resource");
+  }
 }
