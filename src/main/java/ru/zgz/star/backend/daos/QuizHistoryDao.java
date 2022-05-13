@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.AttachmentType;
 import ru.zgz.star.backend.models.QuizHistory;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -39,7 +38,8 @@ public class QuizHistoryDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into quiz_history(question_id, selected_variant_id, user_id) values (?, ?, ?);");
+              "insert into quiz_history(question_id, selected_variant_id, user_id) values (?, ?,"
+                  + " ?);");
       query.setObject(1, quizHistory.getQuestion());
       query.setObject(2, quizHistory.getSelectedVariant());
       query.setObject(3, quizHistory.getUser());
@@ -94,7 +94,6 @@ public class QuizHistoryDao {
     }
   }
 
-
   /**
    * Delete exact quiz history by id.
    *
@@ -125,10 +124,10 @@ public class QuizHistoryDao {
   private QuizHistory buildQuizHistory(ResultSet rs) throws SQLException {
     if (rs.next()) {
       return new QuizHistory()
-        .setId(UUID.fromString(rs.getString("id")))
-        .setQuestion(UUID.fromString(rs.getString("question")))
-        .setSelectedVariant(UUID.fromString(rs.getString("id")))
-        .setId(UUID.fromString(rs.getString("id")));
+          .setId(UUID.fromString(rs.getString("id")))
+          .setQuestion(UUID.fromString(rs.getString("question")))
+          .setSelectedVariant(UUID.fromString(rs.getString("id")))
+          .setId(UUID.fromString(rs.getString("id")));
     } else {
       return null;
     }

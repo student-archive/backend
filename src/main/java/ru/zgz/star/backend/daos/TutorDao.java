@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.models.Tutor;
-import ru.zgz.star.backend.models.University;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for tutor table. */
@@ -39,7 +38,8 @@ public class TutorDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into tutor(first_name, last_name, patronymic, email, phone, link, is_working) values (?,?,?,?,?,?,?);");
+              "insert into tutor(first_name, last_name, patronymic, email, phone, link, is_working)"
+                  + " values (?,?,?,?,?,?,?);");
       query.setString(1, tutor.getFirstName());
       query.setString(2, tutor.getLastName());
       query.setString(3, tutor.getPatronymic());

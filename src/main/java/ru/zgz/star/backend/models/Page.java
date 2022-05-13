@@ -10,13 +10,11 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-
 public class Page {
 
   private UUID id;
   private String link;
   private UUID subject;
-
 
   public Page() {}
 

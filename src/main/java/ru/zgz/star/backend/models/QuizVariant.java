@@ -1,6 +1,5 @@
 package ru.zgz.star.backend.models;
 
-import java.util.List;
 import java.util.UUID;
 
 /**

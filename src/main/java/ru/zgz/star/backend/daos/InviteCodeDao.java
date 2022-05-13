@@ -61,7 +61,8 @@ public class InviteCodeDao {
       checkValidity(inviteCode);
       PreparedStatement query =
           connection.prepareStatement(
-              "update invite_code set invite_code=?, activated_date=?, account_id=?, is_valid=? where id=?");
+              "update invite_code set invite_code=?, activated_date=?, account_id=?, is_valid=?"
+                  + " where id=?");
       query.setObject(1, inviteCode.getInviteCode());
       query.setObject(2, inviteCode.getActivationDate());
       query.setObject(3, inviteCode.getAccount());
@@ -86,7 +87,8 @@ public class InviteCodeDao {
 
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into invite_code(account_id, invite_code, activated_date, is_valid) values (?, ?, ?, ?);");
+              "insert into invite_code(account_id, invite_code, activated_date, is_valid) values"
+                  + " (?, ?, ?, ?);");
       query.setObject(1, inviteCode.getAccount());
       query.setString(2, inviteCode.getInviteCode());
       query.setObject(3, inviteCode.getActivationDate());

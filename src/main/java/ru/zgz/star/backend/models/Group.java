@@ -1,7 +1,5 @@
 package ru.zgz.star.backend.models;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -11,14 +9,12 @@ import java.util.UUID;
  *
  * @author dadyarri
  */
-
 public class Group {
 
   private UUID id;
   private String groupName;
   private UUID university;
   private UUID speciality;
-
 
   /** Instantiates a new Group. */
   public Group() {}

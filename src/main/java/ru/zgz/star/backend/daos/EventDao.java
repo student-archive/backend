@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.AttachmentType;
 import ru.zgz.star.backend.models.Event;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -39,7 +38,8 @@ public class EventDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into event( event_text, event_description, event_date, event_priority_id) values (?, ?, ?, ?);");
+              "insert into event( event_text, event_description, event_date, event_priority_id)"
+                  + " values (?, ?, ?, ?);");
       query.setObject(1, event.getEventText());
       query.setObject(2, event.getEventDescription());
       query.setObject(3, event.getEventDate());
@@ -85,8 +85,7 @@ public class EventDao {
    */
   public Event getById(String id) {
     try {
-      PreparedStatement query =
-          connection.prepareStatement("select * from event where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from event where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       return buildEvent(rs);
@@ -95,7 +94,6 @@ public class EventDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact event by id.
@@ -127,11 +125,11 @@ public class EventDao {
   private Event buildEvent(ResultSet rs) throws SQLException {
     if (rs.next()) {
       return new Event()
-        .setId(UUID.fromString(rs.getString("id")))
-        .setEventText(rs.getString("event_text"))
-        .setEventDescription(rs.getString("event_description"))
-        .setEventDate(rs.getInt("event_date"))
-        .setEventPriority(UUID.fromString(rs.getString("event_priority_id")));
+          .setId(UUID.fromString(rs.getString("id")))
+          .setEventText(rs.getString("event_text"))
+          .setEventDescription(rs.getString("event_description"))
+          .setEventDate(rs.getInt("event_date"))
+          .setEventPriority(UUID.fromString(rs.getString("event_priority_id")));
 
     } else {
       return null;

@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.models.EventPriority;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -91,7 +90,6 @@ public class EventPriorityDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact event priority by id.

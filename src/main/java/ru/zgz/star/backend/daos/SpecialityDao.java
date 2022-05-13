@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.models.Speciality;
-import ru.zgz.star.backend.models.University;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for speciality table. */
@@ -38,8 +37,7 @@ public class SpecialityDao {
   public void add(Speciality speciality) {
     try {
       PreparedStatement query =
-          connection.prepareStatement(
-              "insert into speciality(speciality_name) values (?);");
+          connection.prepareStatement("insert into speciality(speciality_name) values (?);");
       query.setString(1, speciality.getSpecialityName());
       query.executeUpdate();
       query.close();
@@ -79,8 +77,7 @@ public class SpecialityDao {
    */
   public Speciality getById(String id) {
     try {
-      PreparedStatement query =
-          connection.prepareStatement("select * from speciality where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from speciality where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       return buildSpeciality(rs);
@@ -89,7 +86,6 @@ public class SpecialityDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact speciality by id.

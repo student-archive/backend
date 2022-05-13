@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.App;
 import spark.Spark;
 
-
-
 /** Utility class to start a spark server in a test environment. */
 public class SparkStarterUtil {
 

@@ -1,6 +1,5 @@
 package ru.zgz.star.backend.models;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,7 +12,6 @@ import java.util.UUID;
 public class AttachmentType {
   private UUID id;
   private String typeName;
-
 
   /** Instantiates new empty attachment type. */
   public AttachmentType() {}

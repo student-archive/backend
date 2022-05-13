@@ -40,7 +40,8 @@ public class EmployeeDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "update employee set email=?, first_name=?, last_name=?, patronymic=?, link=?, email=?, phone=? where id=?",
+              "update employee set email=?, first_name=?, last_name=?, patronymic=?, link=?,"
+                  + " email=?, phone=? where id=?",
               Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, employee.getEmail());
       query.setObject(2, employee.getFirstName());
@@ -77,7 +78,8 @@ public class EmployeeDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into employee(first_name, last_name, patronymic, email, phone, link) values (?, ?, ?, ?, ?, ?);",
+              "insert into employee(first_name, last_name, patronymic, email, phone, link) values"
+                  + " (?, ?, ?, ?, ?, ?);",
               Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, employee.getFirstName());
       query.setObject(2, employee.getLastName());

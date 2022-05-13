@@ -40,7 +40,8 @@ public class CertificateDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "update certificate set employee_id=?, certificate_description=?, certificate_name=?, office=? where id=?",
+              "update certificate set employee_id=?, certificate_description=?, certificate_name=?,"
+                  + " office=? where id=?",
               Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, certificate.getEmployee());
       query.setObject(2, certificate.getCertificateDescription());
@@ -74,7 +75,8 @@ public class CertificateDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into certificate(certificate_name, certificate_description, office, employee_id) values (?, ?, ?, ?);",
+              "insert into certificate(certificate_name, certificate_description, office,"
+                  + " employee_id) values (?, ?, ?, ?);",
               Statement.RETURN_GENERATED_KEYS);
       query.setString(1, certificate.getCertificateName());
       query.setString(2, certificate.getCertificateDescription());

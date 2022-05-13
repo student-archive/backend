@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.AttachmentType;
 import ru.zgz.star.backend.models.Quiz;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -39,7 +38,8 @@ public class QuizDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into quiz(quiz_name, quiz_description, questions_amount, subject_id) values (?, ?, ?, ?);");
+              "insert into quiz(quiz_name, quiz_description, questions_amount, subject_id) values"
+                  + " (?, ?, ?, ?);");
       query.setString(1, quiz.getQuizName());
       query.setString(2, quiz.getQuizDescription());
       query.setInt(3, quiz.getQuestionsAmount());
