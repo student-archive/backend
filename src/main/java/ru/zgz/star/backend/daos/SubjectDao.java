@@ -57,7 +57,7 @@ public class SubjectDao {
    * @return list of subjects
    */
   public List<Subject> getAll() {
-    List<Subject> subjects= new ArrayList<>();
+    List<Subject> subjects = new ArrayList<>();
     try {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from subject");
@@ -67,7 +67,7 @@ public class SubjectDao {
                 .setId(UUID.fromString(rs.getString("id")))
                 .setGroup((UUID) rs.getObject("group_id"))
                 .setSubjectName(rs.getString("subject_name"))
-                .setSemester( rs.getInt("semester")));
+                .setSemester(rs.getInt("semester")));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -92,7 +92,6 @@ public class SubjectDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact subject by id.
@@ -125,9 +124,9 @@ public class SubjectDao {
     if (rs.next()) {
       return new Subject()
           .setId(UUID.fromString(rs.getString("id")))
-          .setGroup((UUID)rs.getObject("group_id"))
+          .setGroup((UUID) rs.getObject("group_id"))
           .setSubjectName(rs.getString("subject_name"))
-          .setSemester( rs.getInt("semester"));
+          .setSemester(rs.getInt("semester"));
     } else {
       return null;
     }

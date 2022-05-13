@@ -65,7 +65,7 @@ public class QuizVariantDao {
         quizVariants.add(
             new QuizVariant()
                 .setId(UUID.fromString(rs.getString("id")))
-                .setQuestion((UUID)rs.getObject("question_id"))
+                .setQuestion((UUID) rs.getObject("question_id"))
                 .setQuizVariantText(rs.getString("quiz_variant_text"))
                 .setIsCorrect(rs.getBoolean("is_correct")));
       }
@@ -93,7 +93,6 @@ public class QuizVariantDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact quiz variant by id.

@@ -129,7 +129,7 @@ public class QuizResultDao {
           .setId(UUID.fromString(rs.getString("id")))
           .setQuiz((UUID) rs.getObject("quiz_id"))
           .setUser((UUID) rs.getObject("user_id"))
-          .setResult( rs.getInt("result"));
+          .setResult(rs.getInt("result"));
     } else {
       return null;
     }

@@ -63,7 +63,7 @@ public class UserDao {
    * @return list of users
    */
   public List<User> getAll() {
-    List<User> users= new ArrayList<>();
+    List<User> users = new ArrayList<>();
     try {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from \"user\"");
@@ -101,7 +101,6 @@ public class UserDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact user by id.
