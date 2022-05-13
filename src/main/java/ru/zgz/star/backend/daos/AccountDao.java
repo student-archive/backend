@@ -55,6 +55,7 @@ public class AccountDao {
    * Updates account.
    *
    * @param account updated account
+   * @return updated account
    */
   public List<Account> update(Account account) {
     List<Account> accounts = new ArrayList<>();
@@ -88,6 +89,7 @@ public class AccountDao {
    * Create new account.
    *
    * @param account the account
+   * @return created account
    */
   public Account add(Account account) {
     try {
