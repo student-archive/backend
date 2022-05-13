@@ -49,7 +49,8 @@ class AccountsRouterSpecification extends BaseRouterSpecification {
 
   def "POST request should create new account"() {
     given:
-      def response = Unirest.post("${BASE_URL}").body(new Gson().toJson(sampleAccount)).asString()
+      def newAccount = new Account().setEmail(new Faker().internet().emailAddress()).setPasswordHash("sdafgbhj").setLastActiveDate(0)
+      def response = Unirest.post("${BASE_URL}").body(new Gson().toJson(newAccount)).asString()
 
     when:
       def account = new Gson().fromJson(response.body, Account)
@@ -57,7 +58,7 @@ class AccountsRouterSpecification extends BaseRouterSpecification {
     then:
       response.getStatus() == 201
       account != null
-      account.getEmail() == sampleAccount.getEmail()
+      account.getEmail() == newAccount.getEmail()
   }
 
   def "PUT request should return MethodNotAllowed"() {

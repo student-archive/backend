@@ -2,6 +2,7 @@ package routers
 
 import com.google.gson.Gson
 import com.mashape.unirest.http.Unirest
+import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.models.InviteCode
 import ru.zgz.star.backend.responses.ErrorResponse
 import spock.lang.Shared
@@ -12,6 +13,11 @@ class InviteCodesSpecification extends BaseRouterSpecification {
           BASE_URL = "http://localhost:4567/inviteCodes"
 
   @Shared sampleInvite = new InviteCode("qwerty", true, null, null)
+
+  def setupSpec() {
+    def dao = new AccountDao()
+    dao.deleteAll()
+  }
 
   def "GET request should return MethodNotAllowed"() {
     given:
@@ -72,5 +78,14 @@ class InviteCodesSpecification extends BaseRouterSpecification {
     then:
       response.getStatus() == 405
       error.message == "Method DELETE is not allowed for this resource"
+  }
+
+  def cleanup() {
+    def dao = new AccountDao()
+    dao.deleteAll()
+  }
+
+  def cleanupSpec() {
+    cleanup()
   }
 }
