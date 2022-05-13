@@ -39,10 +39,11 @@ public class QuizDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into quiz(quiz_name, quiz_description, questions_amount) values (?, ?, ?);");
+              "insert into quiz(quiz_name, quiz_description, questions_amount, subject_id) values (?, ?, ?, ?);");
       query.setString(1, quiz.getQuizName());
       query.setString(2, quiz.getQuizDescription());
       query.setInt(3, quiz.getQuestionsAmount());
+      query.setObject(4, quiz.getSubject());
       query.executeUpdate();
       query.close();
       connection.commit();
@@ -67,7 +68,8 @@ public class QuizDao {
                 .setId(UUID.fromString(rs.getString("id")))
                 .setQuizName(rs.getString("quiz_name"))
                 .setQuizDescription(rs.getString("quiz_description"))
-                .setQuestionsAmount(rs.getInt("quiz_amount")));
+                .setQuestionsAmount(rs.getInt("quiz_amount"))
+                .setSubject(UUID.fromString(rs.getString("subject"))));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -126,7 +128,8 @@ public class QuizDao {
           .setId(UUID.fromString(rs.getString("id")))
           .setQuizName(rs.getString("quiz_name"))
           .setQuizDescription(rs.getString("quiz_description"))
-          .setQuestionsAmount(rs.getInt("quiz_amount"));
+          .setQuestionsAmount(rs.getInt("quiz_amount"))
+          .setSubject(UUID.fromString(rs.getString("subject")));
     } else {
       return null;
     }
