@@ -41,8 +41,8 @@ public class QuizVariantDao {
           connection.prepareStatement(
               "insert into quiz_variant(question_id, quiz_variant_text, is_correct) values (?,?,?);");
       query.setObject(1, quizVariant.getQuestion());
-      query.setString(1, quizVariant.getQuizVariantText());
-      query.setBoolean(1, quizVariant.getIsCorrect());
+      query.setString(2, quizVariant.getQuizVariantText());
+      query.setBoolean(3, quizVariant.getIsCorrect());
       query.executeUpdate();
       query.close();
       connection.commit();
