@@ -19,7 +19,6 @@ public class Tutor {
   private String phone;
   private String link;
   private Boolean isWorking;
-  private Collection<Subject> subjects;
 
   public Tutor() {}
 
@@ -110,13 +109,5 @@ public class Tutor {
   public Tutor setIsWorking(Boolean isWorking) {
     this.isWorking = isWorking;
     return this;
-  }
-
-  public Collection<Subject> getSubjects() {
-    return subjects;
-  }
-
-  public void setSubjects(Collection<Subject> subjects) {
-    this.subjects = subjects;
   }
 }

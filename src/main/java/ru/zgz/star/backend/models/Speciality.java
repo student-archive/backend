@@ -13,8 +13,6 @@ import java.util.UUID;
 public class Speciality {
   private UUID id;
   private String specialityName;
-  public List<Employee> employees;
-  private List<Group> groups;
 
   public Speciality() {}
 
@@ -40,21 +38,4 @@ public class Speciality {
     return specialityName;
   }
 
-  public List<Employee> getEmployees() {
-    return employees;
-  }
-
-  public Speciality setEmployees(List<Employee> employees) {
-    this.employees = employees;
-    return this;
-  }
-
-  public List<Group> getGroups() {
-    return groups;
-  }
-
-  public Speciality setGroups(List<Group> groups) {
-    this.groups = groups;
-    return this;
-  }
 }

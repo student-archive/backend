@@ -14,10 +14,10 @@ public class User {
   private String firstName;
   private String lastName;
   private String avatarLink;
-  private Role role;
-  private Account account;
-  private Group group;
-  private Sex sex;
+  private UUID role;
+  private UUID account;
+  private UUID group;
+  private UUID sex;
 
   public User() {}
 
@@ -54,12 +54,12 @@ public class User {
     return lastName;
   }
 
-  public User setRole(Role role) {
+  public User setRole(UUID role) {
     this.role = role;
     return this;
   }
 
-  public Role getRole() {
+  public UUID getRole() {
     return role;
   }
 
@@ -72,29 +72,29 @@ public class User {
     return this;
   }
 
-  public Account getAccount() {
+  public UUID getAccount() {
     return account;
   }
 
-  public User setAccount(Account account) {
+  public User setAccount(UUID account) {
     this.account = account;
     return this;
   }
 
-  public Group getGroup() {
+  public UUID getGroup() {
     return group;
   }
 
-  public User setGroup(Group group) {
+  public User setGroup(UUID group) {
     this.group = group;
     return this;
   }
 
-  public Sex getSex() {
+  public UUID getSex() {
     return sex;
   }
 
-  public User setSex(Sex sex) {
+  public User setSex(UUID sex) {
     this.sex = sex;
     return this;
   }

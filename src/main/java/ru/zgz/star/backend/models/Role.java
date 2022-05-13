@@ -15,7 +15,6 @@ public class Role {
   private UUID id;
   private String roleName;
   private String roleDescription;
-  private List<User> users;
 
   public Role() {}
 
@@ -49,14 +48,5 @@ public class Role {
 
   public String getRoleDescription() {
     return roleDescription;
-  }
-
-  public List<User> getUsers() {
-    return users;
-  }
-
-  public Role setUsers(List<User> users) {
-    this.users = users;
-    return this;
   }
 }
