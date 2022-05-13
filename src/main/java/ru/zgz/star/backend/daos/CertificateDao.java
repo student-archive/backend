@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.AttachmentType;
 import ru.zgz.star.backend.models.Certificate;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -31,25 +30,69 @@ public class CertificateDao {
   }
 
   /**
-   * Create new certificate.
+   * Updates account.
    *
-   * @param certificate the certificate
+   * @param certificate updated account
+   * @return updated account
    */
-  public void add(Certificate certificate) {
+  public List<Certificate> update(Certificate certificate) {
+    List<Certificate> certificates = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into certificate( certificate_name, certificate_description, office) values (?, ?, ?, ?);");
+              "update certificate set employee_id=?, certificate_description=?, certificate_name=?, office=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, certificate.getEmployee());
+      query.setObject(2, certificate.getCertificateDescription());
+      query.setObject(3, certificate.getCertificateName());
+      query.setObject(4, certificate.getOffice());
+      query.setObject(4, certificate.getId());
+      query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      query.close();
+      connection.commit();
+
+      while (rs.next()) {
+        certificates.add(buildCertificate(rs));
+      }
+
+      return certificates;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Create new certificate.
+   *
+   * @param certificate the certificate
+   * @return created certificate
+   */
+  public Certificate add(Certificate certificate) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into certificate(certificate_name, certificate_description, office, employee_id) values (?, ?, ?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, certificate.getCertificateName());
       query.setString(2, certificate.getCertificateDescription());
       query.setString(3, certificate.getOffice());
       query.setObject(4, certificate.getEmployee());
       query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
       query.close();
       connection.commit();
+
+      if (rs.next()) {
+        return buildCertificate(rs);
+      }
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -67,7 +110,8 @@ public class CertificateDao {
             new Certificate()
                 .setId(UUID.fromString(rs.getString("id")))
                 .setCertificateName(rs.getString("certificateName"))
-                .setCertificateDescription(rs.getString("CertificateDescription"))
+                .setCertificateDescription(rs.getString("certificate_description"))
+                .setEmployee(UUID.fromString(rs.getString("employee_id")))
                 .setOffice(rs.getString("office")));
       }
     } catch (SQLException e) {
@@ -125,9 +169,9 @@ public class CertificateDao {
     if (rs.next()) {
       return new Certificate()
           .setId(UUID.fromString(rs.getString("id")))
-          .setCertificateName(rs.getString("certificateName"))
-          .setCertificateDescription(rs.getString("CertificateDescription"))
-          .setEmployee(UUID.fromString(rs.getString("employee")))
+          .setCertificateName(rs.getString("certificate_name"))
+          .setCertificateDescription(rs.getString("certificate_description"))
+          .setEmployee(UUID.fromString(rs.getString("employee_id")))
           .setOffice(rs.getString("office"));
     } else {
       return null;
