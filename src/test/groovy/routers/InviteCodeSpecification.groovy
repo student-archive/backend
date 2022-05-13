@@ -6,6 +6,7 @@ import com.mashape.unirest.http.Unirest
 import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.daos.InviteCodeDao
 import ru.zgz.star.backend.models.InviteCode
+import ru.zgz.star.backend.responses.ErrorResponse
 import spock.lang.Shared
 import util.BaseRouterSpecification
 
@@ -36,4 +37,96 @@ class InviteCodeSpecification extends BaseRouterSpecification {
       inviteCode != null
       notThrown(JsonParseException)
   }
+
+  def "GET request with nonexistent code should return 404"() {
+    given:
+      def response = Unirest.get("${BASE_URL}/89877b52-67d3-4769-bf92-ec5ff8b79b14").asString()
+
+    when:
+      def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
+
+    then:
+      response.getStatus() == 404
+      inviteCode.message == "InviteCode id=89877b52-67d3-4769-bf92-ec5ff8b79b14 not found"
+  }
+
+  def "GET request with invalid code should return 400"() {
+    given:
+      def response = Unirest.get("${BASE_URL}/12345").asString()
+
+    when:
+      def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
+
+    then:
+      response.getStatus() == 400
+      inviteCode.message == "Given UUID (12345) is not valid"
+  }
+
+  def "DELETE request should delete one record"() {
+
+  }
+
+  def "DELETE request with nonexistent code should return 404"() {
+    given:
+      def response = Unirest.get("${BASE_URL}/89877b52-67d3-4769-bf92-ec5ff8b79b14").asString()
+
+    when:
+      def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
+
+    then:
+      response.getStatus() == 404
+      inviteCode.message == "InviteCode id=89877b52-67d3-4769-bf92-ec5ff8b79b14 not found"
+  }
+
+  def "DELETE request with invalid code should return 400"() {
+    given:
+      def response = Unirest.get("${BASE_URL}/12345").asString()
+
+    when:
+      def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
+
+    then:
+      response.getStatus() == 400
+      inviteCode.message == "Given UUID (12345) is not valid"
+
+  }
+
+  def "POST request should return 405"() {
+    given:
+      def response = Unirest.post("${BASE_URL}/12345").asString()
+
+    when:
+      def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
+
+    then:
+      response.getStatus() == 405
+      inviteCode.message == "Method POST is not allowed for this resource"
+  }
+
+  def "PUT request should return 405"() {
+    given:
+      def response = Unirest.put("${BASE_URL}/12345").asString()
+
+    when:
+      def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
+
+    then:
+      response.getStatus() == 405
+      inviteCode.message == "Method PUT is not allowed for this resource"
+
+  }
+
+  def "PATCH request should return 405"() {
+    given:
+      def response = Unirest.patch("${BASE_URL}/12345").asString()
+
+    when:
+      def inviteCode = new Gson().fromJson(response.body, ErrorResponse)
+
+    then:
+      response.getStatus() == 405
+      inviteCode.message == "Method PATCH is not allowed for this resource"
+
+  }
+
 }
