@@ -39,8 +39,10 @@ public class GroupDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into group(group_name) values (?);");
+              "insert into group(group_name, university_id, speciality_id) values (?, ?, ?);");
       query.setString(1, group.getGroupName());
+      query.setObject(2, group.getUniversity());
+      query.setObject(3, group.getSpeciality());
       query.executeUpdate();
       query.close();
       connection.commit();
@@ -63,7 +65,9 @@ public class GroupDao {
         groups.add(
             new Group()
                 .setId(UUID.fromString(rs.getString("id")))
-                .setGroupName(rs.getString("groupName")));
+                .setGroupName(rs.getString("groupName"))
+                .setUniversity(UUID.fromString(rs.getString("university")))
+                .setSpeciality(UUID.fromString(rs.getString("speciality"))));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -121,7 +125,9 @@ public class GroupDao {
     if (rs.next()) {
       return new Group()
           .setId(UUID.fromString(rs.getString("id")))
-          .setGroupName(rs.getString("groupName"));
+          .setGroupName(rs.getString("groupName"))
+          .setUniversity(UUID.fromString(rs.getString("university")))
+          .setSpeciality(UUID.fromString(rs.getString("speciality")));
     } else {
       return null;
     }
