@@ -49,13 +49,13 @@ public class CertificateDao {
       query.setObject(4, certificate.getOffice());
       query.setObject(4, certificate.getId());
       query.executeUpdate();
-      ResultSet rs = query.getGeneratedKeys();
-      query.close();
-      connection.commit();
 
+      ResultSet rs = query.getGeneratedKeys();
       while (rs.next()) {
         certificates.add(buildCertificate(rs));
       }
+      query.close();
+      connection.commit();
 
       return certificates;
 
@@ -73,6 +73,7 @@ public class CertificateDao {
    */
   public Certificate add(Certificate certificate) {
     try {
+      Certificate newCertificate = new Certificate();
       PreparedStatement query =
           connection.prepareStatement(
               "insert into certificate(certificate_name, certificate_description, office,"
@@ -84,12 +85,13 @@ public class CertificateDao {
       query.setObject(4, certificate.getEmployee());
       query.executeUpdate();
       ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newCertificate = buildCertificate(rs);
+      }
+
       query.close();
       connection.commit();
-
-      if (rs.next()) {
-        return buildCertificate(rs);
-      }
+      return newCertificate;
 
     } catch (SQLException e) {
       e.printStackTrace();

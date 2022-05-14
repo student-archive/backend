@@ -52,13 +52,14 @@ public class EmployeeDao {
       query.setObject(7, employee.getPhone());
       query.setObject(8, employee.getId());
       query.executeUpdate();
-      ResultSet rs = query.getGeneratedKeys();
-      query.close();
-      connection.commit();
 
+      ResultSet rs = query.getGeneratedKeys();
       while (rs.next()) {
         employees.add(buildEmployee(rs));
       }
+
+      query.close();
+      connection.commit();
 
       return employees;
 
@@ -76,6 +77,7 @@ public class EmployeeDao {
    */
   public Employee add(Employee employee) {
     try {
+      Employee newEmployee = new Employee();
       PreparedStatement query =
           connection.prepareStatement(
               "insert into employee(first_name, last_name, patronymic, email, phone, link) values"
@@ -88,13 +90,15 @@ public class EmployeeDao {
       query.setObject(5, employee.getPhone());
       query.setObject(5, employee.getLink());
       query.executeUpdate();
+
       ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newEmployee = buildEmployee(rs);
+      }
+
       query.close();
       connection.commit();
-
-      if (rs.next()) {
-        return buildEmployee(rs);
-      }
+      return newEmployee;
 
     } catch (SQLException e) {
       e.printStackTrace();
