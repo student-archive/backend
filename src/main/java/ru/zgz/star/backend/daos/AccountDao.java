@@ -69,13 +69,14 @@ public class AccountDao {
       query.setObject(3, account.getLastActiveDate());
       query.setObject(4, account.getId());
       query.executeUpdate();
-      ResultSet rs = query.getGeneratedKeys();
-      query.close();
-      connection.commit();
 
+      ResultSet rs = query.getGeneratedKeys();
       while (rs.next()) {
         accounts.add(buildAccount(rs));
       }
+
+      query.close();
+      connection.commit();
 
       return accounts;
 
@@ -93,6 +94,7 @@ public class AccountDao {
    */
   public Account add(Account account) {
     try {
+      Account newAccount = new Account();
       PreparedStatement query =
           connection.prepareStatement(
               "insert into account(email, password_hash, last_active_date) values (?, ?, ?);",
@@ -101,12 +103,15 @@ public class AccountDao {
       query.setString(2, account.getPasswordHash());
       query.setInt(3, account.getLastActiveDate());
       query.executeUpdate();
+
       ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newAccount = buildAccount(rs);
+      }
+
       query.close();
       connection.commit();
-      if (rs.next()) {
-        return buildAccount(rs);
-      }
+      return newAccount;
     } catch (SQLException e) {
       e.printStackTrace();
     }

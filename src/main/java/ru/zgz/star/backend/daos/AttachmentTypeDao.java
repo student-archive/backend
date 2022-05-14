@@ -45,12 +45,11 @@ public class AttachmentTypeDao {
       query.setObject(2, attachmentType.getId());
       query.executeUpdate();
       ResultSet rs = query.getGeneratedKeys();
-      query.close();
-      connection.commit();
-
       while (rs.next()) {
         attachmentTypes.add(buildAttachmentType(rs));
       }
+      query.close();
+      connection.commit();
 
       return attachmentTypes;
 
@@ -68,6 +67,7 @@ public class AttachmentTypeDao {
    */
   public AttachmentType add(AttachmentType attachmentType) {
     try {
+      AttachmentType newAttachmentType = new AttachmentType();
       PreparedStatement query =
           connection.prepareStatement(
               "insert into attachment_type(type_name) values (?);",
@@ -75,11 +75,12 @@ public class AttachmentTypeDao {
       query.setString(1, attachmentType.getTypeName());
       query.executeUpdate();
       ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newAttachmentType = buildAttachmentType(rs);
+      }
       query.close();
       connection.commit();
-      if (rs.next()) {
-        return buildAttachmentType(rs);
-      }
+      return newAttachmentType;
     } catch (SQLException e) {
       e.printStackTrace();
     }
