@@ -59,6 +59,7 @@ public class EmployeePositionDao {
       return null;
     }
   }
+
   /**
    * Create new employee position.
    *
