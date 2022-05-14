@@ -62,8 +62,8 @@ public class EmployeePositionDao {
   /**
    * Create new employee position.
    *
-   * @param employeePosition the attachment type
-   * @return
+   * @param employeePosition new employee position
+   * @return new employee position
    */
   public EmployeePosition add(EmployeePosition employeePosition) {
     try {
@@ -124,11 +124,14 @@ public class EmployeePositionDao {
           connection.prepareStatement("select * from employee_position where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildEmployeePosition(rs);
+      if (rs.next()) {
+        return buildEmployeePosition(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
