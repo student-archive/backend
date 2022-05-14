@@ -30,21 +30,64 @@ public class EmployeePositionDao {
   }
 
   /**
+   * Updates employeePosition.
+   *
+   * @param employeePosition updated employeePosition
+   * @return updated employeePosition
+   */
+  public List<EmployeePosition> update(EmployeePosition employeePosition) {
+    List<EmployeePosition> employeePositions = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update employee_position set position=? where id=?;",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, employeePosition.getPositionName());
+      query.setObject(2, employeePosition.getId());
+      query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        employeePositions.add(buildEmployeePosition(rs));
+      }
+      query.close();
+      connection.commit();
+
+      return employeePositions;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+  /**
    * Create new employee position.
    *
    * @param employeePosition the attachment type
+   * @return
    */
-  public void add(EmployeePosition employeePosition) {
+  public EmployeePosition add(EmployeePosition employeePosition) {
     try {
+      EmployeePosition newEmployeePosition = new EmployeePosition();
       PreparedStatement query =
-          connection.prepareStatement("insert into employee_position(position) values (?);");
+          connection.prepareStatement(
+              "insert into employee_position(position) values (?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, employeePosition.getPositionName());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newEmployeePosition = buildEmployeePosition(rs);
+      }
+
       query.close();
       connection.commit();
+
+      return newEmployeePosition;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -61,7 +104,7 @@ public class EmployeePositionDao {
         employeePositions.add(
             new EmployeePosition()
                 .setId(UUID.fromString(rs.getString("id")))
-                .setPositionName(rs.getString("positionName")));
+                .setPositionName(rs.getString("position_name")));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -117,12 +160,8 @@ public class EmployeePositionDao {
   }
 
   private EmployeePosition buildEmployeePosition(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new EmployeePosition()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setPositionName(rs.getString("positionName"));
-    } else {
-      return null;
-    }
+    return new EmployeePosition()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setPositionName(rs.getString("position_name"));
   }
 }
