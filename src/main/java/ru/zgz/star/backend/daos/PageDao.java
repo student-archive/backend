@@ -163,17 +163,18 @@ public class PageDao {
   public List<Page> getBySubjectId(String id) {
     List<Page> pages = new ArrayList<>();
     try {
-      PreparedStatement query = connection.prepareStatement("select * from page where subject_id=?");
+      PreparedStatement query =
+          connection.prepareStatement("select * from page where subject_id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-        while (rs.next()) {
-          pages.add(buildPage(rs));
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
+      while (rs.next()) {
+        pages.add(buildPage(rs));
       }
-      return pages;
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
+    return pages;
+  }
 
   /**
    * Delete exact page by id.

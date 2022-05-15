@@ -5,16 +5,12 @@ import java.util.List;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.zgz.star.backend.daos.AccountDao;
 import ru.zgz.star.backend.daos.PageDao;
 import ru.zgz.star.backend.daos.SubjectDao;
 import ru.zgz.star.backend.exceptions.http.BadRequestException;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.exceptions.http.ResourceNotFoundException;
-import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.models.Page;
-import ru.zgz.star.backend.responses.DeletedResponse;
-import ru.zgz.star.backend.util.ClassUtil;
 import spark.Request;
 import spark.Response;
 
@@ -27,7 +23,7 @@ public class GetPageBySubjectRouters {
   public static Logger logger = LoggerFactory.getLogger(GetPageBySubjectRouters.class);
 
   /**
-   * Handles GET request to  /pages/:subject.
+   * Handles GET request to /pages/:subject.
    *
    * @param request request object
    * @param response request object
@@ -78,7 +74,6 @@ public class GetPageBySubjectRouters {
     response.status(405);
     throw new MethodNotAllowedException("Method PATCH is not allowed for this resource");
   }
-
 
   /**
    * Handles PUT requests to /pages/:subject..
