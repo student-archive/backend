@@ -30,16 +30,58 @@ public class TutorDao {
   }
 
   /**
-   * Create new Tutor.
+   * Updates tutor.
    *
-   * @param tutor the tutor
+   * @param tutor updated tutor
+   * @return updated tutor
    */
-  public void add(Tutor tutor) {
+  public List<Tutor> update(Tutor tutor) {
+    List<Tutor> tutors = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
+              "update tutor set first_name=?, last_name=?, patronymic=?, email=?, link=?, phone=?,"
+                  + " is_working=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, tutor.getFirstName());
+      query.setObject(2, tutor.getLastName());
+      query.setObject(3, tutor.getPatronymic());
+      query.setObject(4, tutor.getEmail());
+      query.setObject(5, tutor.getLink());
+      query.setObject(6, tutor.getPhone());
+      query.setObject(7, tutor.isIsWorking());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        tutors.add(buildTutor(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return tutors;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Create new Tutor.
+   *
+   * @param tutor the tutor
+   * @return added tutor
+   */
+  public Tutor add(Tutor tutor) {
+    try {
+      Tutor newTutor = new Tutor();
+      PreparedStatement query =
+          connection.prepareStatement(
               "insert into tutor(first_name, last_name, patronymic, email, phone, link, is_working)"
-                  + " values (?,?,?,?,?,?,?);");
+                  + " values (?,?,?,?,?,?,?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, tutor.getFirstName());
       query.setString(2, tutor.getLastName());
       query.setString(3, tutor.getPatronymic());
@@ -48,11 +90,21 @@ public class TutorDao {
       query.setString(6, tutor.getLink());
       query.setBoolean(7, tutor.isIsWorking());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newTutor = buildTutor(rs);
+      }
+
       query.close();
       connection.commit();
+
+      return newTutor;
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -66,16 +118,7 @@ public class TutorDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from tutor");
       while (rs.next()) {
-        tutors.add(
-            new Tutor()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setFirstName(rs.getString("first_name"))
-                .setLastName(rs.getString("last_name"))
-                .setPatronymic(rs.getString("patronymic"))
-                .setEmail(rs.getString("email"))
-                .setPhone(rs.getString("phone"))
-                .setLink(rs.getString("link"))
-                .setIsWorking(rs.getBoolean("is_working")));
+        tutors.add(buildTutor(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -94,11 +137,14 @@ public class TutorDao {
       PreparedStatement query = connection.prepareStatement("select * from tutor where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildTutor(rs);
+      if (rs.next()) {
+        return buildTutor(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -129,17 +175,13 @@ public class TutorDao {
   }
 
   private Tutor buildTutor(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Tutor()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setFirstName(rs.getString("first_name"))
-          .setLastName(rs.getString("last_name"))
-          .setPatronymic(rs.getString("patronymic"))
-          .setEmail(rs.getString("email"))
-          .setLink(rs.getString("link"))
-          .setIsWorking(rs.getBoolean("is_working"));
-    } else {
-      return null;
-    }
+    return new Tutor()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setFirstName(rs.getString("first_name"))
+        .setLastName(rs.getString("last_name"))
+        .setPatronymic(rs.getString("patronymic"))
+        .setEmail(rs.getString("email"))
+        .setLink(rs.getString("link"))
+        .setIsWorking(rs.getBoolean("is_working"));
   }
 }

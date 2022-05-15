@@ -62,7 +62,8 @@ public class InviteCodeDao {
       PreparedStatement query =
           connection.prepareStatement(
               "update invite_code set invite_code=?, activated_date=?, account_id=?, is_valid=?"
-                  + " where id=?");
+                  + " where id=?",
+              Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, inviteCode.getInviteCode());
       query.setObject(2, inviteCode.getActivationDate());
       query.setObject(3, inviteCode.getAccount());
@@ -112,12 +113,7 @@ public class InviteCodeDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from invite_code");
       while (rs.next()) {
-        inviteCodes.add(
-            new InviteCode()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setInviteCode(rs.getString("invite_code"))
-                .setActivationDate(rs.getInt("activated_date"))
-                .setIsValid(rs.getBoolean("is_valid")));
+        inviteCodes.add(buildInviteCode(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -136,11 +132,14 @@ public class InviteCodeDao {
       PreparedStatement query = connection.prepareStatement("select * from invite_code where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildInviteCode(rs);
+      if (rs.next()) {
+        return buildInviteCode(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -155,11 +154,14 @@ public class InviteCodeDao {
           connection.prepareStatement("select * from invite_code where invite_code=?");
       query.setString(1, code);
       ResultSet rs = query.executeQuery();
-      return buildInviteCode(rs);
+      if (rs.next()) {
+        return buildInviteCode(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -219,19 +221,15 @@ public class InviteCodeDao {
   }
 
   private InviteCode buildInviteCode(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      InviteCode inviteCode =
-          new InviteCode()
-              .setId(UUID.fromString(rs.getString("id")))
-              .setInviteCode(rs.getString("invite_code"))
-              .setIsValid(rs.getBoolean("is_valid"))
-              .setActivationDate(rs.getInt("activated_date"));
-      if (rs.getString("account_id") != null) {
-        inviteCode.setAccount(UUID.fromString(rs.getString("account_id")));
-      }
-      return inviteCode;
-    } else {
-      return null;
+    InviteCode inviteCode =
+        new InviteCode()
+            .setId(UUID.fromString(rs.getString("id")))
+            .setInviteCode(rs.getString("invite_code"))
+            .setIsValid(rs.getBoolean("is_valid"))
+            .setActivationDate(rs.getInt("activated_date"));
+    if (rs.getString("account_id") != null) {
+      inviteCode.setAccount(UUID.fromString(rs.getString("account_id")));
     }
+    return inviteCode;
   }
 }
