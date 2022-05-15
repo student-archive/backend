@@ -159,8 +159,7 @@ public class SexDao {
   }
 
   private Sex buildSex(ResultSet rs) throws SQLException {
-    Sex sex = new Sex().setId(rs.getShort("id")).setSexName(rs.getString("sex_name"));
 
-    return sex;
+    return new Sex().setId(rs.getShort("id")).setSexName(rs.getString("sex_name"));
   }
 }
