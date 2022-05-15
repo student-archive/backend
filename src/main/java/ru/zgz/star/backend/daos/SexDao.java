@@ -30,21 +30,63 @@ public class SexDao {
   }
 
   /**
+   * Updates sex.
+   *
+   * @param sex updated sex
+   * @return updated sex
+   */
+  public List<Sex> update(Sex sex) {
+    List<Sex> accounts = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update sex set sex_name=? where id=?", Statement.RETURN_GENERATED_KEYS);
+      query.setString(1, sex.getSexName());
+
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        accounts.add(buildSex(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return accounts;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
    * Create new Sex.
    *
    * @param sex the sex
    */
-  public void add(Sex sex) {
+  public Sex add(Sex sex) {
     try {
+      Sex newSex = new Sex();
       PreparedStatement query =
           connection.prepareStatement("insert into sex(id,sex_name) values (?,?);");
       query.setShort(1, sex.getId());
       query.setString(2, sex.getSexName());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newSex = buildSex(rs);
+      }
+
       query.close();
       connection.commit();
+      return newSex;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -77,7 +119,11 @@ public class SexDao {
       PreparedStatement query = connection.prepareStatement("select * from sex where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildSex(rs);
+      if (rs.next()) {
+        return buildSex(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -105,6 +151,7 @@ public class SexDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from sex");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -112,10 +159,7 @@ public class SexDao {
   }
 
   private Sex buildSex(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Sex().setId(rs.getShort("id")).setSexName(rs.getString("sex_name"));
-    } else {
-      return null;
-    }
+
+    return new Sex().setId(rs.getShort("id")).setSexName(rs.getString("sex_name"));
   }
 }

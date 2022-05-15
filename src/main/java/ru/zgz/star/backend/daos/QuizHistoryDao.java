@@ -30,25 +30,65 @@ public class QuizHistoryDao {
   }
 
   /**
-   * Create new quiz history.
+   * Updates attachment type.
    *
-   * @param quizHistory the quiz history
+   * @param quizHistory updated attachment type
+   * @return updated attachment type
    */
-  public void add(QuizHistory quizHistory) {
+  public List<QuizHistory> update(QuizHistory quizHistory) {
+    List<QuizHistory> quizHistories = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into quiz_history(question_id, selected_variant_id, user_id) values (?, ?,"
-                  + " ?);");
+              "update quiz_history set question_id=?, selected_variant_id=?, user_id=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, quizHistory.getQuestion());
       query.setObject(2, quizHistory.getSelectedVariant());
       query.setObject(3, quizHistory.getUser());
       query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        quizHistories.add(buildQuizHistory(rs));
+      }
       query.close();
       connection.commit();
+
+      return quizHistories;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Create new quiz history.
+   *
+   * @param quizHistory the quiz history
+   */
+  public QuizHistory add(QuizHistory quizHistory) {
+    try {
+      QuizHistory newQuizHistory = new QuizHistory();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into quiz_history(question_id, selected_variant_id, user_id) values (?, ?,"
+                  + " ?);",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, quizHistory.getQuestion());
+      query.setObject(2, quizHistory.getSelectedVariant());
+      query.setObject(3, quizHistory.getUser());
+      query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newQuizHistory = buildQuizHistory(rs);
+      }
+      query.close();
+      connection.commit();
+      return newQuizHistory;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -62,12 +102,7 @@ public class QuizHistoryDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from quiz_history");
       while (rs.next()) {
-        quizHistories.add(
-            new QuizHistory()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setQuestion(UUID.fromString(rs.getString("question")))
-                .setSelectedVariant(UUID.fromString(rs.getString("id")))
-                .setId(UUID.fromString(rs.getString("id"))));
+        quizHistories.add(buildQuizHistory(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -87,11 +122,14 @@ public class QuizHistoryDao {
           connection.prepareStatement("select * from quiz_history where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildQuizHistory(rs);
+      if (rs.next()) {
+        return buildQuizHistory(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -122,14 +160,10 @@ public class QuizHistoryDao {
   }
 
   private QuizHistory buildQuizHistory(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new QuizHistory()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setQuestion(UUID.fromString(rs.getString("question")))
-          .setSelectedVariant(UUID.fromString(rs.getString("id")))
-          .setId(UUID.fromString(rs.getString("id")));
-    } else {
-      return null;
-    }
+    return new QuizHistory()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setQuestion(UUID.fromString(rs.getString("question")))
+        .setSelectedVariant(UUID.fromString(rs.getString("selected_variant_id")))
+        .setUser(UUID.fromString(rs.getString("user_id")));
   }
 }
