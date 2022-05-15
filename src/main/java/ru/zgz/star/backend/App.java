@@ -37,7 +37,7 @@ public class App {
 
     get("/ping", (req, res) -> "pong");
 
-    for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
+    for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routers")) {
       logger.info("Found class: {}", cls.getName());
       String basePath = (String) cls.getField("BASE_URL").get(cls);
       for (Method method : cls.getDeclaredMethods()) {

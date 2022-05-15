@@ -8,7 +8,7 @@ import spock.lang.Specification
 class RouterValidationSpecification extends Specification {
   def "All routers should implement get http method" () {
     when:
-      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
+      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routers")) {
         cls.getMethod("get", Request, Response)
       }
 
@@ -17,7 +17,7 @@ class RouterValidationSpecification extends Specification {
   }
   def "All routers should implement post http method" () {
     when:
-      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
+      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routers")) {
         cls.getMethod("post", Request, Response)
       }
 
@@ -26,7 +26,7 @@ class RouterValidationSpecification extends Specification {
   }
   def "All routers should implement put http method" () {
     when:
-      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
+      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routers")) {
         cls.getMethod("put", Request, Response)
       }
 
@@ -35,7 +35,7 @@ class RouterValidationSpecification extends Specification {
   }
   def "All routers should implement patch http method" () {
     when:
-      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
+      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routers")) {
         cls.getMethod("patch", Request, Response)
       }
 
@@ -44,7 +44,7 @@ class RouterValidationSpecification extends Specification {
   }
   def "All routers should implement delete http method" () {
     when:
-      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routes")) {
+      for (Class<?> cls : ClassUtil.findAllClasses("ru.zgz.star.backend.routers")) {
         cls.getMethod("delete", Request, Response)
       }
 
