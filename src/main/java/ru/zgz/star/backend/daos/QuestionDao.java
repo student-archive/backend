@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.models.EventPriority;
 import ru.zgz.star.backend.models.Question;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -30,32 +31,100 @@ public class QuestionDao {
   }
 
   /**
-   * Create new question.
+   * Checks if question exists.
    *
-   * @param question the question
+   * @param id id of question
+   * @return true if question exists
    */
-  public void add(Question question) {
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from question where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+
+  /**
+   * Updates question.
+   *
+   * @param eventPriority updated eventPriority
+   * @return updated eventPriority
+   */
+  public List<Question> update(Question eventPriority) {
+    List<Question> questions = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into question(question_text, correct_answers_amount, total_answers_amount,"
-                  + " quiz_id) values (?, ?, ?, ?);");
-      query.setString(1, question.getQuestionText());
-      query.setInt(2, question.getCorrectAnswersAmount());
-      query.setInt(3, question.getTotalAnswersAmount());
-      query.setObject(4, question.getQuiz());
+              "update question set question_text=?, quiz_id=?, correct_answers_amount=?, total_answers_amount=?  where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, eventPriority.getQuestionText());
+      query.setObject(2, eventPriority.getQuiz());
+      query.setObject(3, eventPriority.getQuiz());
+      query.setObject(4, eventPriority.getQuiz());
+      query.setObject(5, eventPriority.getId());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        questions.add(buildQuestion(rs));
+      }
+
       query.close();
       connection.commit();
+
+      return questions;
+
     } catch (SQLException e) {
       e.printStackTrace();
+      return null;
     }
   }
 
   /**
-   * Gets all question.
+   * Create new question.
    *
-   * @return list of question
+   * @param question the question
+   * @return created question
+   */
+  public Question add(Question question) {
+    try {
+      Question newQuestion = new Question();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into question(question_text, quiz_id, correct_answers_amount, total_answers_amount) values (?, ?, ?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setString(1, question.getQuestionText());
+      query.setObject(2, question.getQuiz());
+      query.setObject(3, question.getCorrectAnswersAmount());
+      query.setObject(4, question.getTotalAnswersAmount());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newQuestion = buildQuestion(rs);
+      }
+
+      query.close();
+      connection.commit();
+      return newQuestion;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  /**
+   * Gets all questions.
+   *
+   * @return list of questions
    */
   public List<Question> getAll() {
     List<Question> questions = new ArrayList<>();
@@ -63,11 +132,7 @@ public class QuestionDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from question");
       while (rs.next()) {
-        questions.add(
-            new Question()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setQuiz(UUID.fromString(rs.getString("quiz")))
-                .setQuestionText(rs.getString("questionText")));
+        questions.add(buildQuestion(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -76,17 +141,22 @@ public class QuestionDao {
   }
 
   /**
-   * Gets exact attachment type by id.
+   * Gets exact question by id.
    *
-   * @param id id of attachment type
-   * @return exact attachment type
+   * @param id id of question
+   * @return exact question
    */
   public Question getById(String id) {
     try {
-      PreparedStatement query = connection.prepareStatement("select * from question where id=?");
+      PreparedStatement query =
+          connection.prepareStatement("select * from question where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildQuestion(rs);
+      if (rs.next()) {
+        return buildQuestion(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -94,9 +164,9 @@ public class QuestionDao {
   }
 
   /**
-   * Delete exact attachment type by id.
+   * Delete exact question by id.
    *
-   * @param id id of attachment type
+   * @param id id of question
    */
   public void deleteById(UUID id) {
     try {
@@ -108,12 +178,13 @@ public class QuestionDao {
     }
   }
 
-  /** Delete all accounts. */
+  /** Delete all questions. */
   @SuppressWarnings("SqlWithoutWhere")
   public void deleteAll() {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from question");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -121,13 +192,11 @@ public class QuestionDao {
   }
 
   private Question buildQuestion(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Question()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setQuiz(UUID.fromString(rs.getString("quiz")))
-          .setQuestionText(rs.getString("questionText"));
-    } else {
-      return null;
-    }
+    return new Question()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setQuestionText(rs.getString("question_text"))
+        .setQuiz((UUID) rs.getObject("quiz_id"))
+        .setCorrectAnswersAmount(rs.getInt("correct_answer_amount"))
+        .setTotalAnswersAmount(rs.getInt("total_answer_amount"));
   }
 }
