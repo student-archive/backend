@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.EventPriority;
 import ru.zgz.star.backend.models.Group;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -146,8 +145,7 @@ public class GroupDao {
    */
   public Group getById(String id) {
     try {
-      PreparedStatement query =
-          connection.prepareStatement("select * from \"group\" where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from \"group\" where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
