@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.zgz.star.backend.exceptions.http.BaseHttpException;
 import ru.zgz.star.backend.responses.ErrorResponse;
 import ru.zgz.star.backend.util.ClassUtil;
 
@@ -42,10 +43,11 @@ public class App {
       String basePath = (String) cls.getField("BASE_URL").get(cls);
       for (Method method : cls.getDeclaredMethods()) {
         logger.info(
-            "    Registering endpoint: {}.{} by path {}",
+            "    Registering endpoint: {}.{} by path {} as {}",
             cls.getSimpleName(),
             method.getName(),
-            basePath);
+            basePath,
+            method.getName().toUpperCase());
         if (method.getName().startsWith("get")) {
           get(
               basePath,
@@ -73,7 +75,7 @@ public class App {
         }
       }
       exception(
-          Exception.class,
+          BaseHttpException.class,
           (ex, req, res) -> {
             res.type("application/json");
             res.body(
