@@ -30,25 +30,65 @@ public class QuizVariantDao {
   }
 
   /**
+   * Updates at Quiz Variant.
+   *
+   * @param quizVariant updated Quiz Variant
+   * @return updated Quiz Variant
+   */
+  public List<QuizVariant> update(QuizVariant quizVariant) {
+    List<QuizVariant> quizVariants = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update quiz_variant set question_id=?, quiz_variant_text=?, is_correct=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, quizVariant.getQuestion());
+      query.setObject(2, quizVariant.getQuizVariantText());
+      query.setObject(3, quizVariant.getIsCorrect());
+      query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        quizVariants.add(buildQuizVariant(rs));
+      }
+      query.close();
+      connection.commit();
+
+      return quizVariants;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
    * Create new QuizVariant.
    *
    * @param quizVariant the quizVariant
    */
-  public void add(QuizVariant quizVariant) {
+  public QuizVariant add(QuizVariant quizVariant) {
     try {
+      QuizVariant newQuizVariant = new QuizVariant();
       PreparedStatement query =
           connection.prepareStatement(
               "insert into quiz_variant(question_id, quiz_variant_text, is_correct) values"
-                  + " (?,?,?);");
+                  + " (?,?,?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, quizVariant.getQuestion());
       query.setString(2, quizVariant.getQuizVariantText());
       query.setBoolean(3, quizVariant.getIsCorrect());
       query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newQuizVariant = buildQuizVariant(rs);
+      }
       query.close();
       connection.commit();
+      return newQuizVariant;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -87,11 +127,14 @@ public class QuizVariantDao {
           connection.prepareStatement("select * from quiz_variant where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildQuizVarian(rs);
+      if (rs.next()) {
+        return buildQuizVariant(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -121,15 +164,11 @@ public class QuizVariantDao {
     }
   }
 
-  private QuizVariant buildQuizVarian(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new QuizVariant()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setQuestion((UUID) rs.getObject("question_id"))
-          .setQuizVariantText(rs.getString("quiz_variant_text"))
-          .setIsCorrect(rs.getBoolean("is_correct"));
-    } else {
-      return null;
-    }
+  private QuizVariant buildQuizVariant(ResultSet rs) throws SQLException {
+    return new QuizVariant()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setQuestion((UUID) rs.getObject("question_id"))
+        .setQuizVariantText(rs.getString("quiz_variant_text"))
+        .setIsCorrect(rs.getBoolean("is_correct"));
   }
 }
