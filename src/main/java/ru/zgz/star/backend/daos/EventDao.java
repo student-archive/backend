@@ -30,6 +30,27 @@ public class EventDao {
   }
 
   /**
+   * Checks if event exists.
+   *
+   * @param id id of event
+   * @return true if event exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from event where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+  /**
    * Updates event.
    *
    * @param event updated event
@@ -161,6 +182,7 @@ public class EventDao {
     }
 
   }
+
 
   /**
    * Delete exact event by id.
