@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.QuizHistory;
 import ru.zgz.star.backend.models.QuizResult;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -41,7 +40,8 @@ public class QuizResultDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "update quiz_result set result=?, quiz_submit_date=?, quiz_id=?, user_id=?  where id=?",
+              "update quiz_result set result=?, quiz_submit_date=?, quiz_id=?, user_id=?  where"
+                  + " id=?",
               Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, quizResult.getResult());
       query.setObject(2, quizResult.getQuizSubmitDate());
@@ -63,7 +63,6 @@ public class QuizResultDao {
     }
   }
 
-
   /**
    * Create new TutorQuizResult.
    *
@@ -75,7 +74,8 @@ public class QuizResultDao {
       PreparedStatement query =
           connection.prepareStatement(
               "insert into quiz_result(quiz_id, user_id, result, quiz_submit_date) values"
-                  + " (?,?,?,?);" ,Statement.RETURN_GENERATED_KEYS);
+                  + " (?,?,?,?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, quizResult.getQuiz());
       query.setObject(2, quizResult.getUser());
       query.setInt(3, quizResult.getResult());
@@ -163,12 +163,11 @@ public class QuizResultDao {
   }
 
   private QuizResult buildQuizResult(ResultSet rs) throws SQLException {
-      return new QuizResult()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setQuiz((UUID) rs.getObject("quiz_id"))
-          .setUser((UUID) rs.getObject("user_id"))
-          .setQuizSubmitDate(rs.getInt("quiz_submit_date"))
-          .setResult(rs.getInt("result"));
-
+    return new QuizResult()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setQuiz((UUID) rs.getObject("quiz_id"))
+        .setUser((UUID) rs.getObject("user_id"))
+        .setQuizSubmitDate(rs.getInt("quiz_submit_date"))
+        .setResult(rs.getInt("result"));
   }
 }
