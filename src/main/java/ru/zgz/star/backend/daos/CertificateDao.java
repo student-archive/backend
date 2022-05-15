@@ -113,7 +113,7 @@ public class CertificateDao {
         certificates.add(
             new Certificate()
                 .setId(UUID.fromString(rs.getString("id")))
-                .setCertificateName(rs.getString("certificateName"))
+                .setCertificateName(rs.getString("certificate_name"))
                 .setCertificateDescription(rs.getString("certificate_description"))
                 .setEmployee(UUID.fromString(rs.getString("employee_id")))
                 .setOffice(rs.getString("office")));
