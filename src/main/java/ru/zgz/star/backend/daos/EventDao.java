@@ -36,6 +36,7 @@ public class EventDao {
    */
   public void add(Event event) {
     try {
+      Event newEvent = new Event();
       PreparedStatement query =
           connection.prepareStatement(
               "insert into event( event_text, event_description, event_date, event_priority_id)"
