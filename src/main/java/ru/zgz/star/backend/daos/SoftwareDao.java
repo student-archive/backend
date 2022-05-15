@@ -164,11 +164,10 @@ public class SoftwareDao {
   }
 
   private Software buildSoftware(ResultSet rs) throws SQLException {
-    return  new Software()
-            .setId(UUID.fromString(rs.getString("id")))
-            .setLink(rs.getString("link"))
-            .setDescription(rs.getString("Description"))
-            .setSubject((UUID) rs.getObject("subject"));
-
+    return new Software()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setLink(rs.getString("link"))
+        .setDescription(rs.getString("Description"))
+        .setSubject((UUID) rs.getObject("subject"));
   }
 }
