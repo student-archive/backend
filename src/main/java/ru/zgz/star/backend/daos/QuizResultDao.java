@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.models.QuizResult;
-import ru.zgz.star.backend.models.Tutor;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for quiz_result table. */
@@ -39,7 +38,8 @@ public class QuizResultDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into quiz_result(quiz_id, user_id, result, quiz_submit_date) values (?,?,?,?);");
+              "insert into quiz_result(quiz_id, user_id, result, quiz_submit_date) values"
+                  + " (?,?,?,?);");
       query.setObject(1, quizResult.getQuiz());
       query.setObject(2, quizResult.getUser());
       query.setInt(3, quizResult.getResult());

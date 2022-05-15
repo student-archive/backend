@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.models.AttachmentType;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -31,22 +30,61 @@ public class AttachmentTypeDao {
   }
 
   /**
-   * Create new attachment type.
+   * Updates attachment type.
    *
-   * @param attachmentType the attachment type
+   * @param attachmentType updated attachment type
+   * @return updated attachment type
    */
-  public void add(AttachmentType attachmentType) {
+  public List<AttachmentType> update(AttachmentType attachmentType) {
+    List<AttachmentType> attachmentTypes = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into attachment_type(type_name) values (?);");
-      query.setString(1, attachmentType.getTypeName());
+              "update attachment_type set type_name=? where id=?", Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, attachmentType.getTypeName());
+      query.setObject(2, attachmentType.getId());
       query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        attachmentTypes.add(buildAttachmentType(rs));
+      }
       query.close();
       connection.commit();
+
+      return attachmentTypes;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Create new attachment type.
+   *
+   * @param attachmentType the attachment type
+   * @return created attachment type
+   */
+  public AttachmentType add(AttachmentType attachmentType) {
+    try {
+      AttachmentType newAttachmentType = new AttachmentType();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into attachment_type(type_name) values (?);",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setString(1, attachmentType.getTypeName());
+      query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newAttachmentType = buildAttachmentType(rs);
+      }
+      query.close();
+      connection.commit();
+      return newAttachmentType;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -60,10 +98,7 @@ public class AttachmentTypeDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from attachment_type");
       while (rs.next()) {
-        attachmentTypes.add(
-            new AttachmentType()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setTypeName(rs.getString("typeName")));
+        attachmentTypes.add(buildAttachmentType(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -83,13 +118,15 @@ public class AttachmentTypeDao {
           connection.prepareStatement("select * from attachment_type where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildAttachmentType(rs);
+      if (rs.next()) {
+        return buildAttachmentType(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
-
 
   /**
    * Delete exact attachment type by id.
@@ -119,12 +156,8 @@ public class AttachmentTypeDao {
   }
 
   private AttachmentType buildAttachmentType(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new AttachmentType()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setTypeName(rs.getString("typeName"));
-    } else {
-      return null;
-    }
+    return new AttachmentType()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setTypeName(rs.getString("typeName"));
   }
 }

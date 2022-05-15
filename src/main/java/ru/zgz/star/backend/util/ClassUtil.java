@@ -25,8 +25,8 @@ public class ClassUtil {
   }
 
   /**
-   * Merges two objects into new one.
-   * Iterates through all fields of the first object and, if null takes value from the second
+   * Merges two objects into new one. Iterates through all fields of the first object and, if null
+   * takes value from the second
    *
    * @param one first object
    * @param another second object

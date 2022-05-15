@@ -1,24 +1,25 @@
 package ru.zgz.star.backend;
 
+import static spark.Spark.delete;
+import static spark.Spark.exception;
+import static spark.Spark.get;
+import static spark.Spark.patch;
+import static spark.Spark.post;
+import static spark.Spark.put;
+import static spark.Spark.stop;
+
 import com.google.gson.Gson;
+import java.io.IOException;
+import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.responses.ErrorResponse;
 import ru.zgz.star.backend.util.ClassUtil;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-
-import static spark.Spark.*;
-
-/**
- * Main class of the application.
- */
+/** Main class of the application. */
 public class App {
 
-  /**
-   * Logger object of the class.
-   */
+  /** Logger object of the class. */
   public static Logger logger = LoggerFactory.getLogger(App.class);
 
   /**

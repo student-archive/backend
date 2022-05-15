@@ -7,7 +7,7 @@ import spark.Response;
 public class RolesRouter {
   public static String BASE_URL = "/roles";
 
-  public static String getRoles(Request request, Response response){
+  public static String getRoles(Request request, Response response) {
     return new Gson().toJson("list of roles");
   }
 }

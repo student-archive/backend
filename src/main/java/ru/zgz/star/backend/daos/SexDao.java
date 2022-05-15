@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.models.Sex;
-import ru.zgz.star.backend.models.Tutor;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for sex table. */
@@ -38,8 +37,7 @@ public class SexDao {
   public void add(Sex sex) {
     try {
       PreparedStatement query =
-          connection.prepareStatement(
-              "insert into sex(id,sex_name) values (?,?);");
+          connection.prepareStatement("insert into sex(id,sex_name) values (?,?);");
       query.setShort(1, sex.getId());
       query.setString(2, sex.getSexName());
       query.close();
@@ -60,10 +58,7 @@ public class SexDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from sex");
       while (rs.next()) {
-        sexes.add(
-            new Sex()
-                .setId(rs.getShort("id"))
-                .setSexName(rs.getString("sex_name")));
+        sexes.add(new Sex().setId(rs.getShort("id")).setSexName(rs.getString("sex_name")));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -118,9 +113,7 @@ public class SexDao {
 
   private Sex buildSex(ResultSet rs) throws SQLException {
     if (rs.next()) {
-      return new Sex()
-          .setId(rs.getShort("id"))
-          .setSexName(rs.getString("sex_name"));
+      return new Sex().setId(rs.getShort("id")).setSexName(rs.getString("sex_name"));
     } else {
       return null;
     }

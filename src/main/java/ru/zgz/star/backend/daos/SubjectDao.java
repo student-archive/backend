@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.models.Subject;
-import ru.zgz.star.backend.models.User;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for subject table. */

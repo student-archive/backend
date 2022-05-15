@@ -55,42 +55,67 @@ public class AccountDao {
    * Updates account.
    *
    * @param account updated account
+   * @return updated account
    */
-  public void update(Account account) {
+  public List<Account> update(Account account) {
+    List<Account> accounts = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "update account set email=?, password_hash=?, last_active_date=? where id=?");
+              "update account set email=?, password_hash=?, last_active_date=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, account.getEmail());
       query.setObject(2, account.getPasswordHash());
       query.setObject(3, account.getLastActiveDate());
       query.setObject(4, account.getId());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        accounts.add(buildAccount(rs));
+      }
+
       query.close();
       connection.commit();
+
+      return accounts;
+
     } catch (SQLException e) {
       e.printStackTrace();
+      return null;
     }
   }
+
   /**
    * Create new account.
    *
    * @param account the account
+   * @return created account
    */
-  public void add(Account account) {
+  public Account add(Account account) {
     try {
+      Account newAccount = new Account();
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into account(email, password_hash, last_active_date) values (?, ?, ?);");
+              "insert into account(email, password_hash, last_active_date) values (?, ?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, account.getEmail());
       query.setString(2, account.getPasswordHash());
       query.setInt(3, account.getLastActiveDate());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newAccount = buildAccount(rs);
+      }
+
       query.close();
       connection.commit();
+      return newAccount;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -104,12 +129,7 @@ public class AccountDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from account");
       while (rs.next()) {
-        accounts.add(
-            new Account()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setEmail(rs.getString("email"))
-                .setPasswordHash(rs.getString("password_hash"))
-                .setLastActiveDate(rs.getInt("last_active_date")));
+        accounts.add(buildAccount(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -128,7 +148,11 @@ public class AccountDao {
       PreparedStatement query = connection.prepareStatement("select * from account where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildAccount(rs);
+      if (rs.next()) {
+        return buildAccount(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -146,7 +170,11 @@ public class AccountDao {
       PreparedStatement query = connection.prepareStatement("select * from account where email=?");
       query.setString(1, email);
       ResultSet rs = query.executeQuery();
-      return buildAccount(rs);
+      if (rs.next()) {
+        return buildAccount(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -182,18 +210,14 @@ public class AccountDao {
   }
 
   private Account buildAccount(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      Account account =
-          new Account()
-              .setId(UUID.fromString(rs.getString("id")))
-              .setEmail(rs.getString("email"))
-              .setPasswordHash(rs.getString("password_hash"));
-      if (rs.getObject("last_active_date") != null) {
-        account.setLastActiveDate(rs.getInt("last_active_date"));
-      }
-      return account;
-    } else {
-      return null;
+    Account account =
+        new Account()
+            .setId(UUID.fromString(rs.getString("id")))
+            .setEmail(rs.getString("email"))
+            .setPasswordHash(rs.getString("password_hash"));
+    if (rs.getObject("last_active_date") != null) {
+      account.setLastActiveDate(rs.getInt("last_active_date"));
     }
+    return account;
   }
 }

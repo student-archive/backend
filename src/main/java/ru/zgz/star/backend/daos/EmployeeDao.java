@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.AttachmentType;
 import ru.zgz.star.backend.models.Employee;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -31,15 +30,59 @@ public class EmployeeDao {
   }
 
   /**
-   * Create new employee.
+   * Updates employee.
    *
-   * @param employee the attachment type
+   * @param employee updated employee
+   * @return updated employee
    */
-  public void add(Employee employee) {
+  public List<Employee> update(Employee employee) {
+    List<Employee> employees = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into employee(first_name, last_name, patronymic, email, phone, link) values (?, ?, ?, ?, ?, ?);");
+              "update employee set email=?, first_name=?, last_name=?, patronymic=?, link=?,"
+                  + " email=?, phone=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, employee.getEmail());
+      query.setObject(2, employee.getFirstName());
+      query.setObject(3, employee.getLastName());
+      query.setObject(4, employee.getPatronymic());
+      query.setObject(5, employee.getLink());
+      query.setObject(6, employee.getEmail());
+      query.setObject(7, employee.getPhone());
+      query.setObject(8, employee.getId());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        employees.add(buildEmployee(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return employees;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Create new employee.
+   *
+   * @param employee the employee
+   * @return new employee
+   */
+  public Employee add(Employee employee) {
+    try {
+      Employee newEmployee = new Employee();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into employee(first_name, last_name, patronymic, email, phone, link) values"
+                  + " (?, ?, ?, ?, ?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, employee.getFirstName());
       query.setObject(2, employee.getLastName());
       query.setObject(3, employee.getPatronymic());
@@ -47,11 +90,20 @@ public class EmployeeDao {
       query.setObject(5, employee.getPhone());
       query.setObject(5, employee.getLink());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newEmployee = buildEmployee(rs);
+      }
+
       query.close();
       connection.commit();
+      return newEmployee;
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -65,15 +117,7 @@ public class EmployeeDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from employee");
       while (rs.next()) {
-        employees.add(
-            new Employee()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setFirstName(rs.getString("firstName"))
-                .setLastName(rs.getString("lastName"))
-                .setPatronymic(rs.getString("patronymic"))
-                .setEmail(rs.getString("email"))
-                .setPhone(rs.getString("phone"))
-                .setLink(rs.getString("link")));
+        employees.add(buildEmployee(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -92,11 +136,14 @@ public class EmployeeDao {
       PreparedStatement query = connection.prepareStatement("select * from employee where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildEmployee(rs);
+      if (rs.next()) {
+        return buildEmployee(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -127,17 +174,13 @@ public class EmployeeDao {
   }
 
   private Employee buildEmployee(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Employee()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setFirstName(rs.getString("firstName"))
-          .setLastName(rs.getString("lastName"))
-          .setPatronymic(rs.getString("patronymic"))
-          .setEmail(rs.getString("email"))
-          .setPhone(rs.getString("phone"))
-          .setLink(rs.getString("link"));
-    } else {
-      return null;
-    }
+    return new Employee()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setFirstName(rs.getString("first_name"))
+        .setLastName(rs.getString("last_name"))
+        .setPatronymic(rs.getString("patronymic"))
+        .setEmail(rs.getString("email"))
+        .setPhone(rs.getString("phone"))
+        .setLink(rs.getString("link"));
   }
 }

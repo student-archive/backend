@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.EventPriority;
 import ru.zgz.star.backend.models.University;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -38,8 +37,7 @@ public class UniversityDao {
   public void add(University university) {
     try {
       PreparedStatement query =
-          connection.prepareStatement(
-              "insert into university(university_name) values (?);");
+          connection.prepareStatement("insert into university(university_name) values (?);");
       query.setString(1, university.getUniversityName());
       query.executeUpdate();
       query.close();
@@ -79,8 +77,7 @@ public class UniversityDao {
    */
   public University getById(String id) {
     try {
-      PreparedStatement query =
-          connection.prepareStatement("select * from university where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from university where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       return buildUniversity(rs);
@@ -89,7 +86,6 @@ public class UniversityDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact university by id.

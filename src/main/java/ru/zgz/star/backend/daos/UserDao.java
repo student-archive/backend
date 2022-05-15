@@ -8,9 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.Account;
-import ru.zgz.star.backend.models.Role;
-import ru.zgz.star.backend.models.Sex;
 import ru.zgz.star.backend.models.User;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -41,7 +38,8 @@ public class UserDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into \"user\" (first_name, last_name, avatar_link, role_id, account_id, group_id, sex_id) values (?, ?, ?, ?, ?, ?, ?);");
+              "insert into \"user\" (first_name, last_name, avatar_link, role_id, account_id,"
+                  + " group_id, sex_id) values (?, ?, ?, ?, ?, ?, ?);");
       query.setString(1, user.getFirstName());
       query.setString(2, user.getLastName());
       query.setString(3, user.getAvatarLink());

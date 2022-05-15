@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.models.Role;
-import ru.zgz.star.backend.models.Tutor;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for role table. */

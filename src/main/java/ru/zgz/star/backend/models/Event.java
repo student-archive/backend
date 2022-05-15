@@ -2,7 +2,6 @@ package ru.zgz.star.backend.models;
 
 import java.util.UUID;
 
-
 /**
  * Model for table <code>event</code>.
  *
@@ -10,7 +9,6 @@ import java.util.UUID;
  *
  * @author ironalex
  */
-
 public class Event {
   private UUID id;
   private String eventText;

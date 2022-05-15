@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.models.QuizVariant;
-import ru.zgz.star.backend.models.University;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for quiz_variant table. */
@@ -39,7 +38,8 @@ public class QuizVariantDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into quiz_variant(question_id, quiz_variant_text, is_correct) values (?,?,?);");
+              "insert into quiz_variant(question_id, quiz_variant_text, is_correct) values"
+                  + " (?,?,?);");
       query.setObject(1, quizVariant.getQuestion());
       query.setString(2, quizVariant.getQuizVariantText());
       query.setBoolean(3, quizVariant.getIsCorrect());

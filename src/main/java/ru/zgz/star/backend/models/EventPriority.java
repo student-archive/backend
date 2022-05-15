@@ -1,6 +1,5 @@
 package ru.zgz.star.backend.models;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -14,7 +13,6 @@ public class EventPriority {
   private UUID id;
   private String priorityName;
   private String priorityDescription;
-
 
   /** Instantiates a new empty object. */
   public EventPriority() {}
@@ -89,7 +87,4 @@ public class EventPriority {
   public String getPriorityDescription() {
     return priorityDescription;
   }
-
-
-  }
-
+}

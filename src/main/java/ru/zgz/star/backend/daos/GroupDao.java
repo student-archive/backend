@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.AttachmentType;
 import ru.zgz.star.backend.models.Group;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -92,7 +91,6 @@ public class GroupDao {
       return null;
     }
   }
-
 
   /**
    * Delete exact group by id.
