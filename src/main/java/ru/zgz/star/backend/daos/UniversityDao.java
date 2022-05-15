@@ -30,21 +30,68 @@ public class UniversityDao {
   }
 
   /**
+   * Updates university.
+   *
+   * @param university updated university
+   * @return updated university
+   */
+  public List<University> update(University university) {
+    List<University> accounts = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update university set university_name=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, university.getUniversityName());
+      query.setObject(2, university.getId());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        accounts.add(buildUniversity(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return accounts;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
    * Create new University.
    *
    * @param university the university
+   * @return added university
    */
-  public void add(University university) {
+  public University add(University university) {
     try {
+      University newUniversity = new University();
       PreparedStatement query =
-          connection.prepareStatement("insert into university(university_name) values (?);");
+          connection.prepareStatement(
+              "insert into university(university_name) values (?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, university.getUniversityName());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newUniversity = buildUniversity(rs);
+      }
+
       query.close();
       connection.commit();
+
+      return newUniversity;
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -58,10 +105,7 @@ public class UniversityDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from university");
       while (rs.next()) {
-        universities.add(
-            new University()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setUniversityName(rs.getString("university_name")));
+        universities.add(buildUniversity(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -80,11 +124,14 @@ public class UniversityDao {
       PreparedStatement query = connection.prepareStatement("select * from university where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildUniversity(rs);
+      if (rs.next()) {
+        return buildUniversity(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -96,6 +143,8 @@ public class UniversityDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from university where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -115,12 +164,8 @@ public class UniversityDao {
   }
 
   private University buildUniversity(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new University()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setUniversityName(rs.getString("university_name"));
-    } else {
-      return null;
-    }
+    return new University()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setUniversityName(rs.getString("university_name"));
   }
 }

@@ -30,21 +30,68 @@ public class SpecialityDao {
   }
 
   /**
+   * Updates speciality.
+   *
+   * @param speciality updated speciality
+   * @return updated speciality
+   */
+  public List<Speciality> update(Speciality speciality) {
+    List<Speciality> specialities = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update speciality set speciality_name=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, speciality.getSpecialityName());
+      query.setObject(2, speciality.getId());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        specialities.add(buildSpeciality(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return specialities;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
    * Create new Speciality.
    *
    * @param speciality the speciality
+   * @return added speciality
    */
-  public void add(Speciality speciality) {
+  public Speciality add(Speciality speciality) {
     try {
+      Speciality newSpeciality = new Speciality();
       PreparedStatement query =
-          connection.prepareStatement("insert into speciality(speciality_name) values (?);");
+          connection.prepareStatement(
+              "insert into speciality(speciality_name) values (?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, speciality.getSpecialityName());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newSpeciality = buildSpeciality(rs);
+      }
+
       query.close();
       connection.commit();
+
+      return newSpeciality;
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -58,10 +105,7 @@ public class SpecialityDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from speciality");
       while (rs.next()) {
-        specialities.add(
-            new Speciality()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setSpecialityName(rs.getString("speciality_name")));
+        specialities.add(buildSpeciality(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -80,11 +124,14 @@ public class SpecialityDao {
       PreparedStatement query = connection.prepareStatement("select * from speciality where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildSpeciality(rs);
+      if (rs.next()) {
+        return buildSpeciality(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -115,12 +162,8 @@ public class SpecialityDao {
   }
 
   private Speciality buildSpeciality(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Speciality()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setSpecialityName(rs.getString("speciality_name"));
-    } else {
-      return null;
-    }
+    return new Speciality()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setSpecialityName(rs.getString("speciality_name"));
   }
 }

@@ -30,24 +30,72 @@ public class SubjectDao {
   }
 
   /**
-   * Create new Subject.
+   * Updates subject.
    *
-   * @param subject the subject
+   * @param subject updated subject
+   * @return updated subject
    */
-  public void add(Subject subject) {
+  public List<Subject> update(Subject subject) {
+    List<Subject> subjects = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into subject (group_id, subject_name, semester) values (?, ?, ?);");
+              "update subject set group_id=?, semester=?, subject_name=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, subject.getGroup());
+      query.setObject(2, subject.getSemester());
+      query.setObject(3, subject.getSubjectName());
+      query.setObject(4, subject.getId());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        subjects.add(buildSubject(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return subjects;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Create new Subject.
+   *
+   * @param subject the subject
+   * @return added subject
+   */
+  public Subject add(Subject subject) {
+    try {
+      Subject newSubject = new Subject();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into subject (group_id, subject_name, semester) values (?, ?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, subject.getGroup());
       query.setString(2, subject.getSubjectName());
       query.setInt(3, subject.getSemester());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newSubject = buildSubject(rs);
+      }
+
       query.close();
       connection.commit();
+
+      return newSubject;
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -61,12 +109,7 @@ public class SubjectDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from subject");
       while (rs.next()) {
-        subjects.add(
-            new Subject()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setGroup((UUID) rs.getObject("group_id"))
-                .setSubjectName(rs.getString("subject_name"))
-                .setSemester(rs.getInt("semester")));
+        subjects.add(buildSubject(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -85,11 +128,14 @@ public class SubjectDao {
       PreparedStatement query = connection.prepareStatement("select * from subject where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildSubject(rs);
+      if (rs.next()) {
+        return buildSubject(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -101,6 +147,7 @@ public class SubjectDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from subject where id=?");
       st.setObject(1, id);
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -120,14 +167,10 @@ public class SubjectDao {
   }
 
   private Subject buildSubject(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Subject()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setGroup((UUID) rs.getObject("group_id"))
-          .setSubjectName(rs.getString("subject_name"))
-          .setSemester(rs.getInt("semester"));
-    } else {
-      return null;
-    }
+    return new Subject()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setGroup((UUID) rs.getObject("group_id"))
+        .setSubjectName(rs.getString("subject_name"))
+        .setSemester(rs.getInt("semester"));
   }
 }
