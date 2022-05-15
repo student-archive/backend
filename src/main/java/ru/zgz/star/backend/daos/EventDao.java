@@ -140,6 +140,29 @@ public class EventDao {
   }
 
   /**
+   * Gets exact event by group.
+   *
+   * @param id id of group
+   * @return list of events
+   */
+  public List<Event> getByGroup(String id) {
+    try {
+      List<Event> events = new ArrayList<>();
+      PreparedStatement query = connection.prepareStatement("select * from event where group_id=?");
+      query.setObject(1, UUID.fromString(id));
+      ResultSet rs = query.executeQuery();
+      while (rs.next()) {
+        events.add(buildEvent(rs));
+      }
+      return events;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+
+  }
+
+  /**
    * Delete exact event by id.
    *
    * @param id id of event
