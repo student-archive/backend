@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.models.Software;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -64,7 +63,6 @@ public class SoftwareDao {
     }
   }
 
-
   /**
    * Create new Software.
    *
@@ -75,7 +73,8 @@ public class SoftwareDao {
       Software newSoftware = new Software();
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into software(link, description, subject_id) values (?,?,?);", Statement.RETURN_GENERATED_KEYS);
+              "insert into software(link, description, subject_id) values (?,?,?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, software.getLink());
       query.setString(2, software.getDescription());
       query.setObject(3, software.getSubject());
@@ -166,11 +165,11 @@ public class SoftwareDao {
 
   private Software buildSoftware(ResultSet rs) throws SQLException {
     Software software =
-       new Software()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setLink(rs.getString("link"))
-          .setDescription(rs.getString("Description"))
-          .setSubject((UUID) rs.getObject("subject"));
+        new Software()
+            .setId(UUID.fromString(rs.getString("id")))
+            .setLink(rs.getString("link"))
+            .setDescription(rs.getString("Description"))
+            .setSubject((UUID) rs.getObject("subject"));
     return software;
   }
 }

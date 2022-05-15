@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.models.Sex;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -41,8 +40,7 @@ public class SexDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "update sex set sex_name=? where id=?",
-              Statement.RETURN_GENERATED_KEYS);
+              "update sex set sex_name=? where id=?", Statement.RETURN_GENERATED_KEYS);
       query.setString(1, sex.getSexName());
 
       query.executeUpdate();
@@ -62,7 +60,6 @@ public class SexDao {
       return null;
     }
   }
-
 
   /**
    * Create new Sex.
@@ -162,10 +159,8 @@ public class SexDao {
   }
 
   private Sex buildSex(ResultSet rs) throws SQLException {
-    Sex sex =
-new Sex().setId(rs.getShort("id")).setSexName(rs.getString("sex_name"));
+    Sex sex = new Sex().setId(rs.getShort("id")).setSexName(rs.getString("sex_name"));
 
     return sex;
   }
 }
-
