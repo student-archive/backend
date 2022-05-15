@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.models.QuizHistory;
 import ru.zgz.star.backend.models.QuizResult;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -30,27 +31,68 @@ public class QuizResultDao {
   }
 
   /**
+   * Updates attachment type.
+   *
+   * @param quizResult updated attachment type
+   * @return updated attachment type
+   */
+  public List<QuizResult> update(QuizResult quizResult) {
+    List<QuizResult> quizResults = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update quiz_result set result=?, quiz_submit_date=?, quiz_id=?, user_id=?  where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, quizResult.getResult());
+      query.setObject(2, quizResult.getQuizSubmitDate());
+      query.setObject(3, quizResult.getQuiz());
+      query.setObject(4, quizResult.getUser());
+      query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        quizResults.add(buildQuizResult(rs));
+      }
+      query.close();
+      connection.commit();
+
+      return quizResults;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+
+  /**
    * Create new TutorQuizResult.
    *
    * @param quizResult the quizResult
    */
-  public void add(QuizResult quizResult) {
+  public QuizResult add(QuizResult quizResult) {
     try {
+      QuizResult newQuizResult = new QuizResult();
       PreparedStatement query =
           connection.prepareStatement(
               "insert into quiz_result(quiz_id, user_id, result, quiz_submit_date) values"
-                  + " (?,?,?,?);");
+                  + " (?,?,?,?);" ,Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, quizResult.getQuiz());
       query.setObject(2, quizResult.getUser());
       query.setInt(3, quizResult.getResult());
       query.setInt(4, quizResult.getQuizSubmitDate());
 
       query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newQuizResult = buildQuizResult(rs);
+      }
       query.close();
       connection.commit();
+      return newQuizResult;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -64,13 +106,7 @@ public class QuizResultDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from quiz_result");
       while (rs.next()) {
-        quizResults.add(
-            new QuizResult()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setQuiz((UUID) rs.getObject("quiz_id"))
-                .setUser((UUID) rs.getObject("user_id"))
-                .setResult(rs.getInt("result"))
-                .setQuizSubmitDate(rs.getInt("quiz_submit_date")));
+        quizResults.add(buildQuizResult(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -89,11 +125,14 @@ public class QuizResultDao {
       PreparedStatement query = connection.prepareStatement("select * from quiz_result where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildQuizResult(rs);
+      if (rs.next()) {
+        return buildQuizResult(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -124,14 +163,11 @@ public class QuizResultDao {
   }
 
   private QuizResult buildQuizResult(ResultSet rs) throws SQLException {
-    if (rs.next()) {
       return new QuizResult()
           .setId(UUID.fromString(rs.getString("id")))
           .setQuiz((UUID) rs.getObject("quiz_id"))
           .setUser((UUID) rs.getObject("user_id"))
           .setResult(rs.getInt("result"));
-    } else {
-      return null;
-    }
+
   }
 }
