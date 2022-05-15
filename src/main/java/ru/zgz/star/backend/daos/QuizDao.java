@@ -21,7 +21,7 @@ public class QuizDao {
   }
 
   /**
-   * Instantiates a new Quiz dao.
+   * Instantiates a new quiz dao.
    *
    * @param connection the connection
    */
@@ -30,32 +30,101 @@ public class QuizDao {
   }
 
   /**
-   * Create new quiz.
+   * Checks if quiz exists.
    *
-   * @param quiz the quiz
+   * @param id id of quiz
+   * @return true if quiz exists
    */
-  public void add(Quiz quiz) {
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query = connection.prepareStatement("select count(*) from quiz where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+
+  /**
+   * Updates quiz.
+   *
+   * @param quiz updated quiz
+   * @return updated quiz
+   */
+  public List<Quiz> update(Quiz quiz) {
+    List<Quiz> quizzes = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into quiz(quiz_name, quiz_description, questions_amount, subject_id) values"
-                  + " (?, ?, ?, ?);");
-      query.setString(1, quiz.getQuizName());
-      query.setString(2, quiz.getQuizDescription());
-      query.setInt(3, quiz.getQuestionsAmount());
+              "update quiz set quiz_name=?, quiz_description=?, questions_amount=?,"
+                  + " subject_id=?  where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, quiz.getQuizName());
+      query.setObject(2, quiz.getQuizDescription());
+      query.setObject(3, quiz.getQuestionsAmount());
       query.setObject(4, quiz.getSubject());
+      query.setObject(5, quiz.getId());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        quizzes.add(buildQuiz(rs));
+      }
+
       query.close();
       connection.commit();
+
+      return quizzes;
+
     } catch (SQLException e) {
       e.printStackTrace();
+      return null;
     }
   }
 
   /**
-   * Gets all quiz.
+   * Create new quiz.
    *
-   * @return list of quiz
+   * @param quiz the quiz
+   * @return created quiz
+   */
+  public Quiz add(Quiz quiz) {
+    try {
+      Quiz newQuiz = new Quiz();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into quiz(quiz_name, quiz_description, questions_amount,"
+                  + " subject_id) values (?, ?, ?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setString(1, quiz.getQuizName());
+      query.setObject(2, quiz.getQuizDescription());
+      query.setObject(3, quiz.getQuestionsAmount());
+      query.setObject(4, quiz.getSubject());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newQuiz = buildQuiz(rs);
+      }
+
+      query.close();
+      connection.commit();
+      return newQuiz;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  /**
+   * Gets all quizzes.
+   *
+   * @return list of quizzes
    */
   public List<Quiz> getAll() {
     List<Quiz> quizzes = new ArrayList<>();
@@ -63,13 +132,7 @@ public class QuizDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from quiz");
       while (rs.next()) {
-        quizzes.add(
-            new Quiz()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setQuizName(rs.getString("quiz_name"))
-                .setQuizDescription(rs.getString("quiz_description"))
-                .setQuestionsAmount(rs.getInt("quiz_amount"))
-                .setSubject(UUID.fromString(rs.getString("subject"))));
+        quizzes.add(buildQuiz(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -88,7 +151,11 @@ public class QuizDao {
       PreparedStatement query = connection.prepareStatement("select * from quiz where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildQuiz(rs);
+      if (rs.next()) {
+        return buildQuiz(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -116,6 +183,7 @@ public class QuizDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from quiz");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -123,15 +191,11 @@ public class QuizDao {
   }
 
   private Quiz buildQuiz(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Quiz()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setQuizName(rs.getString("quiz_name"))
-          .setQuizDescription(rs.getString("quiz_description"))
-          .setQuestionsAmount(rs.getInt("quiz_amount"))
-          .setSubject(UUID.fromString(rs.getString("subject")));
-    } else {
-      return null;
-    }
+    return new Quiz()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setQuizName(rs.getString("quiz_name"))
+        .setSubject((UUID) rs.getObject("subject_id"))
+        .setQuestionsAmount(rs.getInt("questions_amount"))
+        .setQuizDescription(rs.getString("quiz_description"));
   }
 }

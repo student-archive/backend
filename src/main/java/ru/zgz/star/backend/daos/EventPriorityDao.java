@@ -21,7 +21,7 @@ public class EventPriorityDao {
   }
 
   /**
-   * Instantiates a new EventPriority dao.
+   * Instantiates a new Account dao.
    *
    * @param connection the connection
    */
@@ -30,23 +30,90 @@ public class EventPriorityDao {
   }
 
   /**
-   * Create new EventPriority.
+   * Checks if event priority exists.
    *
-   * @param eventPriority the eventPriority
+   * @param id id of event priority
+   * @return true if event priority exists
    */
-  public void add(EventPriority eventPriority) {
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from event_priority where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+
+  /**
+   * Updates event priority.
+   *
+   * @param eventPriority updated eventPriority
+   * @return updated eventPriority
+   */
+  public List<EventPriority> update(EventPriority eventPriority) {
+    List<EventPriority> eventPriorities = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into event_priority(priority_name, priority_description) values (?, ?);");
+              "update event_priority set priority_name=?, priority_description=?  where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, eventPriority.getPriorityName());
+      query.setObject(2, eventPriority.getPriorityDescription());
+      query.setObject(3, eventPriority.getId());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        eventPriorities.add(buildEventPriority(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return eventPriorities;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Create new event priority.
+   *
+   * @param eventPriority the eventPriority
+   * @return created eventPriority
+   */
+  public EventPriority add(EventPriority eventPriority) {
+    try {
+      EventPriority newEventPriority = new EventPriority();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into event_priority(priority_name, priority_description) values (?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, eventPriority.getPriorityName());
       query.setString(2, eventPriority.getPriorityDescription());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newEventPriority = buildEventPriority(rs);
+      }
+
       query.close();
       connection.commit();
+      return newEventPriority;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -60,11 +127,7 @@ public class EventPriorityDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from event_priority");
       while (rs.next()) {
-        eventPriorities.add(
-            new EventPriority()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setPriorityName(rs.getString("priority_name"))
-                .setPriorityDescription(rs.getString("priority_description")));
+        eventPriorities.add(buildEventPriority(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -73,7 +136,7 @@ public class EventPriorityDao {
   }
 
   /**
-   * Gets exact eventPriority by id.
+   * Gets exact event priority by id.
    *
    * @param id id of event priority
    * @return exact event priority
@@ -84,7 +147,11 @@ public class EventPriorityDao {
           connection.prepareStatement("select * from event_priority where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildEventPriority(rs);
+      if (rs.next()) {
+        return buildEventPriority(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -112,6 +179,7 @@ public class EventPriorityDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from event_priority");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -119,13 +187,9 @@ public class EventPriorityDao {
   }
 
   private EventPriority buildEventPriority(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new EventPriority()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setPriorityName(rs.getString("priority_name"))
-          .setPriorityDescription(rs.getString("priority_description"));
-    } else {
-      return null;
-    }
+    return new EventPriority()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setPriorityName(rs.getString("priority_name"))
+        .setPriorityDescription(rs.getString("priority_description"));
   }
 }
