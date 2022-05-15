@@ -8,10 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.models.EventPriority;
 import ru.zgz.star.backend.models.Group;
 import ru.zgz.star.backend.util.DbUtil;
 
-/** DAO for Group table. */
+/** DAO for group table. */
 public class GroupDao {
   private final Connection connection;
 
@@ -30,30 +31,98 @@ public class GroupDao {
   }
 
   /**
-   * Create new group.
+   * Checks if group exists.
    *
-   * @param group the group
+   * @param id id of group
+   * @return true if group exists
    */
-  public void add(Group group) {
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from \"group\" where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+
+  /**
+   * Updates group.
+   *
+   * @param group updated group
+   * @return updated group
+   */
+  public List<Group> update(Group group) {
+    List<Group> groups = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into group(group_name, university_id, speciality_id) values (?, ?, ?);");
+              "update \"group\" set group_name=?, university_id=?, speciality_id=?  where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, group.getGroupName());
+      query.setObject(2, group.getUniversity());
+      query.setObject(3, group.getSpeciality());
+      query.setObject(4, group.getId());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        groups.add(buildGroup(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return groups;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Create new group.
+   *
+   * @param group the group
+   * @return created group
+   */
+  public Group add(Group group) {
+    try {
+      Group newGroup = new Group();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into \"group\"(group_name, university_id, speciality_id) values (?, ?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, group.getGroupName());
       query.setObject(2, group.getUniversity());
       query.setObject(3, group.getSpeciality());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newGroup = buildGroup(rs);
+      }
+
       query.close();
       connection.commit();
+      return newGroup;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
    * Gets all group.
    *
-   * @return list of group
+   * @return list of groups
    */
   public List<Group> getAll() {
     List<Group> groups = new ArrayList<>();
@@ -61,12 +130,7 @@ public class GroupDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from \"group\"");
       while (rs.next()) {
-        groups.add(
-            new Group()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setGroupName(rs.getString("groupName"))
-                .setUniversity(UUID.fromString(rs.getString("university")))
-                .setSpeciality(UUID.fromString(rs.getString("speciality"))));
+        groups.add(buildGroup(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -82,10 +146,15 @@ public class GroupDao {
    */
   public Group getById(String id) {
     try {
-      PreparedStatement query = connection.prepareStatement("select * from \"group\" where id=?");
+      PreparedStatement query =
+          connection.prepareStatement("select * from \"group\" where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildGroup(rs);
+      if (rs.next()) {
+        return buildGroup(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -107,12 +176,13 @@ public class GroupDao {
     }
   }
 
-  /** Delete all accounts. */
+  /** Delete all groups. */
   @SuppressWarnings("SqlWithoutWhere")
   public void deleteAll() {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from \"group\"");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -120,14 +190,10 @@ public class GroupDao {
   }
 
   private Group buildGroup(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Group()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setGroupName(rs.getString("groupName"))
-          .setUniversity(UUID.fromString(rs.getString("university")))
-          .setSpeciality(UUID.fromString(rs.getString("speciality")));
-    } else {
-      return null;
-    }
+    return new Group()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setGroupName(rs.getString("priority_name"))
+        .setUniversity((UUID) rs.getObject("university_id"))
+        .setSpeciality((UUID) rs.getObject("speciality"));
   }
 }
