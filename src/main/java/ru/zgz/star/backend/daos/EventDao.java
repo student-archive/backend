@@ -30,27 +30,73 @@ public class EventDao {
   }
 
   /**
+   * Updates event.
+   *
+   * @param event updated event
+   * @return updated event
+   */
+  public List<Event> update(Event event) {
+    List<Event> events = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update event set event_text=?, event_description=?, event_date=?,"
+                  + " event_priority_id=? where id=?;",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, event.getEventText());
+      query.setObject(2, event.getEventDescription());
+      query.setObject(3, event.getEventDate());
+      query.setObject(4, event.getEventPriority());
+      query.setObject(5, event.getId());
+      query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        events.add(buildEvent(rs));
+      }
+      query.close();
+      connection.commit();
+
+      return events;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
    * Create new event.
    *
    * @param event the event
+   * @return created event
    */
-  public void add(Event event) {
+  public Event add(Event event) {
     try {
       Event newEvent = new Event();
       PreparedStatement query =
           connection.prepareStatement(
               "insert into event( event_text, event_description, event_date, event_priority_id)"
-                  + " values (?, ?, ?, ?);");
+                  + " values (?, ?, ?, ?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, event.getEventText());
       query.setObject(2, event.getEventDescription());
       query.setObject(3, event.getEventDate());
       query.setObject(4, event.getEventPriority());
       query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newEvent = buildEvent(rs);
+      }
+
       query.close();
       connection.commit();
+
+      return newEvent;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -64,13 +110,7 @@ public class EventDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from event");
       while (rs.next()) {
-        events.add(
-            new Event()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setEventText(rs.getString("event_text"))
-                .setEventDescription(rs.getString("event_description"))
-                .setEventDate(rs.getInt("event_date"))
-                .setEventPriority(UUID.fromString(rs.getString("event_priority_id"))));
+        events.add(buildEvent(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -89,11 +129,14 @@ public class EventDao {
       PreparedStatement query = connection.prepareStatement("select * from event where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildEvent(rs);
+      if (rs.next()) {
+        return buildEvent(rs);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
+    return null;
   }
 
   /**
@@ -124,16 +167,11 @@ public class EventDao {
   }
 
   private Event buildEvent(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Event()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setEventText(rs.getString("event_text"))
-          .setEventDescription(rs.getString("event_description"))
-          .setEventDate(rs.getInt("event_date"))
-          .setEventPriority(UUID.fromString(rs.getString("event_priority_id")));
-
-    } else {
-      return null;
-    }
+    return new Event()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setEventText(rs.getString("event_text"))
+        .setEventDescription(rs.getString("event_description"))
+        .setEventDate(rs.getInt("event_date"))
+        .setEventPriority(UUID.fromString(rs.getString("event_priority_id")));
   }
 }
