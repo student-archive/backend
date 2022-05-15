@@ -30,23 +30,66 @@ public class RoleDao {
   }
 
   /**
+   * Updates Role.
+   *
+   * @param role updated account
+   * @return updated account
+   */
+  public List<Role> update(Role role) {
+    List<Role> roles = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update role set role_name=?, role_description=? where id=?",
+              Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, role.getRoleName());
+      query.setObject(2, role.getRoleDescription());
+
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        roles.add(buildRole(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return roles;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
    * Create new Role.
    *
    * @param role the role
    */
-  public void add(Role role) {
+  public Role add(Role role) {
     try {
+      Role newRole = new Role();
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into role(role_name, role_description) values (?,?);");
+              "insert into role(role_name, role_description) values (?,?);",
+              Statement.RETURN_GENERATED_KEYS);
       query.setString(1, role.getRoleName());
       query.setString(2, role.getRoleDescription());
       query.executeUpdate();
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newRole = buildRole(rs);
+      }
+
       query.close();
       connection.commit();
+      return newRole;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -60,18 +103,13 @@ public class RoleDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from role");
       while (rs.next()) {
-        roles.add(
-            new Role()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setRoleName(rs.getString("role_name"))
-                .setRoleDescription(rs.getString("role_description")));
+        roles.add(buildRole(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
     return roles;
   }
-
   /**
    * Gets exact role by id.
    *
@@ -83,7 +121,11 @@ public class RoleDao {
       PreparedStatement query = connection.prepareStatement("select * from role where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildRole(rs);
+      if (rs.next()) {
+        return buildRole(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -118,13 +160,9 @@ public class RoleDao {
   }
 
   private Role buildRole(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Role()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setRoleName(rs.getString("role_name"))
-          .setRoleDescription(rs.getString("role_description"));
-    } else {
-      return null;
-    }
+    return new Role()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setRoleName(rs.getString("role_name"))
+        .setRoleDescription(rs.getString("role_description"));
   }
 }
