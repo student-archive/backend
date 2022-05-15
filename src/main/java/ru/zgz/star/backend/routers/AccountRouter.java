@@ -1,4 +1,4 @@
-package ru.zgz.star.backend.routes;
+package ru.zgz.star.backend.routers;
 
 import com.google.gson.Gson;
 import java.util.UUID;
