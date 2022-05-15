@@ -167,6 +167,7 @@ public class QuizResultDao {
           .setId(UUID.fromString(rs.getString("id")))
           .setQuiz((UUID) rs.getObject("quiz_id"))
           .setUser((UUID) rs.getObject("user_id"))
+          .setQuizSubmitDate(rs.getInt("quiz_submit_date"))
           .setResult(rs.getInt("result"));
 
   }
