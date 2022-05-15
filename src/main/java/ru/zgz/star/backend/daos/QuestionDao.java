@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.models.Event;
 import ru.zgz.star.backend.models.Question;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -162,6 +163,28 @@ public class QuestionDao {
       return null;
     }
   }
+  /**
+   * Gets list questions by quiz id.
+   *
+   * @param id quiz
+   * @return list questions by quiz id
+   */
+  public List<Question> getByQuizId(String id) {
+    try {
+      List<Question> questions = new ArrayList<>();
+      PreparedStatement query = connection.prepareStatement("select * from question where quiz_id=?");
+      query.setObject(1, UUID.fromString(id));
+      ResultSet rs = query.executeQuery();
+      while (rs.next()) {
+        questions.add(buildQuestion(rs));
+      }
+      return questions;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+
+  }
 
   /**
    * Delete exact question by id.
@@ -196,7 +219,7 @@ public class QuestionDao {
         .setId(UUID.fromString(rs.getString("id")))
         .setQuestionText(rs.getString("question_text"))
         .setQuiz((UUID) rs.getObject("quiz_id"))
-        .setCorrectAnswersAmount(rs.getInt("correct_answer_amount"))
-        .setTotalAnswersAmount(rs.getInt("total_answer_amount"));
+        .setCorrectAnswersAmount(rs.getInt("correct_answers_amount"))
+        .setTotalAnswersAmount(rs.getInt("total_answers_amount"));
   }
 }
