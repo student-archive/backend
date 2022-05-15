@@ -30,26 +30,93 @@ public class PageDao {
   }
 
   /**
-   * Create new page.
+   * Checks if page exists.
    *
-   * @param page the page
+   * @param id id of page
+   * @return true if page exists
    */
-  public void add(Page page) {
+  public Boolean findById(UUID id) {
     try {
-      PreparedStatement query = connection.prepareStatement("insert into page(link) values (?);");
-      query.setString(1, page.getLink());
-      query.executeUpdate();
-      query.close();
-      connection.commit();
+      PreparedStatement query = connection.prepareStatement("select count(*) from page where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+
+  /**
+   * Updates page.
+   *
+   * @param page updated page
+   * @return updated page
+   */
+  public List<Page> update(Page page) {
+    List<Page> pages = new ArrayList<>();
+    try {
+      PreparedStatement query =
+          connection.prepareStatement(
+              "update page set link=?, subject_id=?  where id=?", Statement.RETURN_GENERATED_KEYS);
+      query.setObject(1, page.getLink());
+      query.setObject(2, page.getSubject());
+      query.setObject(3, page.getId());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      while (rs.next()) {
+        pages.add(buildPage(rs));
+      }
+
+      query.close();
+      connection.commit();
+
+      return pages;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
     }
   }
 
   /**
-   * Gets all page.
+   * Create new page.
    *
-   * @return list of page
+   * @param page the page
+   * @return created page
+   */
+  public Page add(Page page) {
+    try {
+      Page newPage = new Page();
+      PreparedStatement query =
+          connection.prepareStatement(
+              "insert into page(link, subject_id) values (?, ?);", Statement.RETURN_GENERATED_KEYS);
+      query.setString(1, page.getLink());
+      query.setObject(2, page.getSubject());
+      query.executeUpdate();
+
+      ResultSet rs = query.getGeneratedKeys();
+      if (rs.next()) {
+        newPage = buildPage(rs);
+      }
+
+      query.close();
+      connection.commit();
+      return newPage;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  /**
+   * Gets all pages.
+   *
+   * @return list of pages
    */
   public List<Page> getAll() {
     List<Page> pages = new ArrayList<>();
@@ -57,8 +124,7 @@ public class PageDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from page");
       while (rs.next()) {
-        pages.add(
-            new Page().setId(UUID.fromString(rs.getString("id"))).setLink(rs.getString("link")));
+        pages.add(buildPage(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -77,7 +143,11 @@ public class PageDao {
       PreparedStatement query = connection.prepareStatement("select * from page where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildPage(rs);
+      if (rs.next()) {
+        return buildPage(rs);
+      } else {
+        return null;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -99,12 +169,13 @@ public class PageDao {
     }
   }
 
-  /** Delete all accounts. */
+  /** Delete all pages. */
   @SuppressWarnings("SqlWithoutWhere")
   public void deleteAll() {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from page");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -112,10 +183,9 @@ public class PageDao {
   }
 
   private Page buildPage(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Page().setId(UUID.fromString(rs.getString("id"))).setLink(rs.getString("link"));
-    } else {
-      return null;
-    }
+    return new Page()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setLink(rs.getString("priority_name"))
+        .setSubject((UUID) rs.getObject("subject_id"));
   }
 }
