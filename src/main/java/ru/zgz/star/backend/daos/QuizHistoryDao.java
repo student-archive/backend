@@ -163,7 +163,7 @@ public class QuizHistoryDao {
     return new QuizHistory()
         .setId(UUID.fromString(rs.getString("id")))
         .setQuestion(UUID.fromString(rs.getString("question")))
-        .setSelectedVariant(UUID.fromString(rs.getString("id")))
-        .setUser(UUID.fromString(rs.getString("id")));
+        .setSelectedVariant(UUID.fromString(rs.getString("selected_variant_id")))
+        .setUser(UUID.fromString(rs.getString("user_id")));
   }
 }
