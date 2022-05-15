@@ -151,3 +151,4 @@ build
 .env
 !gradle/wrapper/gradle-wrapper.jar
 !tools/gjf.jar
+/.idea/backend.iml
