@@ -155,6 +155,27 @@ public class PageDao {
   }
 
   /**
+   * Gets exact pages by id.
+   *
+   * @param id id of subject
+   * @return exact list of page
+   */
+  public List<Page> getBySubjectId(String id) {
+    List<Page> pages = new ArrayList<>();
+    try {
+      PreparedStatement query = connection.prepareStatement("select * from page where subject_id=?");
+      query.setObject(1, UUID.fromString(id));
+      ResultSet rs = query.executeQuery();
+        while (rs.next()) {
+          pages.add(buildPage(rs));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      return pages;
+    }
+
+  /**
    * Delete exact page by id.
    *
    * @param id id of page
