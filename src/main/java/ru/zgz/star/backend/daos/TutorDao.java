@@ -47,9 +47,9 @@ public class TutorDao {
       query.setObject(2, tutor.getLastName());
       query.setObject(3, tutor.getPatronymic());
       query.setObject(4, tutor.getEmail());
-      query.setObject(4, tutor.getLink());
-      query.setObject(4, tutor.getPhone());
-      query.setObject(4, tutor.isIsWorking());
+      query.setObject(5, tutor.getLink());
+      query.setObject(6, tutor.getPhone());
+      query.setObject(7, tutor.isIsWorking());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
