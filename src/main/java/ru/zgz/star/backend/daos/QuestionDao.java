@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.EventPriority;
 import ru.zgz.star.backend.models.Question;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -63,7 +62,8 @@ public class QuestionDao {
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "update question set question_text=?, quiz_id=?, correct_answers_amount=?, total_answers_amount=?  where id=?",
+              "update question set question_text=?, quiz_id=?, correct_answers_amount=?,"
+                  + " total_answers_amount=?  where id=?",
               Statement.RETURN_GENERATED_KEYS);
       query.setObject(1, eventPriority.getQuestionText());
       query.setObject(2, eventPriority.getQuiz());
@@ -99,7 +99,8 @@ public class QuestionDao {
       Question newQuestion = new Question();
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into question(question_text, quiz_id, correct_answers_amount, total_answers_amount) values (?, ?, ?, ?);",
+              "insert into question(question_text, quiz_id, correct_answers_amount,"
+                  + " total_answers_amount) values (?, ?, ?, ?);",
               Statement.RETURN_GENERATED_KEYS);
       query.setString(1, question.getQuestionText());
       query.setObject(2, question.getQuiz());
@@ -148,8 +149,7 @@ public class QuestionDao {
    */
   public Question getById(String id) {
     try {
-      PreparedStatement query =
-          connection.prepareStatement("select * from question where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from question where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
