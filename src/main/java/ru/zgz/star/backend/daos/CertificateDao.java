@@ -48,7 +48,7 @@ public class CertificateDao {
       query.setObject(2, certificate.getCertificateDescription());
       query.setObject(3, certificate.getCertificateName());
       query.setObject(4, certificate.getOffice());
-      query.setObject(4, certificate.getId());
+      query.setObject(5, certificate.getId());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
@@ -74,7 +74,7 @@ public class CertificateDao {
    */
   public Certificate add(Certificate certificate) {
     try {
-      Certificate newCertificate = new Certificate();
+      Certificate newCertificate;
       PreparedStatement query =
           connection.prepareStatement(
               "insert into certificate(certificate_name, certificate_description, office,"
@@ -132,7 +132,11 @@ public class CertificateDao {
       PreparedStatement query = connection.prepareStatement("select * from certificate where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildCertificate(rs);
+      if (rs.next()) {
+        return buildCertificate(rs);
+      } else {
+        throw new ModelBuildException("Can't find certificate");
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
