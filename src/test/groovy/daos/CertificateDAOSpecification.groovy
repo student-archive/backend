@@ -86,6 +86,18 @@ class CertificateDAOSpecification extends Specification {
         fetched.size() == 0
     }
 
+    def "Delete all certificates"() {
+        given:
+        def dao = new CertificateDao()
+
+        when:
+        dao.deleteAll()
+        def fetched = dao.getAll()
+
+        then:
+        fetched.size() == 0
+    }
+
     def cleanupSpec() {
         def dao = new CertificateDao()
         dao.deleteAll()
