@@ -207,7 +207,7 @@ public class PageDao {
   private Page buildPage(ResultSet rs) throws SQLException {
     return new Page()
         .setId(UUID.fromString(rs.getString("id")))
-        .setLink(rs.getString("priority_name"))
+        .setLink(rs.getString("link"))
         .setSubject((UUID) rs.getObject("subject_id"));
   }
 }
