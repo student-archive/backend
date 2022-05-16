@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.InviteCode;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -134,12 +135,13 @@ public class InviteCodeDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildInviteCode(rs);
+      } else {
+        throw new ModelBuildException("Can't create invite code");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -156,12 +158,13 @@ public class InviteCodeDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildInviteCode(rs);
+      } else {
+        throw new ModelBuildException("Can't create invite code");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**

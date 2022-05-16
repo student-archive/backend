@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Quiz;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -127,6 +128,8 @@ public class QuizDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newQuiz = buildQuiz(rs);
+      } else {
+        throw new ModelBuildException("Can't create quiz");
       }
 
       query.close();
@@ -171,7 +174,7 @@ public class QuizDao {
       if (rs.next()) {
         return buildQuiz(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create quiz");
       }
     } catch (SQLException e) {
       e.printStackTrace();

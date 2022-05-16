@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.EventPriority;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -105,6 +106,8 @@ public class EventPriorityDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newEventPriority = buildEventPriority(rs);
+      } else {
+        throw new ModelBuildException("Can't create account");
       }
 
       query.close();
@@ -150,7 +153,7 @@ public class EventPriorityDao {
       if (rs.next()) {
         return buildEventPriority(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create event priority");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -167,6 +170,7 @@ public class EventPriorityDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from event_priority where id=?");
       st.setObject(1, id);
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

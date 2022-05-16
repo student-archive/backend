@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Employee;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -88,7 +89,7 @@ public class EmployeeDao {
       query.setObject(3, employee.getPatronymic());
       query.setObject(4, employee.getEmail());
       query.setObject(5, employee.getPhone());
-      query.setObject(5, employee.getLink());
+      query.setObject(6, employee.getLink());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
@@ -138,12 +139,13 @@ public class EmployeeDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildEmployee(rs);
+      } else {
+        throw new ModelBuildException("Can't create employee");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -155,6 +157,8 @@ public class EmployeeDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from employee where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

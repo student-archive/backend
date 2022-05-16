@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Subject;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -85,6 +86,8 @@ public class SubjectDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newSubject = buildSubject(rs);
+      } else {
+        throw new ModelBuildException("Can't create subject");
       }
 
       query.close();
@@ -130,12 +133,13 @@ public class SubjectDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildSubject(rs);
+      } else {
+        throw new ModelBuildException("Can't create subject");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -160,6 +164,7 @@ public class SubjectDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from subject");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

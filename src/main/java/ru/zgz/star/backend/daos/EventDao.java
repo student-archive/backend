@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Event;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -108,6 +109,8 @@ public class EventDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newEvent = buildEvent(rs);
+      } else {
+        throw new ModelBuildException("Can't create account");
       }
 
       query.close();
@@ -152,12 +155,13 @@ public class EventDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildEvent(rs);
+      } else {
+        throw new ModelBuildException("Can't create event");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -224,6 +228,7 @@ public class EventDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from event");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

@@ -42,10 +42,11 @@ public class App {
       String basePath = (String) cls.getField("BASE_URL").get(cls);
       for (Method method : cls.getDeclaredMethods()) {
         logger.info(
-            "    Registering endpoint: {}.{} by path {}",
+            "    Registering endpoint: {}.{} by path {} as {}",
             cls.getSimpleName(),
             method.getName(),
-            basePath);
+            basePath,
+            method.getName().toUpperCase());
         if (method.getName().startsWith("get")) {
           get(
               basePath,

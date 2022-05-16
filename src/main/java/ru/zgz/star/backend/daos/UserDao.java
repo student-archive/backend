@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.User;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -116,6 +117,8 @@ public class UserDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newUser = buildUser(rs);
+      } else {
+        throw new ModelBuildException("Can't create user");
       }
 
       query.close();
@@ -169,12 +172,13 @@ public class UserDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildUser(rs);
+      } else {
+        throw new ModelBuildException("Can't create user");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -186,6 +190,8 @@ public class UserDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from \"user\" where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

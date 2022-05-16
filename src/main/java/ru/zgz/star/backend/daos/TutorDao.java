@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Tutor;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -94,6 +95,8 @@ public class TutorDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newTutor = buildTutor(rs);
+      } else {
+        throw new ModelBuildException("Can't create tutor");
       }
 
       query.close();
@@ -139,12 +142,13 @@ public class TutorDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildTutor(rs);
+      } else {
+        throw new ModelBuildException("Can't create tutor");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -156,6 +160,8 @@ public class TutorDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from tutor where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.University;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -81,6 +82,8 @@ public class UniversityDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newUniversity = buildUniversity(rs);
+      } else {
+        throw new ModelBuildException("Can't create university");
       }
 
       query.close();
@@ -126,12 +129,13 @@ public class UniversityDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildUniversity(rs);
+      } else {
+        throw new ModelBuildException("Can't create university");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**

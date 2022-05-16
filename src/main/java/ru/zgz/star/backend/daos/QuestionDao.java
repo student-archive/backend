@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Question;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -111,6 +112,8 @@ public class QuestionDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newQuestion = buildQuestion(rs);
+      } else {
+        throw new ModelBuildException("Can't create question");
       }
 
       query.close();
@@ -155,7 +158,7 @@ public class QuestionDao {
       if (rs.next()) {
         return buildQuestion(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create page");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -194,6 +197,8 @@ public class QuestionDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from question where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

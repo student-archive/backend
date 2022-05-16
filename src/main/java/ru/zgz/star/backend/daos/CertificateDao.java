@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Certificate;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -47,7 +48,7 @@ public class CertificateDao {
       query.setObject(2, certificate.getCertificateDescription());
       query.setObject(3, certificate.getCertificateName());
       query.setObject(4, certificate.getOffice());
-      query.setObject(4, certificate.getId());
+      query.setObject(5, certificate.getId());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
@@ -73,7 +74,7 @@ public class CertificateDao {
    */
   public Certificate add(Certificate certificate) {
     try {
-      Certificate newCertificate = new Certificate();
+      Certificate newCertificate;
       PreparedStatement query =
           connection.prepareStatement(
               "insert into certificate(certificate_name, certificate_description, office,"
@@ -87,6 +88,8 @@ public class CertificateDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newCertificate = buildCertificate(rs);
+      } else {
+        throw new ModelBuildException("Can't create certificate");
       }
 
       query.close();
@@ -110,13 +113,7 @@ public class CertificateDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from certificate");
       while (rs.next()) {
-        certificates.add(
-            new Certificate()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setCertificateName(rs.getString("certificate_name"))
-                .setCertificateDescription(rs.getString("certificate_description"))
-                .setEmployee(UUID.fromString(rs.getString("employee_id")))
-                .setOffice(rs.getString("office")));
+        certificates.add(buildCertificate(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -135,7 +132,11 @@ public class CertificateDao {
       PreparedStatement query = connection.prepareStatement("select * from certificate where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
-      return buildCertificate(rs);
+      if (rs.next()) {
+        return buildCertificate(rs);
+      } else {
+        throw new ModelBuildException("Can't find certificate");
+      }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
@@ -151,6 +152,8 @@ public class CertificateDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from certificate where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -163,6 +166,7 @@ public class CertificateDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from certificate");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -170,15 +174,11 @@ public class CertificateDao {
   }
 
   private Certificate buildCertificate(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Certificate()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setCertificateName(rs.getString("certificate_name"))
-          .setCertificateDescription(rs.getString("certificate_description"))
-          .setEmployee(UUID.fromString(rs.getString("employee_id")))
-          .setOffice(rs.getString("office"));
-    } else {
-      return null;
-    }
+    return new Certificate()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setCertificateName(rs.getString("certificate_name"))
+        .setCertificateDescription(rs.getString("certificate_description"))
+        .setEmployee(UUID.fromString(rs.getString("employee_id")))
+        .setOffice(rs.getString("office"));
   }
 }

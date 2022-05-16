@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.QuizHistory;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -81,6 +82,8 @@ public class QuizHistoryDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newQuizHistory = buildQuizHistory(rs);
+      } else {
+        throw new ModelBuildException("Can't create quiz history");
       }
       query.close();
       connection.commit();
@@ -124,12 +127,13 @@ public class QuizHistoryDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildQuizHistory(rs);
+      } else {
+        throw new ModelBuildException("Can't create account");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -141,6 +145,8 @@ public class QuizHistoryDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from quiz_history where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

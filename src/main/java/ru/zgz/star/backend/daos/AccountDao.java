@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -94,7 +95,7 @@ public class AccountDao {
    */
   public Account add(Account account) {
     try {
-      Account newAccount = new Account();
+      Account newAccount;
       PreparedStatement query =
           connection.prepareStatement(
               "insert into account(email, password_hash, last_active_date) values (?, ?, ?);",
@@ -107,6 +108,8 @@ public class AccountDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newAccount = buildAccount(rs);
+      } else {
+        throw new ModelBuildException("Can't create account");
       }
 
       query.close();
@@ -151,7 +154,7 @@ public class AccountDao {
       if (rs.next()) {
         return buildAccount(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create account");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -173,7 +176,7 @@ public class AccountDao {
       if (rs.next()) {
         return buildAccount(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create account");
       }
     } catch (SQLException e) {
       e.printStackTrace();

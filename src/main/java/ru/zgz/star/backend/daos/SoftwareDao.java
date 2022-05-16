@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Software;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -83,6 +84,8 @@ public class SoftwareDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newSoftware = buildSoftware(rs);
+      } else {
+        throw new ModelBuildException("Can't create software");
       }
 
       query.close();
@@ -127,7 +130,7 @@ public class SoftwareDao {
       if (rs.next()) {
         return buildSoftware(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create software");
       }
     } catch (SQLException e) {
       e.printStackTrace();

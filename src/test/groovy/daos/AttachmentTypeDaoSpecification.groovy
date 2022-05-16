@@ -1,12 +1,7 @@
 package daos
 
-import com.github.javafaker.Faker
-import ru.zgz.star.backend.daos.AccountDao
 import ru.zgz.star.backend.daos.AttachmentTypeDao
-import ru.zgz.star.backend.models.Account
 import ru.zgz.star.backend.models.AttachmentType
-import spock.lang.Ignore
-import spock.lang.Shared
 import spock.lang.Specification
 
 class AttachmentTypeDaoSpecification extends Specification {
@@ -16,7 +11,6 @@ class AttachmentTypeDaoSpecification extends Specification {
     dao.deleteAll()
   }
 
-  @Ignore
   def "Create new attachment type in database and verify it"() {
     given: "Creating data access object"
       AttachmentTypeDao dao = new AttachmentTypeDao()
@@ -30,7 +24,6 @@ class AttachmentTypeDaoSpecification extends Specification {
       fetched.typeName == added.typeName
   }
 
-  @Ignore
   def "Select from attachment_type table should return 1 row"() {
     given: "Creating data access object"
       AttachmentTypeDao dao = new AttachmentTypeDao()
