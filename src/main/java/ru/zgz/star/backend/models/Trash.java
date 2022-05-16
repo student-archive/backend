@@ -13,7 +13,7 @@ public class Trash {
   private UUID id;
   private UUID deletedId;
   private Integer deletingDate;
-  private Group group;
+  private UUID group;
 
   /** Instantiates a new Trash. */
   public Trash() {}
@@ -25,7 +25,7 @@ public class Trash {
    * @param deletingDate the deleting date
    * @param group the group
    */
-  public Trash(UUID deletedId, Integer deletingDate, Group group) {
+  public Trash(UUID deletedId, Integer deletingDate, UUID group) {
     this.deletedId = deletedId;
     this.deletingDate = deletingDate;
     this.group = group;
@@ -97,7 +97,7 @@ public class Trash {
    * @param group the group
    * @return the group
    */
-  public Trash setGroup(Group group) {
+  public Trash setGroup(UUID group) {
     this.group = group;
     return this;
   }
@@ -107,7 +107,7 @@ public class Trash {
    *
    * @return the group
    */
-  public Group getGroup() {
+  public UUID getGroup() {
     return group;
   }
 }
