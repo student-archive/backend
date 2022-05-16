@@ -182,6 +182,28 @@ public class EventDao {
     }
 
   }
+  /**
+   * Gets exact event by user.
+   *
+   * @param id id of user
+   * @return list of events
+   */
+  public List<Event> getByUser(String id) {
+    try {
+      List<Event> events = new ArrayList<>();
+      PreparedStatement query = connection.prepareStatement("select * from event where user_id=?");
+      query.setObject(1, UUID.fromString(id));
+      ResultSet rs = query.executeQuery();
+      while (rs.next()) {
+        events.add(buildEvent(rs));
+      }
+      return events;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+
+  }
 
 
   /**
