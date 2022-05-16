@@ -30,6 +30,27 @@ public class UserDao {
   }
 
   /**
+   * Checks if user exists.
+   *
+   * @param id id of user
+   * @return true if user exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from \"user\" where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+  /**
    * Updates user.
    *
    * @param user updated user
