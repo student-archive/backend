@@ -33,12 +33,17 @@ public class AccountsRouter {
    * @return JSON representation of the created account
    */
   public static String post(Request request, Response response) {
-    response.type("application/json");
-    response.status(201);
-    AccountDao dao = new AccountDao();
-    Account account = new Gson().fromJson(request.body(), Account.class);
-    dao.add(account);
-    return new Gson().toJson(account);
+    try {
+      response.type("application/json");
+      response.status(201);
+      AccountDao dao = new AccountDao();
+      Account account = new Gson().fromJson(request.body(), Account.class);
+      dao.add(account);
+      return new Gson().toJson(account);
+    } catch (Exception e) {
+      response.status(500);
+      throw e;
+    }
   }
 
   /**

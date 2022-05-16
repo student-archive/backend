@@ -34,12 +34,17 @@ public class InviteCodesRouter {
    * @return JSON representation of the created invite code
    */
   public static String post(Request request, Response response) {
-    response.type("application/json");
-    response.status(201);
-    InviteCodeDao inviteCodeDao = new InviteCodeDao();
-    InviteCode inviteCode = new Gson().fromJson(request.body(), InviteCode.class);
-    inviteCodeDao.add(inviteCode);
-    return new Gson().toJson(inviteCode);
+    try {
+      response.type("application/json");
+      response.status(201);
+      InviteCodeDao inviteCodeDao = new InviteCodeDao();
+      InviteCode inviteCode = new Gson().fromJson(request.body(), InviteCode.class);
+      inviteCodeDao.add(inviteCode);
+      return new Gson().toJson(inviteCode);
+    } catch (Exception e) {
+      response.status(500);
+      throw e;
+    }
   }
 
   /**

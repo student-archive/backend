@@ -96,11 +96,16 @@ public class EventsByUserRouter {
    * @return JSON representation of 405 error
    */
   public static String post(Request request, Response response) {
-    response.type("application/json");
-    response.status(201);
-    EventDao dao = new EventDao();
-    Event event = new Gson().fromJson(request.body(), Event.class);
-    dao.add(event);
-    return new Gson().toJson(event);
+    try {
+      response.type("application/json");
+      response.status(201);
+      EventDao dao = new EventDao();
+      Event event = new Gson().fromJson(request.body(), Event.class);
+      dao.add(event);
+      return new Gson().toJson(event);
+    } catch (Exception e) {
+      response.status(500);
+      throw e;
+    }
   }
 }

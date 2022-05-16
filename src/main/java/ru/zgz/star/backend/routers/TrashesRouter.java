@@ -33,12 +33,17 @@ public class TrashesRouter {
    * @return JSON representation of the created account
    */
   public static String post(Request request, Response response) {
-    response.type("application/json");
-    response.status(201);
-    TrashDao dao = new TrashDao();
-    Trash trash = new Gson().fromJson(request.body(), Trash.class);
-    dao.add(trash);
-    return new Gson().toJson(trash);
+    try {
+      response.type("application/json");
+      response.status(201);
+      TrashDao dao = new TrashDao();
+      Trash trash = new Gson().fromJson(request.body(), Trash.class);
+      dao.add(trash);
+      return new Gson().toJson(trash);
+    } catch (Exception e) {
+      response.status(500);
+      throw e;
+    }
   }
 
   /**

@@ -33,12 +33,17 @@ public class QuizzesRouter {
    * @return JSON representation of the created /quizzes/:subjectId
    */
   public static String post(Request request, Response response) {
-    response.type("application/json");
-    response.status(201);
-    QuizDao dao = new QuizDao();
-    Quiz quiz = new Gson().fromJson(request.body(), Quiz.class);
-    dao.add(quiz);
-    return new Gson().toJson(quiz);
+    try {
+      response.type("application/json");
+      response.status(201);
+      QuizDao dao = new QuizDao();
+      Quiz quiz = new Gson().fromJson(request.body(), Quiz.class);
+      dao.add(quiz);
+      return new Gson().toJson(quiz);
+    } catch (Exception e) {
+      response.status(500);
+      throw e;
+    }
   }
 
   /**

@@ -33,12 +33,17 @@ public class UsersRouter {
    * @return JSON representation of the created account
    */
   public static String post(Request request, Response response) {
-    response.type("application/json");
-    response.status(201);
-    UserDao dao = new UserDao();
-    User user = new Gson().fromJson(request.body(), User.class);
-    dao.add(user);
-    return new Gson().toJson(user);
+    try {
+      response.type("application/json");
+      response.status(201);
+      UserDao dao = new UserDao();
+      User user = new Gson().fromJson(request.body(), User.class);
+      dao.add(user);
+      return new Gson().toJson(user);
+    } catch (Exception e) {
+      response.status(500);
+      throw e;
+    }
   }
 
   /**
