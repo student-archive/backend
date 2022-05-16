@@ -74,6 +74,18 @@ class CertificateDAOSpecification extends Specification {
         fetched.getId() == certificateId
     }
 
+    def "Delete certificate by id"() {
+        given:
+        def dao = new CertificateDao()
+
+        when:
+        dao.deleteById((UUID) certificateId)
+        def fetched = dao.getAll()
+
+        then:
+        fetched.size() == 0
+    }
+
     def cleanupSpec() {
         def dao = new CertificateDao()
         dao.deleteAll()
