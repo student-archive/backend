@@ -1,10 +1,9 @@
 package ru.zgz.star.backend.routers;
 
 import com.google.gson.Gson;
-import ru.zgz.star.backend.daos.AccountDao;
 import ru.zgz.star.backend.daos.QuestionDao;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
-import ru.zgz.star.backend.models.Account;
+import ru.zgz.star.backend.models.Question;
 import spark.Request;
 import spark.Response;
 
@@ -37,10 +36,10 @@ public class QuestionsByQuizRouter {
     try {
       response.type("application/json");
       response.status(201);
-      AccountDao dao = new AccountDao();
-      Account account = new Gson().fromJson(request.body(), Account.class);
-      dao.add(account);
-      return new Gson().toJson(account);
+      QuestionDao dao = new QuestionDao();
+      Question quiz = new Gson().fromJson(request.body(), Question.class);
+      dao.add(quiz);
+      return new Gson().toJson(quiz);
     } catch (Exception e) {
       response.status(500);
       throw e;
