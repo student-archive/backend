@@ -88,7 +88,7 @@ public class EmployeeDao {
       query.setObject(3, employee.getPatronymic());
       query.setObject(4, employee.getEmail());
       query.setObject(5, employee.getPhone());
-      query.setObject(5, employee.getLink());
+      query.setObject(6, employee.getLink());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
