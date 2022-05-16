@@ -162,6 +162,6 @@ public class AttachmentTypeDao {
   private AttachmentType buildAttachmentType(ResultSet rs) throws SQLException {
     return new AttachmentType()
         .setId(UUID.fromString(rs.getString("id")))
-        .setTypeName(rs.getString("typeName"));
+        .setTypeName(rs.getString("type_name"));
   }
 }
