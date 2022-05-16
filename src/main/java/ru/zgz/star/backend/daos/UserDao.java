@@ -207,7 +207,7 @@ public class UserDao {
   private User buildUser(ResultSet rs) throws SQLException {
     return new User()
         .setId(UUID.fromString(rs.getString("id")))
-        .setFirstName(rs.getString("priority_name"))
+        .setFirstName(rs.getString("first_name"))
         .setLastName(rs.getString("last_name"))
         .setAvatarLink(rs.getString("avatar_link"))
         .setRole((UUID) rs.getObject("role_id"))
