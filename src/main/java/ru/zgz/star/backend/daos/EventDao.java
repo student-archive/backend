@@ -180,7 +180,6 @@ public class EventDao {
       e.printStackTrace();
       return null;
     }
-
   }
   /**
    * Gets exact event by user.
@@ -202,9 +201,7 @@ public class EventDao {
       e.printStackTrace();
       return null;
     }
-
   }
-
 
   /**
    * Delete exact event by id.

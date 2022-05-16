@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.Event;
 import ru.zgz.star.backend.models.Quiz;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -29,10 +28,12 @@ public class QuizDao {
   public QuizDao(Connection connection) {
     this.connection = connection;
   }
+
   public List<Quiz> getBySubject(String id) {
     try {
       List<Quiz> quizzes = new ArrayList<>();
-      PreparedStatement query = connection.prepareStatement("select * from quiz where subject_id=?");
+      PreparedStatement query =
+          connection.prepareStatement("select * from quiz where subject_id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
@@ -43,7 +44,6 @@ public class QuizDao {
       e.printStackTrace();
       return null;
     }
-
   }
 
   /**

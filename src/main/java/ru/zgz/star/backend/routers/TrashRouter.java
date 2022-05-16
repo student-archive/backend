@@ -4,15 +4,12 @@ import com.google.gson.Gson;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.zgz.star.backend.daos.QuestionDao;
 import ru.zgz.star.backend.daos.TrashDao;
 import ru.zgz.star.backend.exceptions.http.BadRequestException;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.exceptions.http.ResourceNotFoundException;
-import ru.zgz.star.backend.models.Question;
 import ru.zgz.star.backend.models.Trash;
 import ru.zgz.star.backend.responses.DeletedResponse;
-import ru.zgz.star.backend.util.ClassUtil;
 import spark.Request;
 import spark.Response;
 
@@ -88,7 +85,6 @@ public class TrashRouter {
     response.status(405);
     throw new MethodNotAllowedException("Method PATCH is not allowed for this resource");
   }
-
 
   /**
    * Handles PUT request to /trash/:id.

@@ -6,13 +6,11 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.zgz.star.backend.daos.EventDao;
-import ru.zgz.star.backend.daos.GroupDao;
 import ru.zgz.star.backend.daos.UserDao;
 import ru.zgz.star.backend.exceptions.http.BadRequestException;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.exceptions.http.ResourceNotFoundException;
 import ru.zgz.star.backend.models.Event;
-import ru.zgz.star.backend.models.User;
 import spark.Request;
 import spark.Response;
 

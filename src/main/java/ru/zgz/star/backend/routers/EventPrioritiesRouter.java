@@ -1,11 +1,8 @@
 package ru.zgz.star.backend.routers;
 
 import com.google.gson.Gson;
-import ru.zgz.star.backend.daos.AccountDao;
 import ru.zgz.star.backend.daos.EventPriorityDao;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
-import ru.zgz.star.backend.models.Account;
-import ru.zgz.star.backend.models.EventPriority;
 import spark.Request;
 import spark.Response;
 
