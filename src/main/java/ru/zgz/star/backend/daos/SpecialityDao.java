@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Speciality;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -81,6 +82,8 @@ public class SpecialityDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newSpeciality = buildSpeciality(rs);
+      } else {
+        throw new ModelBuildException("Can't create speciality");
       }
 
       query.close();
@@ -126,12 +129,13 @@ public class SpecialityDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildSpeciality(rs);
+      } else {
+        throw new ModelBuildException("Can't create account");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -155,6 +159,7 @@ public class SpecialityDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from speciality");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

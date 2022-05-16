@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Sex;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -78,6 +79,8 @@ public class SexDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newSex = buildSex(rs);
+      } else {
+        throw new ModelBuildException("Can't create sex");
       }
 
       query.close();
@@ -122,7 +125,7 @@ public class SexDao {
       if (rs.next()) {
         return buildSex(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create sex");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -139,6 +142,8 @@ public class SexDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from sex where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

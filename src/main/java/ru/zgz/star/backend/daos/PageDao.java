@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Page;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -102,6 +103,8 @@ public class PageDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newPage = buildPage(rs);
+      } else {
+        throw new ModelBuildException("Can't create page");
       }
 
       query.close();
@@ -146,7 +149,7 @@ public class PageDao {
       if (rs.next()) {
         return buildPage(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create page");
       }
     } catch (SQLException e) {
       e.printStackTrace();

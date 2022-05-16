@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.EmployeePosition;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -79,6 +80,8 @@ public class EmployeePositionDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newEmployeePosition = buildEmployeePosition(rs);
+      } else {
+        throw new ModelBuildException("Can't create employee position");
       }
 
       query.close();
@@ -127,12 +130,13 @@ public class EmployeePositionDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildEmployeePosition(rs);
+      } else {
+        throw new ModelBuildException("Can't create account");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -145,6 +149,8 @@ public class EmployeePositionDao {
       PreparedStatement st =
           connection.prepareStatement("delete from employee_position where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

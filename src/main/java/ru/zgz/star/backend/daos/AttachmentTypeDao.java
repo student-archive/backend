@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.AttachmentType;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -67,7 +68,7 @@ public class AttachmentTypeDao {
    */
   public AttachmentType add(AttachmentType attachmentType) {
     try {
-      AttachmentType newAttachmentType = new AttachmentType();
+      AttachmentType newAttachmentType;
       PreparedStatement query =
           connection.prepareStatement(
               "insert into attachment_type(type_name) values (?);",
@@ -77,6 +78,8 @@ public class AttachmentTypeDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newAttachmentType = buildAttachmentType(rs);
+      } else {
+        throw new ModelBuildException("Can't create attachment type");
       }
       query.close();
       connection.commit();
@@ -120,12 +123,13 @@ public class AttachmentTypeDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildAttachmentType(rs);
+      } else {
+        throw new ModelBuildException("Can't create attachment type");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**

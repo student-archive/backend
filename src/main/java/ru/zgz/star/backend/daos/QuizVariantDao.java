@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.QuizVariant;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -81,6 +82,8 @@ public class QuizVariantDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newQuizVariant = buildQuizVariant(rs);
+      } else {
+        throw new ModelBuildException("Can't create quiz variant");
       }
       query.close();
       connection.commit();
@@ -129,12 +132,13 @@ public class QuizVariantDao {
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
         return buildQuizVariant(rs);
+      } else {
+        throw new ModelBuildException("Can't create account");
       }
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
-    return null;
   }
 
   /**
@@ -146,6 +150,7 @@ public class QuizVariantDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from quiz_variant where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Certificate;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -87,6 +88,8 @@ public class CertificateDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newCertificate = buildCertificate(rs);
+      } else {
+        throw new ModelBuildException("Can't create certificate");
       }
 
       query.close();
@@ -110,13 +113,7 @@ public class CertificateDao {
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery("select * from certificate");
       while (rs.next()) {
-        certificates.add(
-            new Certificate()
-                .setId(UUID.fromString(rs.getString("id")))
-                .setCertificateName(rs.getString("certificate_name"))
-                .setCertificateDescription(rs.getString("certificate_description"))
-                .setEmployee(UUID.fromString(rs.getString("employee_id")))
-                .setOffice(rs.getString("office")));
+        certificates.add(buildCertificate(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -151,6 +148,8 @@ public class CertificateDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from certificate where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -163,6 +162,7 @@ public class CertificateDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from certificate");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

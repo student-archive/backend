@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Role;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -81,6 +82,8 @@ public class RoleDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newRole = buildRole(rs);
+      } else {
+        throw new ModelBuildException("Can't create role");
       }
 
       query.close();
@@ -124,7 +127,7 @@ public class RoleDao {
       if (rs.next()) {
         return buildRole(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create role");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -153,6 +156,7 @@ public class RoleDao {
     try {
       Statement st = connection.createStatement();
       st.executeUpdate("delete from role");
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Group;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -107,6 +108,8 @@ public class GroupDao {
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
         newGroup = buildGroup(rs);
+      } else {
+        throw new ModelBuildException("Can't create account");
       }
 
       query.close();
@@ -151,7 +154,7 @@ public class GroupDao {
       if (rs.next()) {
         return buildGroup(rs);
       } else {
-        return null;
+        throw new ModelBuildException("Can't create account");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -168,6 +171,8 @@ public class GroupDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from \"group\" where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
+      st.close();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
