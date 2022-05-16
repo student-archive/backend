@@ -30,6 +30,27 @@ public class EventDao {
   }
 
   /**
+   * Checks if event exists.
+   *
+   * @param id id of event
+   * @return true if event exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from event where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+  /**
    * Updates event.
    *
    * @param event updated event
@@ -137,6 +158,49 @@ public class EventDao {
       return null;
     }
     return null;
+  }
+
+  /**
+   * Gets exact event by group.
+   *
+   * @param id id of group
+   * @return list of events
+   */
+  public List<Event> getByGroup(String id) {
+    try {
+      List<Event> events = new ArrayList<>();
+      PreparedStatement query = connection.prepareStatement("select * from event where group_id=?");
+      query.setObject(1, UUID.fromString(id));
+      ResultSet rs = query.executeQuery();
+      while (rs.next()) {
+        events.add(buildEvent(rs));
+      }
+      return events;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+  /**
+   * Gets exact event by user.
+   *
+   * @param id id of user
+   * @return list of events
+   */
+  public List<Event> getByUser(String id) {
+    try {
+      List<Event> events = new ArrayList<>();
+      PreparedStatement query = connection.prepareStatement("select * from event where user_id=?");
+      query.setObject(1, UUID.fromString(id));
+      ResultSet rs = query.executeQuery();
+      while (rs.next()) {
+        events.add(buildEvent(rs));
+      }
+      return events;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   /**

@@ -8,37 +8,37 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.models.Group;
+import ru.zgz.star.backend.models.Trash;
 import ru.zgz.star.backend.util.DbUtil;
 
-/** DAO for group table. */
-public class GroupDao {
+/** DAO for trash table. */
+public class TrashDao {
   private final Connection connection;
 
   /** Instantiates a new Group dao. */
-  public GroupDao() {
+  public TrashDao() {
     this.connection = DbUtil.getConnection();
   }
 
   /**
-   * Instantiates a new Group dao.
+   * Instantiates a new Trash dao.
    *
    * @param connection the connection
    */
-  public GroupDao(Connection connection) {
+  public TrashDao(Connection connection) {
     this.connection = connection;
   }
 
   /**
-   * Checks if group exists.
+   * Checks if trash exists.
    *
-   * @param id id of group
-   * @return true if group exists
+   * @param id id of trash
+   * @return true if trash exists
    */
   public Boolean findById(UUID id) {
     try {
       PreparedStatement query =
-          connection.prepareStatement("select count(*) from \"group\" where id=?");
+          connection.prepareStatement("select count(*) from trash where id=?");
       query.setObject(1, id);
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
@@ -52,33 +52,33 @@ public class GroupDao {
   }
 
   /**
-   * Updates group.
+   * Updates trash.
    *
-   * @param group updated group
-   * @return updated group
+   * @param trash updated trash
+   * @return updated trash
    */
-  public List<Group> update(Group group) {
-    List<Group> groups = new ArrayList<>();
+  public List<Trash> update(Trash trash) {
+    List<Trash> trashes = new ArrayList<>();
     try {
       PreparedStatement query =
           connection.prepareStatement(
-              "update \"group\" set group_name=?, university_id=?, speciality_id=?  where id=?",
+              "update trash set deleted_id=?, deleted_date=?, group_id=?  where id=?",
               Statement.RETURN_GENERATED_KEYS);
-      query.setObject(1, group.getGroupName());
-      query.setObject(2, group.getUniversity());
-      query.setObject(3, group.getSpeciality());
-      query.setObject(4, group.getId());
+      query.setObject(1, trash.getDeletedId());
+      query.setObject(2, trash.getDeletingDate());
+      query.setObject(3, trash.getGroup());
+      query.setObject(4, trash.getId());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
       while (rs.next()) {
-        groups.add(buildGroup(rs));
+        trashes.add(buildTrash(rs));
       }
 
       query.close();
       connection.commit();
 
-      return groups;
+      return trashes;
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -87,31 +87,31 @@ public class GroupDao {
   }
 
   /**
-   * Create new group.
+   * Create new trash.
    *
-   * @param group the group
-   * @return created group
+   * @param trash the trash
+   * @return created trash
    */
-  public Group add(Group group) {
+  public Trash add(Trash trash) {
     try {
-      Group newGroup = new Group();
+      Trash newTrash = new Trash();
       PreparedStatement query =
           connection.prepareStatement(
-              "insert into \"group\"(group_name, university_id, speciality_id) values (?, ?, ?);",
+              "insert into trash (deleted_id, deleted_date, group_id) values (?, ?, ?);",
               Statement.RETURN_GENERATED_KEYS);
-      query.setString(1, group.getGroupName());
-      query.setObject(2, group.getUniversity());
-      query.setObject(3, group.getSpeciality());
+      query.setObject(1, trash.getDeletedId());
+      query.setObject(2, trash.getDeletingDate());
+      query.setObject(3, trash.getGroup());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
       if (rs.next()) {
-        newGroup = buildGroup(rs);
+        newTrash = buildTrash(rs);
       }
 
       query.close();
       connection.commit();
-      return newGroup;
+      return newTrash;
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -119,37 +119,37 @@ public class GroupDao {
   }
 
   /**
-   * Gets all group.
+   * Gets all trash.
    *
-   * @return list of groups
+   * @return list of trashes
    */
-  public List<Group> getAll() {
-    List<Group> groups = new ArrayList<>();
+  public List<Trash> getAll() {
+    List<Trash> trashes = new ArrayList<>();
     try {
       Statement st = connection.createStatement();
-      ResultSet rs = st.executeQuery("select * from \"group\"");
+      ResultSet rs = st.executeQuery("select * from trash");
       while (rs.next()) {
-        groups.add(buildGroup(rs));
+        trashes.add(buildTrash(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return groups;
+    return trashes;
   }
 
   /**
-   * Gets exact group by id.
+   * Gets exact trash by id.
    *
-   * @param id id of group
-   * @return exact group
+   * @param id id of trash
+   * @return exact trash
    */
-  public Group getById(String id) {
+  public Trash getById(String id) {
     try {
-      PreparedStatement query = connection.prepareStatement("select * from \"group\" where id=?");
+      PreparedStatement query = connection.prepareStatement("select * from trash where id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       if (rs.next()) {
-        return buildGroup(rs);
+        return buildTrash(rs);
       } else {
         return null;
       }
@@ -160,13 +160,13 @@ public class GroupDao {
   }
 
   /**
-   * Delete exact group by id.
+   * Delete exact trash by id.
    *
-   * @param id id of group
+   * @param id id of trash
    */
   public void deleteById(UUID id) {
     try {
-      PreparedStatement st = connection.prepareStatement("delete from \"group\" where id=?");
+      PreparedStatement st = connection.prepareStatement("delete from trash where id=?");
       st.setObject(1, id);
       connection.commit();
     } catch (SQLException e) {
@@ -174,12 +174,12 @@ public class GroupDao {
     }
   }
 
-  /** Delete all groups. */
+  /** Delete all trashes. */
   @SuppressWarnings("SqlWithoutWhere")
   public void deleteAll() {
     try {
       Statement st = connection.createStatement();
-      st.executeUpdate("delete from \"group\"");
+      st.executeUpdate("delete from trash");
       st.close();
       connection.commit();
     } catch (SQLException e) {
@@ -187,11 +187,11 @@ public class GroupDao {
     }
   }
 
-  private Group buildGroup(ResultSet rs) throws SQLException {
-    return new Group()
+  private Trash buildTrash(ResultSet rs) throws SQLException {
+    return new Trash()
         .setId(UUID.fromString(rs.getString("id")))
-        .setGroupName(rs.getString("group_name"))
-        .setUniversity((UUID) rs.getObject("university_id"))
-        .setSpeciality((UUID) rs.getObject("speciality_id"));
+        .setDeletedId((UUID) rs.getObject("deleted_id"))
+        .setDeletingDate(rs.getInt("deleted_date"))
+        .setGroup((UUID) rs.getObject("group_id"));
   }
 }

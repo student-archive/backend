@@ -30,6 +30,27 @@ public class UserDao {
   }
 
   /**
+   * Checks if user exists.
+   *
+   * @param id id of user
+   * @return true if user exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from \"user\" where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+  /**
    * Updates user.
    *
    * @param user updated user
@@ -48,7 +69,7 @@ public class UserDao {
       query.setObject(3, user.getAccount());
       query.setObject(4, user.getGroup());
       query.setObject(5, user.getRole());
-      query.setObject(6, user.getSex());
+      query.setShort(6, user.getSex());
       query.setObject(7, user.getAvatarLink());
       query.setObject(8, user.getId());
       query.executeUpdate();
@@ -89,7 +110,7 @@ public class UserDao {
       query.setObject(4, user.getRole());
       query.setObject(5, user.getAccount());
       query.setObject(6, user.getGroup());
-      query.setObject(7, user.getSex());
+      query.setShort(7, user.getSex());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
@@ -127,7 +148,7 @@ public class UserDao {
                 .setAvatarLink(rs.getString("avatar_link"))
                 .setRole((UUID) rs.getObject("role_id"))
                 .setAccount((UUID) rs.getObject("account_id"))
-                .setSex((UUID) rs.getObject("sex_id")));
+                .setSex(rs.getShort("sex_id")));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -186,11 +207,11 @@ public class UserDao {
   private User buildUser(ResultSet rs) throws SQLException {
     return new User()
         .setId(UUID.fromString(rs.getString("id")))
-        .setFirstName(rs.getString("priority_name"))
+        .setFirstName(rs.getString("first_name"))
         .setLastName(rs.getString("last_name"))
         .setAvatarLink(rs.getString("avatar_link"))
         .setRole((UUID) rs.getObject("role_id"))
         .setAccount((UUID) rs.getObject("account_id"))
-        .setSex((UUID) rs.getObject("sex_id"));
+        .setSex(rs.getShort("sex_id"));
   }
 }
