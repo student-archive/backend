@@ -2,6 +2,7 @@ package daos
 
 import ru.zgz.star.backend.daos.CertificateDao
 import ru.zgz.star.backend.daos.EmployeeDao
+import ru.zgz.star.backend.exceptions.ModelBuildException
 import ru.zgz.star.backend.models.Certificate
 import ru.zgz.star.backend.models.Employee
 import spock.lang.Shared
@@ -59,6 +60,18 @@ class CertificateDAOSpecification extends Specification {
         then:
         fetched.size() == 1
         fetched[0].getId() == certificateId
+    }
+
+    def "Get certificate by id"() {
+        given:
+        def dao = new CertificateDao()
+
+        when:
+        def fetched = dao.getById(certificateId.toString())
+
+        then:
+        notThrown(ModelBuildException)
+        fetched.getId() == certificateId
     }
 
     def cleanupSpec() {
