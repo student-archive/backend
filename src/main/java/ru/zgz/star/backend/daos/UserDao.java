@@ -69,7 +69,7 @@ public class UserDao {
       query.setObject(3, user.getAccount());
       query.setObject(4, user.getGroup());
       query.setObject(5, user.getRole());
-      query.setObject(6, user.getSex());
+      query.setShort(6, user.getSex());
       query.setObject(7, user.getAvatarLink());
       query.setObject(8, user.getId());
       query.executeUpdate();
@@ -110,7 +110,7 @@ public class UserDao {
       query.setObject(4, user.getRole());
       query.setObject(5, user.getAccount());
       query.setObject(6, user.getGroup());
-      query.setObject(7, user.getSex());
+      query.setShort(7, user.getSex());
       query.executeUpdate();
 
       ResultSet rs = query.getGeneratedKeys();
@@ -148,7 +148,7 @@ public class UserDao {
                 .setAvatarLink(rs.getString("avatar_link"))
                 .setRole((UUID) rs.getObject("role_id"))
                 .setAccount((UUID) rs.getObject("account_id"))
-                .setSex((UUID) rs.getObject("sex_id")));
+                .setSex(rs.getShort("sex_id")));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -212,6 +212,6 @@ public class UserDao {
         .setAvatarLink(rs.getString("avatar_link"))
         .setRole((UUID) rs.getObject("role_id"))
         .setAccount((UUID) rs.getObject("account_id"))
-        .setSex((UUID) rs.getObject("sex_id"));
+        .setSex(rs.getShort("sex_id"));
   }
 }
