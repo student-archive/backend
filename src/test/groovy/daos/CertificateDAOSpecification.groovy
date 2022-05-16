@@ -49,6 +49,18 @@ class CertificateDAOSpecification extends Specification {
         updated[0].getOffice() == fetched.getOffice()
     }
 
+    def "Fetch all certificates"() {
+        given:
+        def dao = new CertificateDao()
+
+        when:
+        def fetched = dao.getAll()
+
+        then:
+        fetched.size() == 1
+        fetched[0].getId() == certificateId
+    }
+
     def cleanupSpec() {
         def dao = new CertificateDao()
         dao.deleteAll()
