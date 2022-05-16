@@ -17,14 +17,25 @@ public class User {
   private UUID role;
   private UUID account;
   private UUID group;
-  private UUID sex;
+  private Short sex;
 
   public User() {}
 
-  public User(String firstName, String lastName, String avatarLink) {
+  public User(
+      String firstName,
+      String lastName,
+      String avatarLink,
+      Short sex,
+      UUID role,
+      UUID account,
+      UUID group) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.avatarLink = avatarLink;
+    this.sex = sex;
+    this.role = role;
+    this.account = account;
+    this.group = group;
   }
 
   public User setId(UUID id) {
@@ -90,11 +101,11 @@ public class User {
     return this;
   }
 
-  public UUID getSex() {
+  public Short getSex() {
     return sex;
   }
 
-  public User setSex(UUID sex) {
+  public User setSex(short sex) {
     this.sex = sex;
     return this;
   }
