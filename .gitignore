@@ -152,3 +152,4 @@ build
 !gradle/wrapper/gradle-wrapper.jar
 !tools/gjf.jar
 /.idea/backend.iml
+/.idea/modules/ru.zgz.star.backend.iml
