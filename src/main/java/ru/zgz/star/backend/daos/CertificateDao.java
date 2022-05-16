@@ -170,15 +170,11 @@ public class CertificateDao {
   }
 
   private Certificate buildCertificate(ResultSet rs) throws SQLException {
-    if (rs.next()) {
-      return new Certificate()
-          .setId(UUID.fromString(rs.getString("id")))
-          .setCertificateName(rs.getString("certificate_name"))
-          .setCertificateDescription(rs.getString("certificate_description"))
-          .setEmployee(UUID.fromString(rs.getString("employee_id")))
-          .setOffice(rs.getString("office"));
-    } else {
-      return null;
-    }
+    return new Certificate()
+        .setId(UUID.fromString(rs.getString("id")))
+        .setCertificateName(rs.getString("certificate_name"))
+        .setCertificateDescription(rs.getString("certificate_description"))
+        .setEmployee(UUID.fromString(rs.getString("employee_id")))
+        .setOffice(rs.getString("office"));
   }
 }
