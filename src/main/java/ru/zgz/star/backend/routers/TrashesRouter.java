@@ -26,7 +26,7 @@ public class TrashesRouter {
   }
 
   /**
-   * Handles POST requests to /quiz/:id/questions.
+   * Handles POST requests to /trashes.
    *
    * @param request request object
    * @param response response object
