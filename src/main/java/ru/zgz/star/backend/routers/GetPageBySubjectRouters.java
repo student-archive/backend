@@ -35,17 +35,17 @@ public class GetPageBySubjectRouters {
     SubjectDao subjectDao = new SubjectDao();
     try {
       if (subjectDao.findById(UUID.fromString(request.params("subject")))) {
-        List<Page> page = dao.getBySubjectId(request.params("id"));
+        List<Page> page = dao.getBySubjectId(request.params("subject"));
         return new Gson().toJson(page);
       } else {
         response.status(404);
         throw new ResourceNotFoundException(
-            String.format("Page id=%s not found", request.params("id")));
+            String.format("Page id=%s not found", request.params("subject")));
       }
     } catch (IllegalArgumentException e) {
       response.status(400);
       throw new BadRequestException(
-          String.format("Given UUID (%s) is not valid", request.params("id")));
+          String.format("Given UUID (%s) is not valid", request.params("subject")));
     }
   }
 
