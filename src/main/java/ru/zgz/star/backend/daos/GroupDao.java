@@ -190,8 +190,8 @@ public class GroupDao {
   private Group buildGroup(ResultSet rs) throws SQLException {
     return new Group()
         .setId(UUID.fromString(rs.getString("id")))
-        .setGroupName(rs.getString("priority_name"))
+        .setGroupName(rs.getString("group_name"))
         .setUniversity((UUID) rs.getObject("university_id"))
-        .setSpeciality((UUID) rs.getObject("speciality"));
+        .setSpeciality((UUID) rs.getObject("speciality_id"));
   }
 }
