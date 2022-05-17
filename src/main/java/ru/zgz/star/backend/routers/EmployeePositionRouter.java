@@ -4,12 +4,10 @@ import com.google.gson.Gson;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.zgz.star.backend.daos.EmployeeDao;
 import ru.zgz.star.backend.daos.EmployeePositionDao;
 import ru.zgz.star.backend.exceptions.http.BadRequestException;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.exceptions.http.ResourceNotFoundException;
-import ru.zgz.star.backend.models.Employee;
 import ru.zgz.star.backend.models.EmployeePosition;
 import ru.zgz.star.backend.responses.DeletedResponse;
 import ru.zgz.star.backend.util.ClassUtil;
@@ -93,7 +91,8 @@ public class EmployeePositionRouter {
         EmployeePosition employeePosition = dao.getById(request.params("id"));
         EmployeePosition body = new Gson().fromJson(request.body(), EmployeePosition.class);
         body.setId(employeePosition.getId());
-        EmployeePosition updated = (EmployeePosition) ClassUtil.mergeObjects(body, employeePosition);
+        EmployeePosition updated =
+            (EmployeePosition) ClassUtil.mergeObjects(body, employeePosition);
         dao.update(updated);
         return new Gson().toJson(updated);
       } else {

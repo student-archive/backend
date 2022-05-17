@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Employee;
-import ru.zgz.star.backend.models.Event;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for employee table. */
@@ -209,5 +208,4 @@ public class EmployeeDao {
         .setPhone(rs.getString("phone"))
         .setLink(rs.getString("link"));
   }
-
 }

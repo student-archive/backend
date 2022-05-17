@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.exceptions.ModelBuildException;
-import ru.zgz.star.backend.models.Event;
 import ru.zgz.star.backend.models.Software;
 import ru.zgz.star.backend.util.DbUtil;
 
@@ -31,7 +30,8 @@ public class SoftwareDao {
   public List<Software> getBySubject(String id) {
     try {
       List<Software> software = new ArrayList<>();
-      PreparedStatement query = connection.prepareStatement("select * from software where subject_id=?");
+      PreparedStatement query =
+          connection.prepareStatement("select * from software where subject_id=?");
       query.setObject(1, UUID.fromString(id));
       ResultSet rs = query.executeQuery();
       while (rs.next()) {

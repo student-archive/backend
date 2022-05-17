@@ -29,7 +29,8 @@ public class SubjectDao {
    */
   public Boolean findById(UUID id) {
     try {
-      PreparedStatement query = connection.prepareStatement("select count(*) from subject where id=?");
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from subject where id=?");
       query.setObject(1, id);
       ResultSet rs = query.executeQuery();
       if (rs.next()) {

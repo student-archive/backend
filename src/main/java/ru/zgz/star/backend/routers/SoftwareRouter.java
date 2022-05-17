@@ -3,18 +3,12 @@ package ru.zgz.star.backend.routers;
 import com.google.gson.Gson;
 import java.util.List;
 import java.util.UUID;
-import ru.zgz.star.backend.daos.AccountDao;
-import ru.zgz.star.backend.daos.EventDao;
-import ru.zgz.star.backend.daos.GroupDao;
 import ru.zgz.star.backend.daos.SoftwareDao;
 import ru.zgz.star.backend.daos.SubjectDao;
 import ru.zgz.star.backend.exceptions.http.BadRequestException;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
 import ru.zgz.star.backend.exceptions.http.ResourceNotFoundException;
-import ru.zgz.star.backend.models.Account;
-import ru.zgz.star.backend.models.Event;
 import ru.zgz.star.backend.models.Software;
-import ru.zgz.star.backend.models.Subject;
 import spark.Request;
 import spark.Response;
 
@@ -47,8 +41,7 @@ public class SoftwareRouter {
       response.status(400);
       throw new BadRequestException(
           String.format("Given UUID (%s) is not valid", request.params("subjectId")));
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
       response.status(500);
       throw e;

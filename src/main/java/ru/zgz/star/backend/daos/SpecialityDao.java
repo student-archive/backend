@@ -37,7 +37,8 @@ public class SpecialityDao {
    */
   public Boolean findById(UUID id) {
     try {
-      PreparedStatement query = connection.prepareStatement("select count(*) from speciality where id=?");
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from speciality where id=?");
       query.setObject(1, id);
       ResultSet rs = query.executeQuery();
       if (rs.next()) {

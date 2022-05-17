@@ -1,10 +1,8 @@
 package ru.zgz.star.backend.routers;
 
 import com.google.gson.Gson;
-import ru.zgz.star.backend.daos.AccountDao;
 import ru.zgz.star.backend.daos.EmployeePositionDao;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
-import ru.zgz.star.backend.models.Account;
 import ru.zgz.star.backend.models.EmployeePosition;
 import spark.Request;
 import spark.Response;
@@ -39,7 +37,8 @@ public class EmployeePositionsRouter {
       response.type("application/json");
       response.status(201);
       EmployeePositionDao dao = new EmployeePositionDao();
-      EmployeePosition employeePosition = new Gson().fromJson(request.body(), EmployeePosition.class);
+      EmployeePosition employeePosition =
+          new Gson().fromJson(request.body(), EmployeePosition.class);
       dao.add(employeePosition);
       return new Gson().toJson(employeePosition);
     } catch (Exception e) {
