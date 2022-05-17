@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 import ru.zgz.star.backend.exceptions.ModelBuildException;
 import ru.zgz.star.backend.models.Employee;
+import ru.zgz.star.backend.models.Event;
 import ru.zgz.star.backend.util.DbUtil;
 
 /** DAO for employee table. */
@@ -30,6 +31,27 @@ public class EmployeeDao {
     this.connection = connection;
   }
 
+  /**
+   * Checks if employee exists.
+   *
+   * @param id id of employee
+   * @return true if employee exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from employee where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
   /**
    * Updates employee.
    *
@@ -187,4 +209,5 @@ public class EmployeeDao {
         .setPhone(rs.getString("phone"))
         .setLink(rs.getString("link"));
   }
+
 }
