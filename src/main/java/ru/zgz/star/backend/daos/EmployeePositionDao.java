@@ -29,7 +29,27 @@ public class EmployeePositionDao {
   public EmployeePositionDao(Connection connection) {
     this.connection = connection;
   }
-
+  /**
+   * Checks if employee position exists.
+   *
+   * @param id id of employee position
+   * @return true if employee position exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from employee_position where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
   /**
    * Updates employeePosition.
    *
@@ -172,6 +192,6 @@ public class EmployeePositionDao {
   private EmployeePosition buildEmployeePosition(ResultSet rs) throws SQLException {
     return new EmployeePosition()
         .setId(UUID.fromString(rs.getString("id")))
-        .setPositionName(rs.getString("position_name"));
+        .setPositionName(rs.getString("position"));
   }
 }
