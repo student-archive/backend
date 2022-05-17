@@ -16,7 +16,7 @@ public class EventPrioritiesRouter {
    *
    * @param request request object
    * @param response response object
-   * @return JSON representation of all accounts
+   * @return JSON representation of all event priorities
    */
   public static String get(Request request, Response response) {
     response.type("application/json");
