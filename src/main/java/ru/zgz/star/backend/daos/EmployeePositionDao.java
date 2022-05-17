@@ -128,7 +128,7 @@ public class EmployeePositionDao {
         employeePositions.add(
             new EmployeePosition()
                 .setId(UUID.fromString(rs.getString("id")))
-                .setPositionName(rs.getString("position_name")));
+                .setPositionName(rs.getString("position")));
       }
     } catch (SQLException e) {
       e.printStackTrace();
