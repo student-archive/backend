@@ -171,6 +171,6 @@ public class SoftwareDao {
         .setId(UUID.fromString(rs.getString("id")))
         .setLink(rs.getString("link"))
         .setDescription(rs.getString("description"))
-        .setSubject((UUID) rs.getObject("subject"));
+        .setSubject((UUID) rs.getObject("subject_id"));
   }
 }
