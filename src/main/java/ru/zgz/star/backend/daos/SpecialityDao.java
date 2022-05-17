@@ -29,7 +29,26 @@ public class SpecialityDao {
   public SpecialityDao(Connection connection) {
     this.connection = connection;
   }
-
+  /**
+   * Checks if speciality exists.
+   *
+   * @param id id of speciality
+   * @return true if speciality exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query = connection.prepareStatement("select count(*) from speciality where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
   /**
    * Updates speciality.
    *
