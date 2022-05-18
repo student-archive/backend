@@ -31,6 +31,27 @@ public class EmployeeDao {
   }
 
   /**
+   * Checks if employee exists.
+   *
+   * @param id id of employee
+   * @return true if employee exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from employee where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+  /**
    * Updates employee.
    *
    * @param employee updated employee

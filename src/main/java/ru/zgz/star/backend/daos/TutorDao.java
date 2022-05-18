@@ -31,6 +31,27 @@ public class TutorDao {
   }
 
   /**
+   * Checks if tutor exists.
+   *
+   * @param id id of tutor
+   * @return true if tutor exists
+   */
+  public Boolean findById(UUID id) {
+    try {
+      PreparedStatement query =
+          connection.prepareStatement("select count(*) from tutor where id=?");
+      query.setObject(1, id);
+      ResultSet rs = query.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return false;
+  }
+  /**
    * Updates tutor.
    *
    * @param tutor updated tutor

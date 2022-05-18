@@ -22,6 +22,28 @@ public class SoftwareDao {
   }
 
   /**
+   * Gets exact software by subject.
+   *
+   * @param id id of subject
+   * @return list of software
+   */
+  public List<Software> getBySubject(String id) {
+    try {
+      List<Software> software = new ArrayList<>();
+      PreparedStatement query =
+          connection.prepareStatement("select * from software where subject_id=?");
+      query.setObject(1, UUID.fromString(id));
+      ResultSet rs = query.executeQuery();
+      while (rs.next()) {
+        software.add(buildSoftware(rs));
+      }
+      return software;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+  /**
    * Instantiates a new Software dao.
    *
    * @param connection the connection
@@ -171,6 +193,6 @@ public class SoftwareDao {
         .setId(UUID.fromString(rs.getString("id")))
         .setLink(rs.getString("link"))
         .setDescription(rs.getString("description"))
-        .setSubject((UUID) rs.getObject("subject"));
+        .setSubject((UUID) rs.getObject("subject_id"));
   }
 }

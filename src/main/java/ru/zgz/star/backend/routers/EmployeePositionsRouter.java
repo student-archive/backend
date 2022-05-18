@@ -1,44 +1,54 @@
 package ru.zgz.star.backend.routers;
 
 import com.google.gson.Gson;
-import ru.zgz.star.backend.daos.EventPriorityDao;
+import ru.zgz.star.backend.daos.EmployeePositionDao;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
+import ru.zgz.star.backend.models.EmployeePosition;
 import spark.Request;
 import spark.Response;
 
-/** Router, which handles requests to /eventPriorities. */
-public class EventPrioritiesRouter {
+/** Router, which handles requests to /employeePositions. */
+public class EmployeePositionsRouter {
   /** Base path for all requests, which this router handles. */
-  public static final String BASE_URL = "/eventPriorities";
+  public static final String BASE_URL = "/employeePositions";
 
   /**
-   * Handles GET requests to /eventPriorities.
+   * Handles GET requests to /employeePositions.
    *
    * @param request request object
    * @param response response object
-   * @return JSON representation of all event priorities
+   * @return JSON representation of all employeePositions
    */
   public static String get(Request request, Response response) {
     response.type("application/json");
-    EventPriorityDao dao = new EventPriorityDao();
+    EmployeePositionDao dao = new EmployeePositionDao();
     return new Gson().toJson(dao.getAll());
   }
 
   /**
-   * Handles POST requests to /eventPriorities.
+   * Handles POST requests to /accounts.
    *
    * @param request request object
    * @param response response object
-   * @return JSON representation of the 405 error
+   * @return JSON representation of the created employeePositions
    */
   public static String post(Request request, Response response) {
-    response.type("application/json");
-    response.status(405);
-    throw new MethodNotAllowedException("Method post is not allowed for this resource");
+    try {
+      response.type("application/json");
+      response.status(201);
+      EmployeePositionDao dao = new EmployeePositionDao();
+      EmployeePosition employeePosition =
+          new Gson().fromJson(request.body(), EmployeePosition.class);
+      dao.add(employeePosition);
+      return new Gson().toJson(employeePosition);
+    } catch (Exception e) {
+      response.status(500);
+      throw e;
+    }
   }
 
   /**
-   * Handles PATCH requests to /eventPriorities.
+   * Handles PATCH requests to /accounts.
    *
    * @param request request object
    * @param response response object
@@ -51,7 +61,7 @@ public class EventPrioritiesRouter {
   }
 
   /**
-   * Handles DELETE requests to /eventPriorities.
+   * Handles DELETE requests to /accounts.
    *
    * @param request request object
    * @param response response object
@@ -64,7 +74,7 @@ public class EventPrioritiesRouter {
   }
 
   /**
-   * Handles PUT requests to /eventPriorities.
+   * Handles PUT requests to /accounts.
    *
    * @param request request object
    * @param response response object

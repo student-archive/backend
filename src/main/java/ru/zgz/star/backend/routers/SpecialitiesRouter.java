@@ -1,44 +1,53 @@
 package ru.zgz.star.backend.routers;
 
 import com.google.gson.Gson;
-import ru.zgz.star.backend.daos.EventPriorityDao;
+import ru.zgz.star.backend.daos.SpecialityDao;
 import ru.zgz.star.backend.exceptions.http.MethodNotAllowedException;
+import ru.zgz.star.backend.models.Speciality;
 import spark.Request;
 import spark.Response;
 
-/** Router, which handles requests to /eventPriorities. */
-public class EventPrioritiesRouter {
+/** Router, which handles requests to /specialities. */
+public class SpecialitiesRouter {
   /** Base path for all requests, which this router handles. */
-  public static final String BASE_URL = "/eventPriorities";
+  public static final String BASE_URL = "/specialities";
 
   /**
-   * Handles GET requests to /eventPriorities.
+   * Handles GET requests to /specialities.
    *
    * @param request request object
    * @param response response object
-   * @return JSON representation of all event priorities
+   * @return JSON representation of all specialities
    */
   public static String get(Request request, Response response) {
     response.type("application/json");
-    EventPriorityDao dao = new EventPriorityDao();
+    SpecialityDao dao = new SpecialityDao();
     return new Gson().toJson(dao.getAll());
   }
 
   /**
-   * Handles POST requests to /eventPriorities.
+   * Handles POST requests to /specialities.
    *
    * @param request request object
    * @param response response object
-   * @return JSON representation of the 405 error
+   * @return JSON representation of the created specialities
    */
   public static String post(Request request, Response response) {
-    response.type("application/json");
-    response.status(405);
-    throw new MethodNotAllowedException("Method post is not allowed for this resource");
+    try {
+      response.type("application/json");
+      response.status(201);
+      SpecialityDao dao = new SpecialityDao();
+      Speciality speciality = new Gson().fromJson(request.body(), Speciality.class);
+      dao.add(speciality);
+      return new Gson().toJson(speciality);
+    } catch (Exception e) {
+      response.status(500);
+      throw e;
+    }
   }
 
   /**
-   * Handles PATCH requests to /eventPriorities.
+   * Handles PATCH requests to /specialities.
    *
    * @param request request object
    * @param response response object
@@ -51,7 +60,7 @@ public class EventPrioritiesRouter {
   }
 
   /**
-   * Handles DELETE requests to /eventPriorities.
+   * Handles DELETE requests to /specialities.
    *
    * @param request request object
    * @param response response object
@@ -64,7 +73,7 @@ public class EventPrioritiesRouter {
   }
 
   /**
-   * Handles PUT requests to /eventPriorities.
+   * Handles PUT requests to /specialities.
    *
    * @param request request object
    * @param response response object
