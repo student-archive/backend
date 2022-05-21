@@ -19,7 +19,7 @@ public class Question {
 
   public Question() {}
 
-  public Question(String questionText, UUID quiz) {
+  public Question(String questionText, UUID quiz, int correctAnswersAmount, int totalAnswersAmount) {
     this.questionText = questionText;
     this.quiz = quiz;
     this.correctAnswersAmount = correctAnswersAmount;
