@@ -19,6 +19,14 @@ public class Question {
 
   public Question() {}
 
+  /**
+   * Instantinates new object of question.
+   * 
+   * @param questionText text of question
+   * @param quiz id of associated quiz
+   * @param correctAnswersAmount amount of correct answers of the question
+   * @param totalAnswersAmount total amount of answers of the question
+   */
   public Question(
       String questionText, UUID quiz, int correctAnswersAmount, int totalAnswersAmount) {
     this.questionText = questionText;
