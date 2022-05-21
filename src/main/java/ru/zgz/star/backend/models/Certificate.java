@@ -26,7 +26,8 @@ public class Certificate {
    * @param certificateDescription description of the certificate
    * @param office office where the certificate is issuing
    */
-  public Certificate(String certificateName, String certificateDescription, String office) {
+  public Certificate(
+      String certificateName, String certificateDescription, String office, UUID employee) {
     this.certificateName = certificateName;
     this.certificateDescription = certificateDescription;
     this.office = office;

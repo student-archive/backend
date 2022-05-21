@@ -141,6 +141,7 @@ replay_pid*
 
 /.gradle/
 /build/
+/bin/
 
 # Ignore Gradle project-specific cache directory
 .gradle
