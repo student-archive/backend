@@ -54,6 +54,18 @@ class AttachmentTypeDaoSpecification extends Specification {
       updated[0].getTypeName() == fetched.getTypeName()
   }
 
+  def "Delete certificate by id"() {
+    given:
+      def dao = new AttachmentTypeDao()
+
+    when:
+      dao.deleteById((UUID) attachmentTypeId)
+      def fetched = dao.getAll()
+
+    then:
+      fetched.size() == 0
+  }
+
   def "Delete all records in account table"() {
     given: "Creating data access object"
       AttachmentTypeDao dao = new AttachmentTypeDao()
