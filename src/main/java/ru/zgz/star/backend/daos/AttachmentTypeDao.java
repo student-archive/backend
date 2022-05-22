@@ -141,6 +141,7 @@ public class AttachmentTypeDao {
     try {
       PreparedStatement st = connection.prepareStatement("delete from attachment_type where id=?");
       st.setObject(1, id);
+      st.executeUpdate();
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace();
