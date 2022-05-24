@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="App" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="ru.zgz.star.backend.App" />
-    <module name="backend.main" />
+    <module name="star.backend.main" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="ru.zgz.star.backend.*" />

@@ -783,7 +783,6 @@ ij_continuation_indent_size = 8
 ij_vtl_keep_indents_on_empty_lines = false
 
 [{*.gant,*.groovy,*.gy}]
-indent_size = 4
 tab_width = 4
 ij_continuation_indent_size = 8
 ij_groovy_align_group_field_declarations = false
@@ -860,7 +859,7 @@ ij_groovy_keep_simple_classes_in_one_line = true
 ij_groovy_keep_simple_lambdas_in_one_line = true
 ij_groovy_keep_simple_methods_in_one_line = true
 ij_groovy_label_indent_absolute = false
-ij_groovy_label_indent_size = 0
+ij_groovy_label_indent_size = 2
 ij_groovy_lambda_brace_style = end_of_line
 ij_groovy_layout_static_imports_separately = true
 ij_groovy_line_comment_add_space = false
